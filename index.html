@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WortWelt">
+<meta name="theme-color" content="#7ec8f2">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACGElEQVR42u3cMU4CQRiAUSA0FhSeAxsrG69AYmUBIfEANl5AQ6kUWnAAaioSrkABFQmxtNkrSGljsYSCKCKZkJnhvYpiszssn//iEqg+zj4r8JOaU4A4EAfiQByIA3EgDsSBOBAHiANxIA7EgTgQB+JAHIgDcYA4EAfiQByIA3EgDsSBOBAHiANxIA7EgTgQB+JAHIgDcSAOEAfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAOEAfiQByEVI9/ib2rxj6bPc1X1mxyIA5cVkIZ3l6UD+5G79ZsciAOxIE4EAfiQByIA8SBOBAH4kAciANxIA7EgThAHIiDg9RP56nm8V0SkwNx4LKSlhS//2JyIA7EgTgQB+LgtP6VPT/rRr/I8b+2/v0ZhdrPMddschDn5HAKthRF8ec2b8sb7znwhhRcVkJ5bS3KBw+TS5MDlxUQB+JAHIgDcSAOopfPTbB9PhNJ8Vji2GXzKdfmvuTBr1a5qx37CVhGkGO5rGByROCYf8dJz4x1HF/PH6ms9f66EeGughwrzlfBZQVxIA7EgTgQB+JAHOQikzuk/c7653gG01VOxzI5EAepqb60m84CJgfiQByIA3EgDsSBOBAH4gBxIA7EgTgQB+JAHIgDcSAOEAfiQByIA3EgDsSBOBAH4kAcIA7EgTgQB+JAHIgDcSAOxAHiQByIA3EgDsSBOBAHefoG1/pHmQs+1owAAAAASUVORK5CYII=">
+<title>⛏️ WortWelt – Klasse 1</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; }
+  html,body { height:100%; }
+  body {
+    font-family: "Courier New", monospace; font-weight:bold;
+    background: linear-gradient(#7ec8f2 0%, #a8dcf7 55%, #8fd14f 55%, #6cb33f 58%, #8a5a2b 58%, #6e4520 100%);
+    background-attachment: fixed;
+    display:flex; flex-direction:column; align-items:center;
+    touch-action: manipulation; overflow-x:hidden;
+  }
+  /* ---------- HUD ---------- */
+  #hud { width:100%; max-width:860px; display:flex; justify-content:space-between; align-items:center; padding:10px 14px; gap:8px; flex-wrap:wrap; }
+  .hudbox {
+    background:#3b3b3b; color:#fff; border:4px solid #1e1e1e;
+    box-shadow: inset -4px -4px 0 #2a2a2a, inset 4px 4px 0 #555;
+    padding:6px 12px; font-size:19px; display:flex; align-items:center; gap:6px;
+  }
+  #streakbox.hot { background:#a33; }
+  .backbtn { cursor:pointer; background:#5b8731 !important; box-shadow: inset -4px -4px 0 #46691f, inset 4px 4px 0 #79ad48 !important; }
+  /* ---------- Menü ---------- */
+  #menu { width:100%; max-width:860px; padding:6px 14px 30px; }
+  #menu h1 { text-align:center; color:#fff; font-size:min(9vw,46px); text-shadow:3px 3px 0 #1e1e1e; margin:6px 0 2px; }
+  #menu .sub { text-align:center; color:#1e3a12; font-size:17px; margin-bottom:10px; }
+  .worldtitle { color:#fff; font-size:22px; text-shadow:2px 2px 0 #1e1e1e; margin:18px 0 8px; }
+  .lvlgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+  .lvl {
+    background:#8a5a2b; border:5px solid #1e1e1e; color:#fff; cursor:pointer;
+    box-shadow: inset -6px -6px 0 #6e4520, inset 6px 6px 0 #a8763f, 0 5px 0 #1e1e1e;
+    padding:12px 8px; text-align:center; font-family:inherit; font-weight:bold;
+  }
+  .lvl:active { transform:translateY(3px); }
+  .lvl .ico { font-size:38px; }
+  .lvl .nm { font-size:15px; margin-top:4px; }
+  .lvl .st { font-size:17px; margin-top:4px; letter-spacing:2px; }
+  .lvl.locked { filter:grayscale(1) brightness(.6); }
+  .menubtnrow { display:flex; gap:12px; justify-content:center; margin:12px 0 2px; flex-wrap:wrap; }
+  /* ---------- Kampf-Szene ---------- */
+  #battle { display:flex; align-items:flex-end; justify-content:center; gap:min(10vw,70px); margin:4px 0 2px; min-height:96px; position:relative; }
+  .fightercol { display:flex; flex-direction:column; align-items:center; gap:2px; }
+  #hero { position:relative; width:78px; height:94px; display:inline-block; filter:drop-shadow(3px 3px 0 rgba(0,0,0,.25)); }
+  #hero svg { width:100%; height:100%; display:block; }
+  #hero.hit { animation:mshake .4s; }
+  #phearts { font-size:15px; min-height:20px; letter-spacing:1px; }
+  .petslot { display:none; } /* Begleiter ist jetzt Teil des SVG-Avatars */
+  /* ---------- Avatar-Studio ---------- */
+  .avpreview { width:150px; height:180px; display:inline-block; margin:6px auto 4px; filter:drop-shadow(3px 3px 0 rgba(0,0,0,.2)); }
+  .avpreview svg { width:100%; height:100%; display:block; }
+  .swatchrow { display:flex; gap:8px; flex-wrap:wrap; }
+  .swatch { width:46px; height:46px; border:4px solid #1e1e1e; cursor:pointer; box-shadow: inset -3px -3px 0 rgba(0,0,0,.28); }
+  .swatch.sel { outline:3px solid #ffd23f; border-color:#ffd23f; }
+  .partbtn { background:#8a5a2b; border:4px solid #1e1e1e; cursor:pointer; padding:4px 4px 2px; min-width:74px;
+    box-shadow: inset -4px -4px 0 #6e4520, inset 4px 4px 0 #a8763f; }
+  .partbtn svg { width:58px; height:70px; display:block; margin:0 auto; }
+  .partbtn .price { font-size:12px; color:#fff; font-weight:bold; text-align:center; margin-top:2px; }
+  .partbtn.sel { background:#5b8731; box-shadow: inset -4px -4px 0 #46691f, inset 4px 4px 0 #79ad48; outline:3px solid #ffd23f; }
+  .partbtn.locked { filter:grayscale(1) brightness(.62); }
+  #studio { max-height:56vh; overflow-y:auto; width:100%; max-width:640px; -webkit-overflow-scrolling:touch; }
+  .slottitle { color:#ffd23f; font-size:20px; margin:14px 0 6px; text-shadow:2px 2px 0 #000; text-align:left; }
+  .shopgrid { display:flex; gap:10px; flex-wrap:wrap; }
+  .shopitem {
+    background:#8a5a2b; border:4px solid #1e1e1e; color:#fff; cursor:pointer; font-family:inherit; font-weight:bold;
+    box-shadow: inset -4px -4px 0 #6e4520, inset 4px 4px 0 #a8763f;
+    padding:8px; font-size:34px; min-width:78px; text-align:center;
+  }
+  .shopitem .price { font-size:13px; margin-top:3px; }
+  .shopitem.equipped { background:#5b8731; box-shadow: inset -4px -4px 0 #46691f, inset 4px 4px 0 #79ad48; outline:3px solid #ffd23f; }
+  .shopitem.lockedit { filter:grayscale(1) brightness(.6); }
+  .shopitem.achieveit { border-color:#ffd23f; }
+  #monster { font-size:72px; filter:drop-shadow(3px 3px 0 rgba(0,0,0,.25)); transition:transform .15s; }
+  #monster.hit { animation:mshake .4s; }
+  #monster.dead { animation:mdie 1s forwards; }
+  @keyframes mshake { 0%,100%{transform:translateX(0) rotate(0)} 25%{transform:translateX(-12px) rotate(-8deg)} 75%{transform:translateX(12px) rotate(8deg)} }
+  @keyframes mdie { 40%{transform:rotate(20deg) translateY(0); opacity:1} 100%{transform:rotate(120deg) translateY(70px); opacity:0} }
+  #hearts { text-align:center; font-size:24px; letter-spacing:2px; min-height:30px; }
+  #mname { text-align:center; color:#fff; font-size:17px; text-shadow:2px 2px 0 #1e1e1e; }
+  .fx { position:absolute; font-size:40px; pointer-events:none; z-index:40; }
+  .swordfly { animation:swordfly .35s forwards; }
+  @keyframes swordfly { from{transform:translateX(0) rotate(0)} to{transform:translateX(min(14vw,95px)) rotate(90deg); opacity:.9} }
+  .dmg { animation:dmgpop .8s forwards; color:#ffd23f; text-shadow:2px 2px 0 #1e1e1e; font-size:30px; }
+  .dmg.crit { color:#ff5533; font-size:42px; }
+  @keyframes dmgpop { from{transform:translateY(0); opacity:1} to{transform:translateY(-60px); opacity:0} }
+  /* ---------- Spielfeld ---------- */
+  #game { width:100%; max-width:860px; display:none; flex-direction:column; align-items:center; padding:0 14px 30px; }
+  #task { color:#1e3a12; font-size:20px; text-align:center; text-shadow:1px 1px 0 rgba(255,255,255,.5); min-height:26px; }
+  #picture { font-size:min(14vw,76px); line-height:1.15; filter:drop-shadow(4px 4px 0 rgba(0,0,0,.25)); text-align:center; }
+  #bigword {
+    font-size:min(11vw,50px); color:#fff; background:rgba(0,0,0,.35);
+    border:4px solid #1e1e1e; padding:8px 22px; margin:8px 0; letter-spacing:3px; text-align:center;
+  }
+  #speakbtn {
+    margin-top:4px; font-size:17px; font-family:inherit; font-weight:bold;
+    background:#5b8731; color:#fff; border:4px solid #1e1e1e; padding:6px 14px;
+    box-shadow: inset -4px -4px 0 #46691f, inset 4px 4px 0 #79ad48; cursor:pointer;
+  }
+  #slots { display:flex; gap:10px; margin:14px 0 4px; flex-wrap:wrap; justify-content:center; }
+  .slot { min-width:80px; height:66px; font-size:32px; color:#fff; background:rgba(0,0,0,.35); border:4px dashed rgba(255,255,255,.6); display:flex; align-items:center; justify-content:center; padding:0 10px; }
+  .slot.done { border:4px solid #1e1e1e; background:#4a90d9; box-shadow: inset -5px -5px 0 #3a72ab, inset 5px 5px 0 #6fb1f5; animation:pop .25s; }
+  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.25)} 100%{transform:scale(1)} }
+  #tiles { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:12px; max-width:680px; }
+  .tile {
+    min-width:96px; height:80px; font-size:32px; color:#fff; font-family:inherit; font-weight:bold;
+    background:#8a5a2b; border:5px solid #1e1e1e; cursor:pointer; padding:0 14px;
+    box-shadow: inset -6px -6px 0 #6e4520, inset 6px 6px 0 #a8763f, 0 6px 0 #1e1e1e;
+    display:flex; align-items:center; justify-content:center; transition:transform .06s;
+  }
+  .tile.emojitile { font-size:46px; min-width:110px; height:96px; }
+  .tile:active { transform:translateY(4px); }
+  .tile.used { visibility:hidden; }
+  .tile.wrong { animation:shake .4s; background:#a33; }
+  .tile.good { background:#5b8731; box-shadow: inset -6px -6px 0 #46691f, inset 6px 6px 0 #79ad48, 0 6px 0 #1e1e1e; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-10px)} 75%{transform:translateX(10px)} }
+  #msg { min-height:34px; margin-top:12px; font-size:23px; color:#1e3a12; text-shadow:1px 1px 0 rgba(255,255,255,.5); text-align:center; }
+  .gemfly { position:fixed; font-size:30px; pointer-events:none; animation:fly .8s forwards; z-index:50; }
+  @keyframes fly { to { transform:translate(var(--dx),var(--dy)) scale(.4); opacity:0; } }
+  /* ---------- Overlays ---------- */
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#fff; text-align:center; padding:20px; }
+  .overlay h1 { font-size:min(8.5vw,44px); text-shadow:3px 3px 0 #000; }
+  .overlay p { font-size:21px; max-width:560px; }
+  .bigbtn { font-size:23px; font-family:inherit; font-weight:bold; color:#fff; background:#5b8731; border:5px solid #1e1e1e; padding:14px 28px; cursor:pointer; box-shadow: inset -6px -6px 0 #46691f, inset 6px 6px 0 #79ad48, 0 6px 0 #1e1e1e; }
+  #chest { font-size:100px; cursor:pointer; animation:wiggle 1s infinite; }
+  @keyframes wiggle { 0%,100%{transform:rotate(-4deg)} 50%{transform:rotate(4deg)} }
+  #stars { font-size:50px; letter-spacing:8px; }
+  #introov .bigmon { font-size:120px; animation:appear .6s; filter:drop-shadow(4px 4px 0 #000); }
+  @keyframes appear { from{transform:scale(0) rotate(-30deg)} 70%{transform:scale(1.3)} to{transform:scale(1)} }
+  .lootbox { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; max-width:600px; }
+  .lootitem { border:4px solid #1e1e1e; padding:10px; font-size:36px; min-width:70px; }
+  .r0{background:#9aa0a6} .r1{background:#4a90d9} .r2{background:#9b59b6} .r3{background:#e67e22; animation:glow 1.2s infinite alternate}
+  @keyframes glow { from{box-shadow:0 0 6px #ffd23f} to{box-shadow:0 0 24px #ffd23f} }
+  .lootname { font-size:13px; color:#fff; margin-top:4px; }
+  .confetti { position:fixed; top:-50px; font-size:28px; pointer-events:none; z-index:250; animation:confall linear forwards; }
+  @keyframes confall { to { transform:translateY(115vh) rotate(400deg); } }
+  #parents table { border-collapse:collapse; color:#fff; font-size:15px; margin:0 auto; }
+  #parents td, #parents th { border:2px solid #555; padding:4px 10px; text-align:left; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<div id="hud">
+  <div class="hudbox backbtn" id="homebtn">🏡 Karte</div>
+  <div class="hudbox">💎 <span id="gems">0</span></div>
+  <div class="hudbox" id="progbox">⚔️ <span id="prog"></span></div>
+  <div class="hudbox" id="streakbox">🔥 <span id="streak">0</span></div>
+  <div class="hudbox backbtn" id="sndbtn">🔊</div>
+</div>
+
+<!-- ======= HAUPTSEITE (Hub) ======= -->
+<div id="hub" style="width:100%; max-width:860px; padding:6px 14px 30px;"></div>
+
+<!-- ======= MENÜ / LEVELKARTE ======= -->
+<div id="menu"></div>
+
+<!-- ======= SPIELFELD ======= -->
+<div id="game">
+  <div id="battle">
+    <div id="heropet" class="petslot"></div>
+    <div class="fightercol">
+      <div id="hero"></div>
+      <div id="phearts"></div>
+    </div>
+    <div id="monster">🧟</div>
+  </div>
+  <div id="hearts"></div>
+  <div id="mname"></div>
+  <div id="task"></div>
+  <div id="picture"></div>
+  <div id="bigword" class="hidden"></div>
+  <button id="speakbtn">🔊 Vorlesen</button>
+  <div id="slots"></div>
+  <div id="tiles"></div>
+  <div id="msg"></div>
+</div>
+
+<!-- ======= LEVEL-INTRO (Zwischensequenz) ======= -->
+<div class="overlay hidden" id="introov">
+  <div class="bigmon" id="intromon">🧟</div>
+  <h1 id="introtitle"></h1>
+  <p id="introtext"></p>
+  <button class="bigbtn" id="introbtn">⚔️ Kampf beginnen!</button>
+</div>
+
+<!-- ======= SIEG ======= -->
+<div class="overlay hidden" id="winov">
+  <h1 id="wintitle">Besiegt! 🎉</h1>
+  <div id="stars"></div>
+  <div id="chest">🧰</div>
+  <p id="chestmsg">Tippe auf die Truhe!</p>
+  <p id="teaser" class="hidden"></p>
+  <button class="bigbtn hidden" id="nextbtn">Weiter zur Karte 🗺️</button>
+</div>
+
+<!-- ======= NIEDERLAGE (nur im Schaden-Modus) ======= -->
+<div class="overlay hidden" id="failov">
+  <div style="font-size:100px" id="failmon">🧟</div>
+  <h1>Aua! 💥</h1>
+  <p>Das Monster war diesmal stärker. Aber deine 💎 behältst du – auf zur Revanche!</p>
+  <button class="bigbtn" id="retrybtn">⚔️ Revanche!</button>
+  <button class="bigbtn" id="failmap">🗺️ Karte</button>
+</div>
+
+<!-- ======= EINSTELLUNGEN ======= -->
+<div class="overlay hidden" id="setov">
+  <h1>⚙️ Einstellungen</h1>
+  <div id="setlist" style="display:flex; flex-direction:column; gap:12px;"></div>
+  <button class="bigbtn" id="setclose">Fertig ✅</button>
+</div>
+
+<!-- ======= BESTENLISTE ======= -->
+<div class="overlay hidden" id="rankov">
+  <h1>🏅 Bestenliste</h1>
+  <div id="rankbody" style="max-height:50vh; overflow-y:auto;"></div>
+  <p style="font-size:15px">Klassen-Ranking gegen andere kommt mit dem Klassencode-Update! 🔜</p>
+  <button class="bigbtn" id="rankclose">Zurück</button>
+</div>
+
+<!-- ======= TAGESBONUS ======= -->
+<div class="overlay hidden" id="dailyov">
+  <h1>Willkommen zurück! 🌞</h1>
+  <p id="dailytext"></p>
+  <button class="bigbtn" id="dailybtn">💎 Abholen!</button>
+</div>
+
+<!-- ======= ERWACHSENEN-ECKE ======= -->
+<div class="overlay hidden" id="parentsov">
+  <h1>👨‍👩‍👧 Erwachsenen-Ecke</h1>
+  <div id="parents" style="max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch;"></div>
+  <button class="bigbtn" id="parentsclose">Zurück 🗺️</button>
+</div>
+
+<!-- ======= AVATAR-STUDIO / SHOP ======= -->
+<div class="overlay hidden" id="studioov">
+  <h1>🧑‍🎨 Avatar-Studio</h1>
+  <div id="studiopreview" class="avpreview"></div>
+  <p style="font-size:16px">💎 <span id="studiogems"></span> · Verdiene Edelsteine nur durchs Spielen – nichts kostet echtes Geld!</p>
+  <div id="studio"></div>
+  <button class="bigbtn" id="studioclose">Fertig ✅</button>
+</div>
+
+<!-- ======= ACHIEVEMENT FREIGESCHALTET ======= -->
+<div class="overlay hidden" id="achov">
+  <h1>🏅 ERFOLG!</h1>
+  <div style="font-size:90px" id="achico"></div>
+  <p id="achtext"></p>
+  <button class="bigbtn" id="achbtn">Nice! 🎉</button>
+</div>
+
+<!-- ======= SCHATZKAMMER ======= -->
+<div class="overlay hidden" id="lootov">
+  <h1>🏆 Deine Schatzkammer</h1>
+  <div class="lootbox" id="lootlist"></div>
+  <p id="lootcount"></p>
+  <button class="bigbtn" id="lootclose">Zurück 🗺️</button>
+</div>
+
+<script>
+"use strict";
+/* =====================================================================
+   WORTWELT v3.4 – Klassen 1–2 (NRW), Mehrklassen-Hub · Fächer: Deutsch + Mathe + Sachunterricht + Musik · SVG-Avatare · Spaced-Repetition (fach- & klassenweise) · Hook-Design: siehe GAME-DESIGN-PRINZIPIEN.md
+   Neu: Boss-Kämpfe mit Zwischensequenzen, variable Belohnungen,
+        Seltenheits-Loot, Schatzkammer, Tages-Streak, Sound
+   ===================================================================== */
+
+// ---------- Anlaut-Datenbank ----------
+const ANLAUT = {
+  "M":[["🐭","Maus"],["🌙","Mond"],["🍈","Melone"]],
+  "A":[["🐒","Affe"],["🍎","Apfel"],["🐜","Ameise"]],
+  "L":[["🦁","Löwe"],["💡","Lampe"],["🪜","Leiter"]],
+  "O":[["👵","Oma"],["👂","Ohr"],["🍊","Orange"]],
+  "S":[["☀️","Sonne"],["🛋️","Sofa"],["🥗","Salat"]],
+  "I":[["🦔","Igel"],["🏝️","Insel"]],
+  "N":[["👃","Nase"],["🥜","Nuss"],["🪺","Nest"]],
+  "E":[["🐘","Elefant"],["🦆","Ente"],["🍓","Erdbeere"]],
+  "R":[["🚀","Rakete"],["🌹","Rose"],["🌈","Regenbogen"]],
+  "T":[["🐯","Tiger"],["🍅","Tomate"],["☕","Tasse"]],
+  "U":[["⏰","Uhr"],["🦉","Uhu"]],
+  "D":[["🐉","Drache"],["🐬","Delfin"],["🥫","Dose"]],
+  "H":[["🐶","Hund"],["🏠","Haus"],["🐰","Hase"]],
+  "F":[["🐟","Fisch"],["🐸","Frosch"],["🦊","Fuchs"]],
+  "W":[["🐳","Wal"],["☁️","Wolke"],["🎲","Würfel"]],
+  "G":[["🦒","Giraffe"],["🎁","Geschenk"],["🎸","Gitarre"]],
+  "B":[["⚽","Ball"],["🍌","Banane"],["🐻","Bär"]],
+  "K":[["🐱","Katze"],["👑","Krone"],["🐮","Kuh"]],
+  "Z":[["🦓","Zebra"],["🍋","Zitrone"],["⛺","Zelt"]],
+  "P":[["🐧","Pinguin"],["🍄","Pilz"],["🍕","Pizza"]],
+  "J":[["🧥","Jacke"],["🪀","Jo-Jo"]],
+  "V":[["🐦","Vogel"],["🌋","Vulkan"]],
+  "C":[["🤡","Clown"],["💻","Computer"]],
+  "Ei":[["🍦","Eis"],["🪣","Eimer"],["🥚","Ei"]],
+  "Au":[["🚗","Auto"],["👁️","Auge"]],
+  "Eu":[["🦉","Eule"],["💶","Euro"]],
+  "Sch":[["🐑","Schaf"],["🚢","Schiff"],["🏫","Schule"]],
+  "St":[["⭐","Stern"],["🪑","Stuhl"],["🥾","Stiefel"]],
+  "Sp":[["🕷️","Spinne"],["🪞","Spiegel"]],
+  "Pf":[["🐴","Pferd"],["🍳","Pfanne"]],
+  "Qu":[["🪼","Qualle"],["💦","Quelle"]]
+};
+
+const GK1 = ["M","A","L","O","S","I","N","E","R","T","U","H","F","W"];
+const GK2 = ["B","D","P","Q","G","K","Z","J","V","C","X","Y","Ä","Ö","Ü"];
+
+const SIL1 = [
+  ["🐰",["HA","SE"]],["👃",["NA","SE"]],["🌹",["RO","SE"]],["🛋️",["SO","FA"]],
+  ["🚗",["AU","TO"]],["👵",["O","MA"]],["👴",["O","PA"]],["🦆",["EN","TE"]],
+  ["🦉",["EU","LE"]],["🐯",["TI","GER"]],["🦔",["I","GEL"]],["🐒",["AF","FE"]],
+  ["💡",["LAM","PE"]],["🥫",["DO","SE"]],["🧀",["KÄ","SE"]]
+];
+const SIL2 = [
+  ["🤖",["RO","BO","TER"]],["🍌",["BA","NA","NE"]],["🍅",["TO","MA","TE"]],
+  ["🍋",["ZI","TRO","NE"]],["🍍",["A","NA","NAS"]],["🐊",["KRO","KO","DIL"]],
+  ["🍫",["SCHO","KO","LA","DE"]],["🦒",["GI","RAF","FE"]],["📷",["KA","ME","RA"]],
+  ["🥕",["MÖH","RE"]],["🐞",["KÄ","FER"]],["🍐",["BIR","NE"]]
+];
+const DISTRACT = ["BU","KO","LI","ZA","MU","PE","RA","TU","SCHI","NO","FE","LE"];
+
+const WORT1 = [["🐭","MAUS"],["🏠","HAUS"],["⚽","BALL"],["🐶","HUND"],["🌙","MOND"],["🍦","EIS"],["🐟","FISCH"],["👂","OHR"],["⏰","UHR"],["🐮","KUH"],["🥚","EI"],["🐳","WAL"]];
+const WORT2 = [["☀️","SONNE"],["🐱","KATZE"],["🍎","APFEL"],["🐑","SCHAF"],["🚢","SCHIFF"],["⭐","STERN"],["🐴","PFERD"],["🕷️","SPINNE"],["🦓","ZEBRA"],["🍕","PIZZA"],["👑","KRONE"],["🌋","VULKAN"]];
+const WORTALL = [...WORT1, ...WORT2];
+const GKALL = () => [...GK1, ...GK2];
+
+const BLITZ1 = [
+  ["🐭","MAUS",["HAUS","LAUS"]],["🏠","HAUS",["MAUS","HOSE"]],["🌹","ROSE",["DOSE","HOSE"]],
+  ["👃","NASE",["HASE","VASE"]],["🐰","HASE",["NASE","HOSE"]],["🌙","MOND",["MUND","HAND"]],
+  ["🐶","HUND",["HAND","MUND"]],["🍦","EIS",["EI","REIS"]]
+];
+const BLITZ2 = [
+  ["🐟","FISCH",["TISCH","FROSCH"]],["🐱","KATZE",["TATZE","KETTE"]],["☀️","SONNE",["TONNE","KANNE"]],
+  ["🐻","BÄR",["BART","BIRNE"]],["⚽","BALL",["WALD","BELL"]],["🐑","SCHAF",["SCHIFF","SCHARF"]],
+  ["⭐","STERN",["STIRN","STARK"]],["🪑","STUHL",["SCHULE","STAHL"]]
+];
+
+const LUECKE1 = [
+  ["🐰","HASE",1,["A","E","O","U"]],["🌹","ROSE",1,["O","A","U","I"]],["🚗","AUTO",3,["O","A","E","U"]],
+  ["🦔","IGEL",0,["I","E","A","O"]],["🐭","MAUS",1,["A","E","I","O"]],["🐶","HUND",1,["U","O","A","E"]],
+  ["🛋️","SOFA",1,["O","U","A","E"]],["🌙","MOND",1,["O","U","A","I"]]
+];
+const LUECKE2 = [
+  ["🐻","BÄR",1,["Ä","A","E","Ö"]],["🦁","LÖWE",1,["Ö","O","Ü","Ä"]],["🚪","TÜR",1,["Ü","U","Ö","I"]],
+  ["🦶","FUß",2,["ß","S","Z","T"]],["🐑","SCHAF",0,["SCH","ST","SP","CH"]],["⭐","STERN",0,["ST","SCH","SP","T"]],
+  ["🐴","PFERD",0,["PF","F","P","W"]],["🪼","QUALLE",0,["QU","K","G","W"]]
+];
+
+// Wort-Baumeister: ganze Wörter aus Buchstaben legen (Schreiben)
+const BAU1 = [["🐭","MAUS"],["🏠","HAUS"],["🐶","HUND"],["⚽","BALL"],["🚗","AUTO"],["🛋️","SOFA"],["🐰","HASE"],["🦔","IGEL"],["👵","OMA"],["🍦","EIS"]];
+const BAU2 = [["🏫","SCHULE"],["⭐","STERN"],["🐴","PFERD"],["🍌","BANANE"],["🐯","TIGER"],["🤖","ROBOTER"],["🐱","KATZE"],["☀️","SONNE"]];
+const BAULETTERS = "BDFGKLMNPRSTWEIOU";
+
+const SATZ1 = [
+  ["Der Hund bellt.","🐶",["🐱","🐟"]],["Die Sonne scheint.","☀️",["🌙","☁️"]],
+  ["Das Auto fährt.","🚗",["🚢","🚀"]],["Die Katze schläft.","🐱",["🐶","🐭"]],
+  ["Der Fisch schwimmt.","🐟",["🐦","🐰"]],["Die Eule fliegt.","🦉",["🐟","🐌"]],
+  ["Der Affe klettert.","🐒",["🐮","🐧"]],["Oma liest ein Buch.","👵",["👶","🤖"]],
+  ["Der Ball rollt.","⚽",["🎸","🪑"]],["Das Eis ist kalt.","🍦",["🍕","☕"]]
+];
+const QUATSCH = [
+  ["Der Hund bellt laut.",true],["Die Kuh fliegt zum Mond.",false],
+  ["Fische schwimmen im Wasser.",true],["Das Sofa isst eine Banane.",false],
+  ["Im Winter ist es kalt.",true],["Der Käse liest ein Buch.",false],
+  ["Die Sonne ist gelb.",true],["Autos wachsen auf Bäumen.",false],
+  ["Der Pilz fährt Fahrrad.",false],["Vögel bauen Nester.",true]
+];
+
+// ---------- Monster (ein Gegner pro Level, aufsteigend) ----------
+const MONSTER_DE = [
+  ["🐌","Schleim-Schnecke"],["🦇","Flatter-Fledermaus"],["🕷️","Krabbel-Spinne"],["🐍","Zisch-Schlange"],
+  ["🧟","Wackel-Zombie"],["💀","Klapper-Skelett"],["👻","Kicher-Geist"],["🐺","Knurr-Wolf"],
+  ["🧌","Grummel-Troll"],["👾","Pixel-Monster"],["🤖","Rost-Roboter"],["🦂","Stachel-Skorpion"],
+  ["🧛","Zahnlücken-Vampir"],["🦑","Tinten-Krake"],["🧞","Flunker-Dschinn"],["👹","Brüll-Oger"],["🐲","Wörter-Drache"]
+];
+
+// ---------- Level (Deutsch) ----------
+const LEVELS_DE = [
+  {w:"Welt 1 · Buchstaben & Laute", id:"an1", ico:"⛏️", nm:"Anlaut-Mine 1", type:"anlaut", set:["M","A","L","O","S","I","N","E","R","T"]},
+  {w:"Welt 1 · Buchstaben & Laute", id:"gk1", ico:"🔠", nm:"Groß & Klein 1", type:"grossklein", set:GK1},
+  {w:"Welt 1 · Buchstaben & Laute", id:"an2", ico:"⛏️", nm:"Anlaut-Mine 2", type:"anlaut", set:["U","D","H","F","W","G","B","K","Z","P"]},
+  {w:"Welt 1 · Buchstaben & Laute", id:"gk2", ico:"🔡", nm:"Groß & Klein 2", type:"grossklein", set:GK2},
+  {w:"Welt 2 · Königsbuchstaben", id:"an3", ico:"👑", nm:"Königs-Mine", type:"anlaut", set:["Ei","Au","Eu","Sch","St","Sp","Pf","Qu","J","V"]},
+  {w:"Welt 3 · Silben", id:"si1", ico:"🧱", nm:"Silben-Sammler 1", type:"silben", set:SIL1},
+  {w:"Welt 3 · Silben", id:"si2", ico:"🏗️", nm:"Silben-Sammler 2", type:"silben", set:SIL2},
+  {w:"Welt 4 · Wörter lesen", id:"wo1", ico:"🔎", nm:"Wort-Detektiv 1", type:"wortbild", set:WORT1},
+  {w:"Welt 4 · Wörter lesen", id:"wo2", ico:"🕵️", nm:"Wort-Detektiv 2", type:"wortbild", set:WORT2},
+  {w:"Welt 4 · Wörter lesen", id:"bl1", ico:"⚡", nm:"Blitz-Portal 1", type:"blitz", set:BLITZ1},
+  {w:"Welt 4 · Wörter lesen", id:"bl2", ico:"🌀", nm:"Blitz-Portal 2", type:"blitz", set:BLITZ2},
+  {w:"Welt 5 · Schreiben", id:"lu1", ico:"✏️", nm:"Lücken-Schmiede 1", type:"luecke", set:LUECKE1},
+  {w:"Welt 5 · Schreiben", id:"lu2", ico:"⚒️", nm:"Lücken-Schmiede 2", type:"luecke", set:LUECKE2},
+  {w:"Welt 5 · Schreiben", id:"bm1", ico:"🧰", nm:"Wort-Baumeister 1", type:"baumeister", set:BAU1},
+  {w:"Welt 5 · Schreiben", id:"bm2", ico:"🏰", nm:"Wort-Baumeister 2", type:"baumeister", set:BAU2},
+  {w:"Welt 6 · Sätze", id:"sa1", ico:"🌉", nm:"Satz-Brücke", type:"satzbild", set:SATZ1},
+  {w:"Welt 6 · Sätze", id:"sa2", ico:"🤪", nm:"Quatsch-Fabrik", type:"quatsch", set:QUATSCH}
+];
+const ROUNDS = 6;
+
+// ================= MATHE · Klasse 1 (NRW) =================
+// Monster für Mathe (ein Gegner je Level)
+const MONSTER_MA = [
+  ["🔢","Zahlen-Zwerg"],["🧮","Rechen-Ratte"],["⚖️","Waage-Wicht"],
+  ["➕","Plus-Kobold"],["🐛","Zähl-Raupe"],["🎲","Würfel-Wicht"],
+  ["➖","Minus-Molch"],["🦎","Rechen-Echse"],["🔍","Spür-Spinne"],
+  ["🏰","Turm-Troll"],["🗼","Zahlen-Riese"],["✨","Doppel-Geist"],
+  ["🧩","Knobel-Kobold"],["🦉","Sach-Eule"],["🐲","Mathe-Drache"]
+];
+// Welt 1 · Zählen bis 10
+const MZAEHL1 = [["🔵","1"],["🔵🔵","2"],["🔵🔵🔵","3"],["🔵🔵🔵🔵","4"],["🔵🔵🔵🔵🔵","5"]];
+const MNACHBAR = [
+  ["🧮","1 2 3",2,["2","1","3","4"]],["🧮","3 4 5",2,["4","3","5","6"]],
+  ["🧮","5 6 7",2,["6","5","7","8"]],["🧮","6 7 8",2,["7","6","8","9"]],
+  ["🧮","7 8 9",2,["8","7","9","6"]],["🧮","8 9 10",4,["10","9","11","8"]]
+];
+const MVERGLEICH = [
+  ["5 ist größer als 2", true],["3 ist größer als 7", false],
+  ["8 ist größer als 4", true],["2 ist größer als 6", false],
+  ["9 ist größer als 5", true],["4 ist kleiner als 7", true],
+  ["6 ist kleiner als 3", false],["10 ist größer als 8", true]
+];
+// Welt 2 · Plus bis 10
+const MPLUS_PIC = [
+  ["🔵🔵","1 + 1"],["🔵🔵🔵","2 + 1"],["🔵🔵🔵🔵","2 + 2"],
+  ["🔵🔵🔵🔵🔵","3 + 2"],["🔵🔵🔵🔵🔵🔵","4 + 2"]
+];
+const MPLUS_LUE = [
+  ["🎲","2+3=5",4,["5","4","6","3"]],["🎲","4+4=8",4,["8","7","9","6"]],
+  ["🎲","6+3=9",4,["9","8","10","7"]],["🎲","3+4=7",4,["7","6","8","5"]],
+  ["🎲","5+5=10",4,["10","9","11","8"]],["🎲","1+6=7",4,["7","6","8","9"]]
+];
+const MPLUS_QUA = [
+  ["2 + 3 = 5", true],["4 + 1 = 6", false],["3 + 3 = 6", true],["5 + 2 = 8", false],
+  ["1 + 4 = 5", true],["6 + 2 = 9", false],["4 + 4 = 8", true],["2 + 5 = 6", false]
+];
+// Welt 3 · Minus bis 10
+const MMINUS_LUE1 = [
+  ["🎲","7-2=5",4,["5","4","6","3"]],["🎲","9-4=5",4,["5","6","4","3"]],
+  ["🎲","6-3=3",4,["3","2","4","5"]],["🎲","8-5=3",4,["3","4","2","5"]],
+  ["🎲","10-4=6",5,["6","5","7","4"]],["🎲","7-5=2",4,["2","3","1","4"]]
+];
+const MMINUS_LUE2 = [
+  ["🎲","8-3=5",2,["3","2","4","5"]],["🎲","9-4=5",2,["4","5","3","2"]],
+  ["🎲","7-2=5",2,["2","3","1","4"]],["🎲","6-4=2",2,["4","3","5","2"]],
+  ["🎲","10-3=7",3,["3","2","4","5"]],["🎲","8-6=2",2,["6","5","7","4"]]
+];
+const MMINUS_QUA = [
+  ["7 - 3 = 4", true],["9 - 5 = 3", false],["6 - 2 = 4", true],["8 - 4 = 3", false],
+  ["10 - 5 = 5", true],["5 - 1 = 3", false],["9 - 6 = 3", true],["7 - 4 = 2", false]
+];
+// Welt 4 · Rechnen bis 20
+const MTURM_PLUS = [
+  ["🎲","8+5=13",4,["13","12","14","11"]],["🎲","9+7=16",4,["16","15","17","14"]],
+  ["🎲","6+8=14",4,["14","13","15","12"]],["🎲","9+9=18",4,["18","17","19","16"]],
+  ["🎲","7+8=15",4,["15","14","16","13"]],["🎲","10+5=15",5,["15","14","16","13"]]
+];
+const MTURM_MINUS = [
+  ["🎲","15-4=11",5,["11","10","12","13"]],["🎲","18-6=12",5,["12","11","13","14"]],
+  ["🎲","16-3=13",5,["13","12","14","11"]],["🎲","14-5=9",5,["9","8","10","7"]],
+  ["🎲","20-10=10",6,["10","9","11","12"]],["🎲","17-8=9",5,["9","8","10","7"]]
+];
+const MDOPPEL = [
+  ["6 + 6 = 12", true],["7 + 7 = 15", false],["8 + 8 = 16", true],["5 + 5 = 11", false],
+  ["9 + 9 = 18", true],["4 + 4 = 9", false],["10 + 10 = 20", true],["3 + 3 = 5", false]
+];
+// Welt 5 · Knobel-Kammer
+const MZERLEG = [
+  ["🧩","10=6+4",3,["6","5","7","4"]],["🧩","10=7+3",3,["7","8","6","5"]],
+  ["🧩","8=5+3",2,["5","4","6","3"]],["🧩","9=6+3",2,["6","5","7","4"]],
+  ["🧩","7=4+3",2,["4","3","5","6"]],["🧩","10=8+2",3,["8","7","9","6"]]
+];
+const MSACH = [
+  ["Anna hat 2 Äpfel. Sie bekommt 1 dazu. Wie viele Äpfel?","🍎🍎🍎",["🍎🍎","🍎🍎🍎🍎"]],
+  ["Tom hat 4 Bonbons. Er isst 1. Wie viele bleiben?","🍬🍬🍬",["🍬🍬🍬🍬","🍬🍬"]],
+  ["Im Nest sind 3 Eier. 1 kommt dazu. Wie viele Eier?","🥚🥚🥚🥚",["🥚🥚🥚","🥚🥚"]],
+  ["Lisa hat 5 Blumen. Sie verschenkt 2. Wie viele bleiben?","🌸🌸🌸",["🌸🌸","🌸🌸🌸🌸"]],
+  ["2 Vögel sitzen da. 2 fliegen dazu. Wie viele Vögel?","🐦🐦🐦🐦",["🐦🐦🐦","🐦🐦"]],
+  ["Es sind 3 Fische. 2 kommen dazu. Wie viele Fische?","🐟🐟🐟🐟🐟",["🐟🐟🐟🐟","🐟🐟🐟"]]
+];
+const MMIX = [
+  ["🎯","9+8=17",4,["17","16","18","15"]],["🎯","14-6=8",5,["8","7","9","6"]],
+  ["🎯","7+9=16",4,["16","15","17","14"]],["🎯","13-5=8",5,["8","7","9","6"]],
+  ["🎯","6+6=12",4,["12","11","13","10"]],["🎯","18-9=9",5,["9","8","10","7"]]
+];
+const LEVELS_MA = [
+  {w:"Welt 1 · Zählen bis 10", id:"m_z1", ico:"🔵", nm:"Mengen-Mine", type:"wortbild", set:MZAEHL1},
+  {w:"Welt 1 · Zählen bis 10", id:"m_z2", ico:"🧮", nm:"Zahlen-Nachbarn", type:"luecke", set:MNACHBAR},
+  {w:"Welt 1 · Zählen bis 10", id:"m_z3", ico:"⚖️", nm:"Größer & Kleiner", type:"quatsch", set:MVERGLEICH},
+  {w:"Welt 2 · Plus bis 10", id:"m_p1", ico:"➕", nm:"Plus-Portal 1", type:"wortbild", set:MPLUS_PIC},
+  {w:"Welt 2 · Plus bis 10", id:"m_p2", ico:"✏️", nm:"Plus-Portal 2", type:"luecke", set:MPLUS_LUE},
+  {w:"Welt 2 · Plus bis 10", id:"m_p3", ico:"⚡", nm:"Plus-Blitz", type:"quatsch", set:MPLUS_QUA},
+  {w:"Welt 3 · Minus bis 10", id:"m_s1", ico:"➖", nm:"Minus-Mine 1", type:"luecke", set:MMINUS_LUE1},
+  {w:"Welt 3 · Minus bis 10", id:"m_s2", ico:"⛏️", nm:"Minus-Mine 2", type:"luecke", set:MMINUS_LUE2},
+  {w:"Welt 3 · Minus bis 10", id:"m_s3", ico:"🔍", nm:"Minus-Check", type:"quatsch", set:MMINUS_QUA},
+  {w:"Welt 4 · Rechnen bis 20", id:"m_t1", ico:"🏰", nm:"Zahlen-Turm 1", type:"luecke", set:MTURM_PLUS},
+  {w:"Welt 4 · Rechnen bis 20", id:"m_t2", ico:"🗼", nm:"Zahlen-Turm 2", type:"luecke", set:MTURM_MINUS},
+  {w:"Welt 4 · Rechnen bis 20", id:"m_t3", ico:"✨", nm:"Verdoppeln", type:"quatsch", set:MDOPPEL},
+  {w:"Welt 5 · Knobel-Kammer", id:"m_k1", ico:"🧩", nm:"Zahlen-Zerlegen", type:"luecke", set:MZERLEG},
+  {w:"Welt 5 · Knobel-Kammer", id:"m_k2", ico:"📖", nm:"Sachaufgaben", type:"satzbild", set:MSACH},
+  {w:"Welt 5 · Knobel-Kammer", id:"m_k3", ico:"🎯", nm:"Zahlen-Mix", type:"luecke", set:MMIX}
+];
+
+// ================= SACHUNTERRICHT · Klasse 1 (NRW – 5 Bereiche) =================
+const MONSTER_SU = [
+  ["🌱","Sprossen-Kobold"],["🐛","Krabbel-Käfer"],["🍎","Apfel-Wicht"],
+  ["🦔","Stachel-Igel"],["🐿️","Nuss-Dieb"],["🌻","Sonnen-Riese"],
+  ["☁️","Wolken-Schaf"],["🌧️","Regen-Geist"],["🌈","Bunt-Bogen"],
+  ["🚦","Ampel-Wächter"],["🦺","Warnwesten-Wicht"],["♻️","Recycling-Roboter"],
+  ["🌙","Nacht-Schleicher"],["📅","Kalender-Kobold"],["🐲","Wissens-Drache"]
+];
+// Bereich: Natur und Leben (Körper, Sinne, Gesundheit)
+const SU_KOERPER=[
+  ["Womit riechst du?","👃",["👂","👀"]],["Womit hörst du?","👂",["👀","👄"]],
+  ["Womit siehst du?","👀",["👃","🦶"]],["Womit läufst du?","🦶",["✋","👂"]],
+  ["Womit greifst du?","✋",["🦶","👃"]]
+];
+const SU_SINNE=[
+  ["Womit schmeckst du?","👅",["👂","👀"]],["Was gehört zum Sehen?","👁️",["👂","👃"]],
+  ["Was gehört zum Hören?","👂",["👁️","👅"]],["Was gehört zum Riechen?","👃",["✋","👀"]],
+  ["Womit fühlst du, ob etwas weich ist?","✋",["👀","👂"]]
+];
+const SU_GESUND=[
+  ["Zähne putzen ist gesund.",true],["Obst und Gemüse sind gesund.",true],
+  ["Nur Süßigkeiten essen ist gesund.",false],["Genug schlafen tut dem Körper gut.",true],
+  ["Hände waschen schützt vor Keimen.",true],["Den ganzen Tag nichts trinken ist gut.",false],
+  ["Bewegung ist gut für den Körper.",true],["Man muss die Zähne nie putzen.",false]
+];
+// Bereich: Natur und Leben (Tiere & Pflanzen)
+const SU_TIERE=[
+  ["Welches Tier bellt?","🐶",["🐱","🐟"]],["Welches Tier miaut?","🐱",["🐮","🐔"]],
+  ["Welches Tier gibt uns Milch?","🐮",["🐷","🐸"]],["Welches Tier gackert und legt Eier?","🐔",["🐑","🐴"]],
+  ["Welches Tier hüpft und quakt?","🐸",["🐭","🐝"]],["Welches Tier macht Honig?","🐝",["🦋","🐛"]]
+];
+const SU_FUTTER=[
+  ["Was frisst der Hase am liebsten?","🥕",["🍖","🍫"]],["Was frisst die Maus gern?","🧀",["🌿","🍓"]],
+  ["Was frisst der Affe gern?","🍌",["🥩","🍞"]],["Was frisst die Kuh?","🌿",["🍕","🍬"]],
+  ["Was frisst der Bär gern?","🍯",["🥦","🍟"]],["Was sammelt das Eichhörnchen?","🌰",["🍰","🧀"]]
+];
+const SU_PFLANZEN=[
+  ["Pflanzen brauchen Wasser.",true],["Pflanzen brauchen Sonne.",true],
+  ["Eine Blume wächst aus einem Samen.",true],["Pflanzen wachsen ganz ohne alles.",false],
+  ["Ein Baum hat Wurzeln.",true],["Ein Apfel wächst am Baum.",true],
+  ["Blätter sind oft grün.",true],["Kartoffeln wachsen in der Luft.",false]
+];
+// Bereich: Zeit und Kultur / Natur (Jahreszeiten & Wetter)
+const SU_JAHRES=[
+  ["Wann schneit es meistens?","⛄",["🏖️","🍂"]],["Wann blühen viele Blumen?","🌷",["❄️","🍁"]],
+  ["Wann ist es heiß und man badet?","🏖️",["⛄","🌧️"]],["Wann fallen bunte Blätter?","🍂",["🌷","☀️"]],
+  ["Was passt zum Winter?","❄️",["🌻","🏖️"]],["Was passt zum Sommer?","☀️",["⛄","🧤"]]
+];
+const SU_WETTER=[
+  ["Was brauchst du bei Regen?","☔",["🕶️","🧣"]],["Was passt zu einem sonnigen Tag?","☀️",["🌧️","❄️"]],
+  ["Was passt zu Schnee?","❄️",["🏖️","🌈"]],["Was kommt oft nach Regen und Sonne?","🌈",["⛄","🌵"]],
+  ["Was passt zu einem Gewitter?","⚡",["🌸","🍦"]],["Was zeigt starken Wind?","🌬️",["🔥","💧"]]
+];
+const SU_KLEIDUNG=[
+  ["Bei Regen nehme ich einen Schirm.",true],["Im Winter trage ich eine warme Jacke.",true],
+  ["Bei Schnee gehe ich in Badehose raus.",false],["Bei Sonne schützt Sonnencreme.",true],
+  ["Bei Kälte helfen Handschuhe.",true],["Im Sommer trage ich eine dicke Wollmütze.",false]
+];
+// Bereich: Raum, Umwelt und Mobilität (Verkehr & Umwelt)
+const SU_AMPEL=[
+  ["Welche Ampelfarbe heißt: Stehen bleiben?","🔴",["🟢","🟡"]],["Welche Ampelfarbe heißt: Gehen?","🟢",["🔴","🟡"]],
+  ["Womit schützt du deinen Kopf beim Radfahren?","⛑️",["🧢","👒"]],["Wo gehst du sicher über die Straße?","🚸",["🎠","🏖️"]],
+  ["Was macht dich für Autos gut sichtbar?","🦺",["🕶️","🎀"]]
+];
+const SU_VERKEHR=[
+  ["Bei Rot bleibe ich stehen.",true],["Bei Grün darf ich über die Straße gehen.",true],
+  ["Beim Radfahren trage ich einen Helm.",true],["Ich renne ohne zu schauen über die Straße.",false],
+  ["Vor dem Überqueren schaue ich links und rechts.",true],["Im Auto schnalle ich mich an.",true],
+  ["Rote Ampel heißt: schnell rennen.",false],["Ich spiele zwischen fahrenden Autos.",false]
+];
+const SU_UMWELT=[
+  ["Müll gehört in den Mülleimer.",true],["Papier kann man wiederverwenden.",true],
+  ["Ich werfe Müll einfach in den Wald.",false],["Licht ausmachen spart Strom.",true],
+  ["Man sollte Wasser verschwenden.",false],["Bäume sind gut für die Luft.",true],
+  ["Man trennt Müll in verschiedene Tonnen.",true],["Plastik gehört in die Natur.",false]
+];
+// Bereich: Mensch und Gemeinschaft + Zeit und Kultur (Tageszeiten, Gefühle)
+const SU_TAGESZEIT=[
+  ["Wann frühstückst du?","🌅",["🌙","🌆"]],["Wann gehst du schlafen?","🌙",["🌅","☀️"]],
+  ["Wann steht die Sonne am höchsten?","☀️",["🌙","⭐"]],["Was passt zum Abend?","🌆",["🌅","🍳"]],
+  ["Was passt zur Nacht?","⭐",["🌞","🥞"]]
+];
+const SU_WOCHE=[
+  ["Nach Montag kommt Dienstag.",true],["Nach Freitag kommt Samstag.",true],
+  ["Eine Woche hat sieben Tage.",true],["Am Wochenende ist Samstag und Sonntag.",true],
+  ["Nach Sonntag kommt Montag.",true],["Eine Woche hat nur zwei Tage.",false],
+  ["Nach Mittwoch kommt Montag.",false],["Gestern, heute und morgen sind Zeitwörter.",true]
+];
+const SU_GEFUEHLE=[
+  ["Wie sieht jemand aus, der sich freut?","😊",["😢","😠"]],["Wie sieht jemand aus, der weint?","😢",["😄","😴"]],
+  ["Wie sieht jemand aus, der wütend ist?","😠",["😊","😮"]],["Wie sieht jemand aus, der müde ist?","😴",["😃","😡"]],
+  ["Wie sieht jemand aus, der überrascht ist?","😮",["😪","🙂"]],["Wie sieht jemand aus, der etwas toll feiert?","🥳",["😢","😠"]]
+];
+const LEVELS_SU = [
+  {w:"Welt 1 · Mein Körper & Sinne", id:"su_k1", ico:"🧍", nm:"Körperteile", type:"satzbild", set:SU_KOERPER},
+  {w:"Welt 1 · Mein Körper & Sinne", id:"su_k2", ico:"👀", nm:"Die fünf Sinne", type:"satzbild", set:SU_SINNE},
+  {w:"Welt 1 · Mein Körper & Sinne", id:"su_k3", ico:"🪥", nm:"Gesund bleiben", type:"quatsch", set:SU_GESUND},
+  {w:"Welt 2 · Tiere & Pflanzen", id:"su_t1", ico:"🐾", nm:"Tiere erkennen", type:"satzbild", set:SU_TIERE},
+  {w:"Welt 2 · Tiere & Pflanzen", id:"su_t2", ico:"🥕", nm:"Was frisst das Tier?", type:"satzbild", set:SU_FUTTER},
+  {w:"Welt 2 · Tiere & Pflanzen", id:"su_t3", ico:"🌻", nm:"Pflanzen & Wachsen", type:"quatsch", set:SU_PFLANZEN},
+  {w:"Welt 3 · Jahreszeiten & Wetter", id:"su_j1", ico:"🍂", nm:"Jahreszeiten", type:"satzbild", set:SU_JAHRES},
+  {w:"Welt 3 · Jahreszeiten & Wetter", id:"su_j2", ico:"🌦️", nm:"Wetter", type:"satzbild", set:SU_WETTER},
+  {w:"Welt 3 · Jahreszeiten & Wetter", id:"su_j3", ico:"🧥", nm:"Richtig anziehen", type:"quatsch", set:SU_KLEIDUNG},
+  {w:"Welt 4 · Sicher unterwegs", id:"su_v1", ico:"🚦", nm:"Ampel & Straße", type:"satzbild", set:SU_AMPEL},
+  {w:"Welt 4 · Sicher unterwegs", id:"su_v2", ico:"🚸", nm:"Sicher im Verkehr", type:"quatsch", set:SU_VERKEHR},
+  {w:"Welt 4 · Sicher unterwegs", id:"su_v3", ico:"♻️", nm:"Umwelt schützen", type:"quatsch", set:SU_UMWELT},
+  {w:"Welt 5 · Zeit & Zusammenleben", id:"su_z1", ico:"🕐", nm:"Tageszeiten", type:"satzbild", set:SU_TAGESZEIT},
+  {w:"Welt 5 · Zeit & Zusammenleben", id:"su_z2", ico:"📅", nm:"Wochentage", type:"quatsch", set:SU_WOCHE},
+  {w:"Welt 5 · Zeit & Zusammenleben", id:"su_z3", ico:"😊", nm:"Gefühle", type:"satzbild", set:SU_GEFUEHLE}
+];
+
+// ================= MUSIK · Klasse 1 (NRW) =================
+const MONSTER_MU = [
+  ["🎵","Ton-Kobold"],["🎸","Saiten-Geist"],["🥁","Trommel-Troll"],
+  ["🔊","Laut-Riese"],["🔈","Leise-Schleicher"],["🐦","Zwitscher-Vogel"],
+  ["🎤","Mikro-Monster"],["🎶","Melodie-Fee"],["🐲","Rhythmus-Drache"]
+];
+const MU_INST1=[
+  ["Welches Instrument hat Tasten?","🎹",["🥁","🎺"]],["Welches Instrument zupft man?","🎸",["🥁","🎷"]],
+  ["Worauf schlägt man zum Spielen?","🥁",["🎻","🎺"]],["In welches Instrument bläst man?","🎺",["🎹","🥁"]],
+  ["Welches Instrument streicht man mit einem Bogen?","🎻",["🥁","🎹"]],["Welches Instrument schüttelt man?","🪇",["🎹","🎸"]]
+];
+const MU_INST2=[
+  ["Eine Gitarre hat Saiten.",true],["Ein Klavier hat Tasten.",true],
+  ["Eine Trommel bläst man mit dem Mund.",false],["In eine Trompete bläst man hinein.",true],
+  ["Eine Geige spielt man mit einem Bogen.",true],["Eine Flöte schlägt man wie eine Trommel.",false],
+  ["Eine Trommel kann man mit den Händen spielen.",true],["Ein Xylofon schlägt man mit Stäben.",true]
+];
+const MU_INST3=[
+  ["Welches Instrument pustet man und hat Klappen?","🎷",["🥁","🎹"]],["Was verstärkt beim Singen die Stimme?","🎤",["🥁","🎻"]],
+  ["Welches Zeichen steht für Musik?","🎵",["🍎","⚽"]],["Welches Tier singt am Morgen?","🐦",["🐟","🐌"]],
+  ["Worauf spielt man mit zehn Fingern?","🎹",["🥁","🎺"]],["Welches große Instrument hat viele Saiten?","🎻",["🎤","🥁"]]
+];
+const MU_LAUT=[
+  ["Ein Löwe brüllt laut.",true],["Eine Maus piept leise.",true],
+  ["Ein Flüstern ist sehr laut.",false],["Ein Donner ist laut.",true],
+  ["Wenn ein Baby schläft, ist man leise.",true],["Ein Feuerwehrauto ist ganz leise.",false]
+];
+const MU_HOCH=[
+  ["Ein Vöglein zwitschert hoch.",true],["Ein großer Bär brummt tief.",true],
+  ["Piepsen ist ein tiefer Ton.",false],["Eine große Trommel klingt oft tief.",true],
+  ["Eine kleine Glocke klingt hell und hoch.",true],["Ein Brummen ist ein hoher Ton.",false]
+];
+const MU_TEMPO=[
+  ["Ein Rennauto ist schnell.",true],["Eine Schnecke ist sehr schnell.",false],
+  ["Langsame Musik ist gut zum Einschlafen.",true],["Schnelle Musik macht Lust zum Tanzen.",true],
+  ["Ein Faultier bewegt sich blitzschnell.",false],["Man kann schnell und langsam klatschen.",true]
+];
+const MU_LIED=[
+  ["„Alle meine Entchen\“ ist ein Lied.",true],["Beim Singen benutzt man die Stimme.",true],
+  ["Man singt mit den Füßen.",false],["In einem Chor singen viele zusammen.",true],
+  ["Haus und Maus reimen sich.",true],["Hund und Blume reimen sich.",false]
+];
+const MU_MACHEN=[
+  ["Womit singst du?","🎤",["🦶","👀"]],["Womit klatschst du einen Takt?","👏",["👃","👂"]],
+  ["Welches Zeichen sind Töne?","🎶",["🍎","⚽"]],["Womit trommelst du?","🥁",["📖","🧦"]],
+  ["Was passt zu einem Fest mit Musik und Tanz?","🎉",["🛌","🧹"]],["Welches Tier singt schön?","🐦",["🐛","🐟"]]
+];
+const MU_RHYTH=[
+  ["Klatschen macht einen Rhythmus.",true],["Stampfen kann einen Takt machen.",true],
+  ["Ein Rhythmus wiederholt sich.",true],["Man kann zur Musik tanzen.",true],
+  ["Beim Singen muss man immer schreien.",false],["Trommeln kann laut und leise sein.",true]
+];
+const LEVELS_MU = [
+  {w:"Welt 1 · Instrumente", id:"mu_i1", ico:"🎹", nm:"Instrumente 1", type:"satzbild", set:MU_INST1},
+  {w:"Welt 1 · Instrumente", id:"mu_i2", ico:"🎸", nm:"Instrumenten-Wissen", type:"quatsch", set:MU_INST2},
+  {w:"Welt 1 · Instrumente", id:"mu_i3", ico:"🎻", nm:"Instrumente 2", type:"satzbild", set:MU_INST3},
+  {w:"Welt 2 · Laut, Hoch & Schnell", id:"mu_c1", ico:"🔊", nm:"Laut & Leise", type:"quatsch", set:MU_LAUT},
+  {w:"Welt 2 · Laut, Hoch & Schnell", id:"mu_c2", ico:"🎶", nm:"Hoch & Tief", type:"quatsch", set:MU_HOCH},
+  {w:"Welt 2 · Laut, Hoch & Schnell", id:"mu_c3", ico:"⚡", nm:"Schnell & Langsam", type:"quatsch", set:MU_TEMPO},
+  {w:"Welt 3 · Singen & Rhythmus", id:"mu_s1", ico:"🎤", nm:"Lieder & Reime", type:"quatsch", set:MU_LIED},
+  {w:"Welt 3 · Singen & Rhythmus", id:"mu_s2", ico:"🥁", nm:"Musik machen", type:"satzbild", set:MU_MACHEN},
+  {w:"Welt 3 · Singen & Rhythmus", id:"mu_s3", ico:"👏", nm:"Rhythmus", type:"quatsch", set:MU_RHYTH}
+];
+
+// ================= KLASSE 2 · Deutsch (NRW) =================
+const MONSTER_DE2 = [
+  ["✏️","Krakel-Kobold"],["📚","Bücher-Wurm"],["🔤","Buchstaben-Bandit"],["🐝","Rechtschreib-Biene"],
+  ["🧱","Silben-Golem"],["📝","Schreib-Schreck"],["🔡","Wortarten-Wicht"],["❓","Frage-Geist"],
+  ["❗","Ausruf-Oger"],["📖","Lese-Lindwurm"],["🔠","ABC-Aufwiegler"],["🖋️","Tinten-Troll"],["🐲","Sprach-Drache"]
+];
+const D2_IE=[
+  ["🐝","BIENE",1,["IE","EI","I","E"]],["🌾","WIESE",1,["IE","EI","E","I"]],["🐐","ZIEGE",1,["IE","EI","I","E"]],
+  ["🪞","SPIEGEL",2,["IE","EI","I","E"]],["✉️","BRIEF",2,["IE","EI","I","E"]],["4️⃣","VIER",1,["IE","EI","I","E"]]
+];
+const D2_CK=[
+  ["🧥","JACKE",2,["CK","K","KK","G"]],["🔔","GLOCKE",3,["CK","K","G","KK"]],["🌉","BRÜCKE",3,["CK","K","G","KK"]],
+  ["🍬","ZUCKER",2,["CK","K","G","KK"]],["🪨","STOCK",3,["CK","K","G","KK"]]
+];
+const D2_DOP=[
+  ["☀️","SONNE",2,["NN","N","M","MM"]],["🎀","PUPPE",2,["PP","P","B","BB"]],["🧵","WOLLE",2,["LL","L","R","RR"]],
+  ["🛼","ROLLER",2,["LL","L","R","RR"]],["👩","MUTTER",2,["TT","T","D","DD"]],["⚽","BALL",2,["LL","L","R","RR"]]
+];
+const D2_SPST=[
+  ["🕷️","SPINNE",0,["SP","ST","S","SCH"]],["⭐","STERN",0,["ST","SP","S","SCH"]],["🪑","STUHL",0,["ST","SP","S","SCH"]],
+  ["🥾","STIEFEL",0,["ST","SP","S","SCH"]],["🏀","SPORT",0,["SP","ST","S","SCH"]],["🧊","STEIN",0,["ST","SP","S","SCH"]]
+];
+const D2_UML=[
+  ["🐻","BÄR",1,["Ä","A","E","Ö"]],["🦁","LÖWE",1,["Ö","O","Ü","Ä"]],["🚪","TÜR",1,["Ü","U","Ö","I"]],
+  ["🧀","KÄSE",1,["Ä","A","E","Ö"]],["🐦","VÖGEL",1,["Ö","O","Ü","Ä"]],["🗑️","MÜLL",1,["Ü","U","Ö","I"]]
+];
+const D2_BAU=[
+  ["🌸","BLUME"],["🍎","APFEL"],["🏫","SCHULE"],["🐯","TIGER"],["🍌","BANANE"],["☁️","WOLKE"],["🌳","GARTEN"],["🐘","ELEFANT"]
+];
+const D2_NOMEN=[
+  ["Nomen (Namenwörter) schreibt man groß.",true],["Am Satzanfang schreibt man groß.",true],
+  ["„hund“ schreibt man immer klein.",false],["Namen von Menschen schreibt man groß.",true],
+  ["Verben (Tunwörter) sind zum Beispiel laufen und springen.",true],["„Tisch“ ist ein Nomen und wird großgeschrieben.",true],
+  ["Man schreibt jedes Wort im Satz groß.",false],["„Auto“, „Baum“ und „Katze“ sind Nomen.",true]
+];
+const D2_VERBEN=[
+  ["Welches Bild passt zu „schlafen“?","😴",["🏃","🍽️"]],["Welches Bild passt zu „essen“?","🍽️",["😴","🏊"]],
+  ["Welches Bild passt zu „schwimmen“?","🏊",["🛌","📖"]],["Welches Bild passt zu „lesen“?","📖",["🏃","🍽️"]],
+  ["Welches Bild passt zu „laufen“?","🏃",["😴","📖"]],["Welches Bild passt zu „singen“?","🎤",["😴","🏊"]]
+];
+const D2_GEGEN=[
+  ["Das Gegenteil von groß ist klein.",true],["Das Gegenteil von heiß ist kalt.",true],
+  ["Das Gegenteil von hell ist dunkel.",true],["Das Gegenteil von schnell ist langsam.",true],
+  ["Das Gegenteil von alt ist nass.",false],["Das Gegenteil von auf ist zu.",true],
+  ["Das Gegenteil von laut ist leise.",true],["Das Gegenteil von voll ist schön.",false]
+];
+const D2_SATZZ=[
+  ["Ein Aussagesatz endet mit einem Punkt.",true],["Eine Frage endet mit einem Fragezeichen.",true],
+  ["„Wie heißt du“ endet mit einem Punkt.",false],["Ein Ausruf kann mit ! enden.",true],
+  ["Am Satzende steht ein Satzzeichen.",true],["Jeder Satz beginnt mit einem kleinen Buchstaben.",false],
+  ["Nach „Wo wohnst du“ kommt ein Fragezeichen.",true],["Nach einem Aussagesatz steht ein Punkt.",true]
+];
+const D2_LESEN1=[
+  ["Der Hund vergräbt seinen Knochen im Garten.","🦴",["🍎","⚽"]],["Die Sonne geht am Morgen auf.","🌅",["🌙","❄️"]],
+  ["Im Herbst fallen die Blätter von den Bäumen.","🍂",["🌷","🏖️"]],["Die Biene sammelt Nektar aus der Blume.","🌸",["🐟","🚗"]],
+  ["Der Feuerwehrmann löscht das Feuer mit Wasser.","🚒",["🚌","🚲"]],["Nachts sieht man am Himmel die Sterne.","⭐",["☀️","🌈"]]
+];
+const D2_LESEN2=[
+  ["Ein Fisch kann im Wasser atmen.",true],["Ein Vogel hat Federn und kann fliegen.",true],
+  ["Ein Auto braucht Futter zum Fahren.",false],["Im Winter ist es meistens kalt.",true],
+  ["Ein Baum kann laufen.",false],["Aus einem Ei kann ein Küken schlüpfen.",true],
+  ["Die Schule ist ein Ort zum Lernen.",true],["Ein Stein kann sprechen.",false]
+];
+const D2_ABC=[
+  ["Das Alphabet beginnt mit A.",true],["Nach A kommt B.",true],["Das Alphabet endet mit Z.",true],
+  ["Nach M kommt N.",true],["Im Wörterbuch stehen Wörter nach dem ABC geordnet.",true],
+  ["Nach B kommt gleich D.",false],["Vor B kommt A.",true],["Das ABC hat nur fünf Buchstaben.",false]
+];
+const LEVELS_DE2=[
+  {w:"Welt 1 · Richtig schreiben 1", id:"d2_ie", ico:"🐝", nm:"ie-Wörter", type:"luecke", set:D2_IE},
+  {w:"Welt 1 · Richtig schreiben 1", id:"d2_ck", ico:"🔔", nm:"ck oder k?", type:"luecke", set:D2_CK},
+  {w:"Welt 1 · Richtig schreiben 1", id:"d2_dop", ico:"🎀", nm:"Doppelte Mitlaute", type:"luecke", set:D2_DOP},
+  {w:"Welt 2 · Richtig schreiben 2", id:"d2_spst", ico:"⭐", nm:"sp und st", type:"luecke", set:D2_SPST},
+  {w:"Welt 2 · Richtig schreiben 2", id:"d2_uml", ico:"🐻", nm:"Umlaute ä ö ü", type:"luecke", set:D2_UML},
+  {w:"Welt 2 · Richtig schreiben 2", id:"d2_bau", ico:"🧰", nm:"Wörter schreiben", type:"baumeister", set:D2_BAU},
+  {w:"Welt 3 · Wörter & Wortarten", id:"d2_nomen", ico:"🔡", nm:"Nomen & Groß/Klein", type:"quatsch", set:D2_NOMEN},
+  {w:"Welt 3 · Wörter & Wortarten", id:"d2_verben", ico:"🏃", nm:"Tunwörter (Verben)", type:"satzbild", set:D2_VERBEN},
+  {w:"Welt 3 · Wörter & Wortarten", id:"d2_gegen", ico:"↔️", nm:"Gegenteile", type:"quatsch", set:D2_GEGEN},
+  {w:"Welt 4 · Sätze & Lesen", id:"d2_satzz", ico:"❓", nm:"Satzzeichen", type:"quatsch", set:D2_SATZZ},
+  {w:"Welt 4 · Sätze & Lesen", id:"d2_lesen1", ico:"🔎", nm:"Lesen: Was passt?", type:"satzbild", set:D2_LESEN1},
+  {w:"Welt 4 · Sätze & Lesen", id:"d2_lesen2", ico:"📖", nm:"Lesen: Stimmt das?", type:"quatsch", set:D2_LESEN2},
+  {w:"Welt 4 · Sätze & Lesen", id:"d2_abc", ico:"🔠", nm:"Das ABC", type:"quatsch", set:D2_ABC}
+];
+
+// ================= KLASSE 2 · Mathe (NRW – Zahlenraum 100, 1×1) =================
+const MONSTER_MA2=[
+  ["💯","Hunderter-Hüne"],["🔟","Zehner-Zwerg"],["➕","Summen-Schlingel"],["➖","Minus-Molch"],
+  ["✖️","Mal-Magier"],["✋","Fünfer-Fuchs"],["🔢","Zahlen-Ninja"],["💶","Euro-Eule"],
+  ["🕐","Uhren-Ungeheuer"],["🧮","Rechen-Ratte"],["🍎","Sach-Sphinx"],["🐉","Mathe-Drache"]
+];
+const M2_NACHBAR=[
+  ["🔢","48 49 50",3,["49","48","50","51"]],["🔢","69 70 71",3,["70","69","71","60"]],["🔢","89 90 91",3,["90","89","91","80"]],
+  ["🔢","20 30 40",3,["30","20","40","35"]],["🔢","25 26 27",3,["26","25","27","28"]],["🔢","98 99 100",3,["99","98","100","89"]]
+];
+const M2_ZE=[
+  ["Die Zahl 34 hat 3 Zehner und 4 Einer.",true],["Die Zahl 50 hat 5 Zehner.",true],
+  ["Die Zahl 7 ist größer als 70.",false],["100 ist mehr als 99.",true],
+  ["Die Zahl 61 kommt vor 62.",true],["20 ist kleiner als 12.",false],
+  ["Die Zahl 45 liegt zwischen 40 und 50.",true],["Die Zahl 88 hat 8 Zehner und 8 Einer.",true]
+];
+const M2_PLUS=[
+  ["🎲","40+20=60",6,["60","50","70","80"]],["🎲","30+50=80",6,["80","70","90","60"]],["🎲","20+30=50",6,["50","40","60","70"]],
+  ["🎲","60+20=80",6,["80","70","90","60"]],["🎲","50+50=100",6,["100","90","110","80"]],["🎲","10+40=50",6,["50","40","60","30"]]
+];
+const M2_MINUS=[
+  ["🎲","70-20=50",6,["50","40","60","30"]],["🎲","90-40=50",6,["50","60","40","30"]],["🎲","80-30=50",6,["50","40","60","70"]],
+  ["🎲","60-20=40",6,["40","30","50","20"]],["🎲","100-50=50",7,["50","40","60","55"]],["🎲","50-10=40",6,["40","30","50","20"]]
+];
+const M2_PMUE=[
+  ["47 + 5 = 52",true],["38 + 6 = 45",false],["63 - 8 = 55",true],["72 - 9 = 61",false],
+  ["25 + 25 = 50",true],["44 + 10 = 54",true],["81 - 20 = 61",true],["56 + 7 = 62",false]
+];
+const M2_1X2=[
+  ["🎲","2·3=6",4,["6","5","8","4"]],["🎲","2·5=10",4,["10","8","12","9"]],["🎲","2·4=8",4,["8","6","10","7"]],
+  ["🎲","2·2=4",4,["4","2","6","3"]],["🎲","2·6=12",4,["12","10","14","11"]],["🎲","2·10=20",5,["20","18","22","16"]]
+];
+const M2_1X5=[
+  ["🎲","5·2=10",4,["10","8","12","9"]],["🎲","5·3=15",4,["15","10","20","14"]],["🎲","5·4=20",4,["20","15","25","18"]],
+  ["🎲","5·5=25",4,["25","20","30","24"]],["🎲","5·6=30",4,["30","25","35","28"]],["🎲","5·10=50",5,["50","45","55","40"]]
+];
+const M2_1X10=[
+  ["2 · 5 = 10",true],["10 · 3 = 30",true],["5 · 4 = 20",true],["2 · 6 = 13",false],
+  ["10 · 10 = 100",true],["5 · 3 = 20",false],["2 · 8 = 16",true],["10 · 7 = 70",true]
+];
+const M2_GELD=[
+  ["1 Euro sind 100 Cent.",true],["2 Euro sind mehr als 1 Euro.",true],["50 Cent sind mehr als 1 Euro.",false],
+  ["Für 1 Euro bekommt man zwei 50-Cent-Stücke.",true],["5 Euro sind weniger als 2 Euro.",false],
+  ["Ein 2-Euro-Stück ist Geld.",true],["10 Cent + 10 Cent = 20 Cent.",true],["1 Euro + 1 Euro = 3 Euro.",false]
+];
+const M2_UHR=[
+  ["Welche Uhr zeigt 3 Uhr?","🕒",["🕕","🕘"]],["Welche Uhr zeigt 6 Uhr?","🕕",["🕒","🕛"]],["Welche Uhr zeigt 12 Uhr?","🕛",["🕕","🕘"]],
+  ["Welche Uhr zeigt 9 Uhr?","🕘",["🕒","🕕"]],["Welche Uhr zeigt 1 Uhr?","🕐",["🕔","🕗"]],["Welche Uhr zeigt halb 8?","🕢",["🕖","🕗"]]
+];
+const M2_SACH=[
+  ["Tom hat 2 Bonbons, er bekommt 2 dazu. Wie viele?","🍬🍬🍬🍬",["🍬🍬🍬","🍬🍬🍬🍬🍬"]],
+  ["5 Vögel sitzen, 2 fliegen weg. Wie viele bleiben?","🐦🐦🐦",["🐦🐦","🐦🐦🐦🐦"]],
+  ["3 Kinder, jedes hat 2 Hände. Wie viele Hände?","✋✋✋✋✋✋",["✋✋✋✋","✋✋✋✋✋"]],
+  ["6 Kekse, 3 werden gegessen. Wie viele bleiben?","🍪🍪🍪",["🍪🍪","🍪🍪🍪🍪"]],
+  ["4 Blumen und 1 Blume dazu. Wie viele?","🌸🌸🌸🌸🌸",["🌸🌸🌸🌸","🌸🌸🌸"]],
+  ["2 Teller mit je 3 Keksen. Wie viele Kekse?","🍪🍪🍪🍪🍪🍪",["🍪🍪🍪","🍪🍪🍪🍪🍪"]]
+];
+const M2_DOP=[
+  ["Das Doppelte von 5 ist 10.",true],["Das Doppelte von 10 ist 20.",true],["Die Hälfte von 8 ist 4.",true],
+  ["Das Doppelte von 6 ist 11.",false],["Die Hälfte von 10 ist 5.",true],["Die Hälfte von 6 ist 4.",false],
+  ["Das Doppelte von 20 ist 40.",true],["Die Hälfte von 20 ist 10.",true]
+];
+const LEVELS_MA2=[
+  {w:"Welt 1 · Zahlen bis 100", id:"m2_z1", ico:"🔢", nm:"Zahlen-Nachbarn", type:"luecke", set:M2_NACHBAR},
+  {w:"Welt 1 · Zahlen bis 100", id:"m2_z2", ico:"🔟", nm:"Zehner & Einer", type:"quatsch", set:M2_ZE},
+  {w:"Welt 2 · Plus & Minus bis 100", id:"m2_p1", ico:"➕", nm:"Plus (glatt)", type:"luecke", set:M2_PLUS},
+  {w:"Welt 2 · Plus & Minus bis 100", id:"m2_m1", ico:"➖", nm:"Minus (glatt)", type:"luecke", set:M2_MINUS},
+  {w:"Welt 2 · Plus & Minus bis 100", id:"m2_pm", ico:"🎯", nm:"Mit Übergang", type:"quatsch", set:M2_PMUE},
+  {w:"Welt 3 · Einmaleins", id:"m2_r2", ico:"2️⃣", nm:"2er-Reihe", type:"luecke", set:M2_1X2},
+  {w:"Welt 3 · Einmaleins", id:"m2_r5", ico:"5️⃣", nm:"5er-Reihe", type:"luecke", set:M2_1X5},
+  {w:"Welt 3 · Einmaleins", id:"m2_r10", ico:"🔟", nm:"1×1-Check", type:"quatsch", set:M2_1X10},
+  {w:"Welt 4 · Geld, Uhr & Sachrechnen", id:"m2_geld", ico:"💶", nm:"Geld (€ & ct)", type:"quatsch", set:M2_GELD},
+  {w:"Welt 4 · Geld, Uhr & Sachrechnen", id:"m2_uhr", ico:"🕐", nm:"Die Uhr", type:"satzbild", set:M2_UHR},
+  {w:"Welt 4 · Geld, Uhr & Sachrechnen", id:"m2_sach", ico:"📖", nm:"Sachaufgaben", type:"satzbild", set:M2_SACH},
+  {w:"Welt 4 · Geld, Uhr & Sachrechnen", id:"m2_dop", ico:"✨", nm:"Verdoppeln & Halbieren", type:"quatsch", set:M2_DOP}
+];
+
+// ================= KLASSE 2 · Sachunterricht (NRW – 5 Bereiche) =================
+const MONSTER_SU2=[
+  ["🦊","Wald-Wichtel"],["🐝","Summ-Sammler"],["🦔","Futter-Fresser"],["🌳","Baum-Riese"],["🥕","Garten-Gnom"],
+  ["🌦️","Wetter-Hexe"],["💧","Tropfen-Troll"],["🧲","Magnet-Monster"],["⚓","Sink-Schreck"],["🚲","Verkehrs-Vogel"],
+  ["🧭","Kompass-Kobold"],["🚒","Feuer-Fänger"],["🥗","Vitamin-Vieh"],["🦷","Zahn-Zombie"],["📅","Kalender-Drache"]
+];
+const S2_LEBEN=[
+  ["Welches Tier lebt im Wasser?","🐟",["🦊","🐔"]],["Welches Tier lebt im Wald?","🦊",["🐠","🐘"]],
+  ["Welches Tier lebt auf dem Bauernhof?","🐄",["🦁","🐊"]],["Welches Tier lebt in der Wüste?","🐫",["🐧","🐻‍❄️"]],
+  ["Welches Tier lebt am kalten Nordpol?","🐧",["🦒","🐪"]],["Welches Tier lebt auf der Wiese?","🐝",["🦈","🐊"]]
+];
+const S2_INSEKT=[
+  ["Eine Biene hat sechs Beine.",true],["Ein Marienkäfer ist ein Insekt.",true],["Eine Spinne hat acht Beine.",true],
+  ["Ein Schmetterling war zuerst eine Raupe.",true],["Eine Ameise ist so groß wie ein Hund.",false],
+  ["Bienen machen Honig.",true],["Ein Regenwurm hat Flügel.",false],["Insekten haben sechs Beine.",true]
+];
+const S2_FUTTER=[
+  ["Was frisst der Igel gern?","🐛",["🍫","🍕"]],["Was frisst das Pferd?","🌾",["🍖","🍔"]],
+  ["Was frisst der Fuchs?","🐔",["🥦","🍰"]],["Was frisst der Panda am liebsten?","🎋",["🍖","🧀"]],
+  ["Was frisst die Raupe?","🍃",["🍖","🍟"]],["Was frisst der Storch gern?","🐸",["🌰","🍎"]]
+];
+const S2_BAUM=[
+  ["Ein Baum hat Wurzeln, Stamm und Krone.",true],["Blätter brauchen Licht.",true],["Ein Apfelbaum trägt Äpfel.",true],
+  ["Bäume wachsen im Winter am schnellsten.",false],["Aus einem Samen kann eine Pflanze wachsen.",true],
+  ["Tannen bleiben im Winter grün.",true],["Blumen brauchen kein Wasser.",false],["Getreide wächst auf dem Feld.",true]
+];
+const S2_OBST=[
+  ["Welches ist ein Gemüse?","🥕",["🍎","🍓"]],["Welches ist ein Obst?","🍎",["🥕","🥦"]],
+  ["Was wächst am Baum?","🍒",["🥔","🥕"]],["Was wächst unter der Erde?","🥔",["🍒","🍓"]],
+  ["Welches ist eine Frucht?","🍓",["🥦","🧅"]],["Welches Gemüse ist orange?","🥕",["🥦","🍆"]]
+];
+const S2_WETTER=[
+  ["Im Sommer ist es meistens warm.",true],["Im Winter kann es schneien.",true],["Ein Jahr hat vier Jahreszeiten.",true],
+  ["Im Frühling blühen viele Pflanzen.",true],["Im Herbst werden die Tage länger.",false],
+  ["Ein Regenbogen entsteht bei Sonne und Regen.",true],["Ein Thermometer misst die Temperatur.",true],["Im Winter ist es meistens sehr heiß.",false]
+];
+const S2_WASSER=[
+  ["Wasser wird bei Kälte zu Eis.",true],["Eis ist gefrorenes Wasser.",true],["Wasserdampf entsteht, wenn Wasser kocht.",true],
+  ["Wasser fließt bergauf.",false],["Aus Wolken kann Regen fallen.",true],["Schnee ist heiß.",false],
+  ["Pflanzen, Tiere und Menschen brauchen Wasser.",true],["Man kann Wasser trinken.",true]
+];
+const S2_MAT=[
+  ["Holz kommt vom Baum.",true],["Glas kann zerbrechen.",true],["Papier wird aus Holz gemacht.",true],
+  ["Ein Stein ist weich wie Watte.",false],["Metall ist hart.",true],["Wolle kommt vom Schaf.",true],
+  ["Plastik wächst auf Bäumen.",false],["Aus Ton kann man Töpfe machen.",true]
+];
+const S2_MAGNET=[
+  ["Ein Magnet zieht Eisen an.",true],["Ein Korken schwimmt auf Wasser.",true],["Ein Stein sinkt im Wasser.",true],
+  ["Ein Magnet zieht Papier an.",false],["Holz schwimmt meistens.",true],["Eine Büroklammer aus Eisen haftet am Magneten.",true],
+  ["Alles schwimmt im Wasser.",false],["Ein schweres Schiff aus Metall kann trotzdem schwimmen.",true]
+];
+const S2_VERKEHR=[
+  ["Beim Radfahren trägt man einen Helm.",true],["Ein Fahrrad braucht Licht, wenn es dunkel ist.",true],
+  ["Rote Ampel heißt: stehen bleiben.",true],["Ein Zebrastreifen ist zum sicheren Überqueren.",true],
+  ["Beim Abbiegen gibt man mit dem Arm ein Zeichen.",true],["Auf dem Schulweg rennt man blind über die Straße.",false],
+  ["Eine Fahrradklingel warnt andere.",true],["Grün an der Ampel heißt: gehen.",true]
+];
+const S2_KOMPASS=[
+  ["Die Sonne geht im Osten auf.",true],["Die Sonne geht im Westen unter.",true],
+  ["Norden, Süden, Osten und Westen sind Himmelsrichtungen.",true],["Ein Kompass zeigt die Richtung.",true],
+  ["Auf einer Karte ist oben meistens Norden.",true],["Die Sonne geht im Norden auf.",false],
+  ["Eine Karte hilft, den Weg zu finden.",true],["Es gibt nur zwei Himmelsrichtungen.",false]
+];
+const S2_FEUER=[
+  ["Die Feuerwehr hat die Nummer 112.",true],["Mit Feuer spielt man nicht.",true],["Wasser kann Feuer löschen.",true],
+  ["Ein Rauchmelder warnt bei Rauch.",true],["Streichhölzer sind ein Spielzeug für Kinder.",false],
+  ["Bei Gefahr ruft man um Hilfe.",true],["Feuer ist immer ganz ungefährlich.",false],["Ein Feuer braucht Luft zum Brennen.",true]
+];
+const S2_ERNAEHR=[
+  ["Was ist der beste Durstlöscher?","💧",["🥤","🍭"]],["Was ist gesundes Essen?","🥗",["🍟","🍰"]],
+  ["Was sollte man nur selten essen?","🍭",["🍎","🥕"]],["Was gehört zu einem gesunden Frühstück?","🍎",["🍫","🍩"]],
+  ["Welches ist Obst?","🍌",["🍔","🍟"]],["Welches ist ein gesundes Getränk?","🥛",["🥤","🧃"]]
+];
+const S2_KOERPER=[
+  ["Man putzt die Zähne zweimal am Tag.",true],["Zu viel Zucker ist schlecht für die Zähne.",true],
+  ["Der Körper braucht Schlaf.",true],["Bewegung hält gesund.",true],["Man muss nie die Hände waschen.",false],
+  ["Das Herz pumpt Blut durch den Körper.",true],["Wir atmen mit der Lunge.",true],["Milchzähne bleiben für immer.",false]
+];
+const S2_KALENDER=[
+  ["Ein Jahr hat zwölf Monate.",true],["Der erste Monat im Jahr ist der Januar.",true],["Nach dem Frühling kommt der Sommer.",true],
+  ["Ein Jahr hat sieben Monate.",false],["Der Dezember ist ein Wintermonat.",true],["Eine Woche hat sieben Tage.",true],
+  ["Nach dem Dezember kommt wieder der Januar.",true],["Der Sommer ist im Januar.",false]
+];
+const LEVELS_SU2=[
+  {w:"Welt 1 · Tiere & Lebensräume", id:"su2_t1", ico:"🦊", nm:"Wo lebt das Tier?", type:"satzbild", set:S2_LEBEN},
+  {w:"Welt 1 · Tiere & Lebensräume", id:"su2_t2", ico:"🐝", nm:"Insekten & Kleintiere", type:"quatsch", set:S2_INSEKT},
+  {w:"Welt 1 · Tiere & Lebensräume", id:"su2_t3", ico:"🦔", nm:"Was frisst das Tier?", type:"satzbild", set:S2_FUTTER},
+  {w:"Welt 2 · Pflanzen & Wetter", id:"su2_p1", ico:"🌳", nm:"Baum & Pflanzen", type:"quatsch", set:S2_BAUM},
+  {w:"Welt 2 · Pflanzen & Wetter", id:"su2_p2", ico:"🥕", nm:"Obst & Gemüse", type:"satzbild", set:S2_OBST},
+  {w:"Welt 2 · Pflanzen & Wetter", id:"su2_w1", ico:"🌦️", nm:"Wetter & Jahreszeiten", type:"quatsch", set:S2_WETTER},
+  {w:"Welt 3 · Wasser, Material & Technik", id:"su2_wa", ico:"💧", nm:"Wasser & Zustände", type:"quatsch", set:S2_WASSER},
+  {w:"Welt 3 · Wasser, Material & Technik", id:"su2_ma", ico:"🧱", nm:"Materialien", type:"quatsch", set:S2_MAT},
+  {w:"Welt 3 · Wasser, Material & Technik", id:"su2_mag", ico:"🧲", nm:"Magnet · schwimmt/sinkt", type:"quatsch", set:S2_MAGNET},
+  {w:"Welt 4 · Verkehr & Sicherheit", id:"su2_v1", ico:"🚲", nm:"Fahrrad & Verkehr", type:"quatsch", set:S2_VERKEHR},
+  {w:"Welt 4 · Verkehr & Sicherheit", id:"su2_v2", ico:"🧭", nm:"Himmelsrichtungen", type:"quatsch", set:S2_KOMPASS},
+  {w:"Welt 4 · Verkehr & Sicherheit", id:"su2_v3", ico:"🚒", nm:"Feuer & Sicherheit", type:"quatsch", set:S2_FEUER},
+  {w:"Welt 5 · Körper, Ernährung & Zeit", id:"su2_k1", ico:"🥗", nm:"Gesunde Ernährung", type:"satzbild", set:S2_ERNAEHR},
+  {w:"Welt 5 · Körper, Ernährung & Zeit", id:"su2_k2", ico:"🦷", nm:"Körper & Zähne", type:"quatsch", set:S2_KOERPER},
+  {w:"Welt 5 · Körper, Ernährung & Zeit", id:"su2_z1", ico:"📅", nm:"Kalender & Monate", type:"quatsch", set:S2_KALENDER}
+];
+
+// ================= KLASSE 2 · Musik (NRW) =================
+const MONSTER_MU2=[
+  ["🎻","Streich-Schlawiner"],["🎺","Bläser-Boss"],["🔊","Dynamik-Dämon"],["🎶","Tonhöhen-Troll"],["⏱️","Tempo-Teufel"],
+  ["🎼","Noten-Nixe"],["🎤","Sänger-Sirene"],["🥁","Takt-Tyrann"],["🐲","Rhythmus-Drache"]
+];
+const U2_FAM=[
+  ["Welches ist ein Streichinstrument?","🎻",["🥁","🎺"]],["Welches ist ein Blasinstrument?","🎺",["🎻","🥁"]],
+  ["Welches ist ein Schlaginstrument?","🥁",["🎻","🎹"]],["Welches ist ein Tasteninstrument?","🎹",["🥁","🎸"]],
+  ["Welches Instrument zupft man?","🎸",["🎺","🥁"]],["Welches Instrument bläst man mit Klappen?","🎷",["🎻","🥁"]]
+];
+const U2_WISSEN=[
+  ["Eine Geige gehört zu den Streichinstrumenten.",true],["Eine Trompete ist ein Blasinstrument.",true],
+  ["Ein Schlagzeug schlägt man.",true],["Ein Klavier hat viele Tasten.",true],["Eine Flöte spielt man mit einem Bogen.",false],
+  ["Eine Harfe hat Saiten.",true],["Ein Xylofon gehört zu den Blasinstrumenten.",false],["Ein Orchester besteht aus vielen Instrumenten.",true]
+];
+const U2_DYN=[
+  ["Laut bedeutet, dass Musik kräftig klingt.",true],["Leise bedeutet ganz sanft.",true],
+  ["Ein Schlaflied singt man meistens leise.",true],["Ein Marsch ist oft kräftig und laut.",true],
+  ["Leise und laut klingen genau gleich.",false],["Man kann Musik lauter und leiser machen.",true],
+  ["Ein Flüstern ist laut.",false],["Bei einem Konzert kann Musik sehr laut sein.",true]
+];
+const U2_HOCH=[
+  ["Eine kleine Flöte klingt hoch.",true],["Ein Kontrabass klingt tief.",true],["Vogelgezwitscher klingt hoch.",true],
+  ["Ein Löwenbrüllen klingt tief.",true],["Hohe und tiefe Töne sind gleich.",false],["Eine kleine Glocke klingt hoch.",true],
+  ["Ein tiefer Ton brummt.",true],["Ein Piepsen ist ein tiefer Ton.",false]
+];
+const U2_TEMPO=[
+  ["Schnelle Musik nennt man auch flott.",true],["Langsame Musik ist gut zum Träumen.",true],
+  ["Ein Wettrennen passt zu schneller Musik.",true],["Ein Wiegenlied ist meist langsam.",true],
+  ["Tempo bedeutet, wie schnell die Musik ist.",true],["Schnell und langsam sind dasselbe.",false],
+  ["Man kann das Tempo wechseln.",true],["Eine Schnecke passt zu schneller Musik.",false]
+];
+const U2_NOTEN=[
+  ["Noten zeigen, welche Töne man spielt.",true],["Eine Pause bedeutet: kurz nicht spielen.",true],
+  ["Noten schreibt man in ein Notensystem mit Linien.",true],["Ein Notenschlüssel steht am Anfang.",true],
+  ["Noten sind zum Essen da.",false],["Es gibt lange und kurze Noten.",true],
+  ["Ein Notensystem hat fünf Linien.",true],["Musik kann man aufschreiben.",true]
+];
+const U2_SINGEN=[
+  ["Beim Singen benutzt man die Stimme.",true],["In einem Chor singen viele zusammen.",true],
+  ["„Bruder Jakob“ ist ein Lied.",true],["Man kann ein Lied im Kanon singen.",true],
+  ["Ein Reim ist zum Beispiel: Katze – Tatze.",true],["Beim Singen muss man immer schreien.",false],
+  ["Ein Solo singt eine Person allein.",true],["Man kann hoch und tief singen.",true]
+];
+const U2_MACHEN=[
+  ["Womit singst du?","🎤",["🦶","👀"]],["Womit klatschst du den Takt?","👏",["👃","👂"]],
+  ["Welches Zeichen sind Töne?","🎶",["🍎","⚽"]],["Womit trommelst du einen Rhythmus?","🥁",["📖","🧦"]],
+  ["Was passt zu einem Tanzfest?","🎉",["🛌","🧹"]],["Welches Tier singt am Morgen schön?","🐦",["🐛","🐟"]]
+];
+const U2_RHYTH=[
+  ["Klatschen kann einen Rhythmus machen.",true],["Ein Rhythmus wiederholt sich.",true],
+  ["Man kann im Takt stampfen.",true],["Zu Musik kann man tanzen.",true],["Ein Takt teilt die Musik ein.",true],
+  ["Trommeln kann man laut und leise.",true],["Rhythmus bedeutet: immer stillstehen.",false],["Man kann klatschen und dazu singen.",true]
+];
+const LEVELS_MU2=[
+  {w:"Welt 1 · Instrumente", id:"mu2_i1", ico:"🎻", nm:"Instrumentenfamilien", type:"satzbild", set:U2_FAM},
+  {w:"Welt 1 · Instrumente", id:"mu2_i2", ico:"🎺", nm:"Instrumenten-Wissen", type:"quatsch", set:U2_WISSEN},
+  {w:"Welt 2 · Töne, Dynamik & Tempo", id:"mu2_d1", ico:"🔊", nm:"Laut & Leise", type:"quatsch", set:U2_DYN},
+  {w:"Welt 2 · Töne, Dynamik & Tempo", id:"mu2_d2", ico:"🎶", nm:"Hoch & Tief", type:"quatsch", set:U2_HOCH},
+  {w:"Welt 2 · Töne, Dynamik & Tempo", id:"mu2_t1", ico:"⏱️", nm:"Tempo", type:"quatsch", set:U2_TEMPO},
+  {w:"Welt 3 · Noten, Singen & Rhythmus", id:"mu2_n1", ico:"🎼", nm:"Noten & Werte", type:"quatsch", set:U2_NOTEN},
+  {w:"Welt 3 · Noten, Singen & Rhythmus", id:"mu2_s1", ico:"🎤", nm:"Singen & Lieder", type:"quatsch", set:U2_SINGEN},
+  {w:"Welt 3 · Noten, Singen & Rhythmus", id:"mu2_s2", ico:"🥁", nm:"Musik machen", type:"satzbild", set:U2_MACHEN},
+  {w:"Welt 3 · Noten, Singen & Rhythmus", id:"mu2_r1", ico:"👏", nm:"Rhythmus & Takt", type:"quatsch", set:U2_RHYTH}
+];
+
+// ---------- Klassen & Fächer: aktive Level/Monster umschaltbar ----------
+const GRADE_CONTENT = {
+  k1:{
+    deutsch:{title:"📖 Deutsch · Klasse 1", LEVELS:LEVELS_DE, MONSTER:MONSTER_DE},
+    mathe:  {title:"🔢 Mathe · Klasse 1",   LEVELS:LEVELS_MA, MONSTER:MONSTER_MA},
+    sach:   {title:"🌍 Sachunterricht · Klasse 1", LEVELS:LEVELS_SU, MONSTER:MONSTER_SU},
+    musik:  {title:"🎵 Musik · Klasse 1",   LEVELS:LEVELS_MU, MONSTER:MONSTER_MU}
+  },
+  k2:{
+    deutsch:{title:"📖 Deutsch · Klasse 2", LEVELS:LEVELS_DE2, MONSTER:MONSTER_DE2},
+    mathe:  {title:"🔢 Mathe · Klasse 2",   LEVELS:LEVELS_MA2, MONSTER:MONSTER_MA2},
+    sach:   {title:"🌍 Sachunterricht · Klasse 2", LEVELS:LEVELS_SU2, MONSTER:MONSTER_SU2},
+    musik:  {title:"🎵 Musik · Klasse 2",   LEVELS:LEVELS_MU2, MONSTER:MONSTER_MU2}
+  }
+};
+const SUBJECT_META = {
+  deutsch:{ico:"📖",nm:"Deutsch"}, mathe:{ico:"🔢",nm:"Mathe"},
+  sach:{ico:"🌍",nm:"Sachkunde"}, musik:{ico:"🎵",nm:"Musik"}, englisch:{ico:"🇬🇧",nm:"Englisch"}
+};
+let curGrade = "k1";
+let curSubject = "deutsch";
+let LEVELS = LEVELS_DE;
+let MONSTER = MONSTER_DE;
+function curContent(){ return (GRADE_CONTENT[curGrade]||{})[curSubject]; }
+function setSubject(key){
+  const c=(GRADE_CONTENT[curGrade]||{})[key]; if(!c) return;
+  curSubject = key; LEVELS = c.LEVELS; MONSTER = c.MONSTER; showMenu();
+}
+function setGrade(gk){ if(!GRADE_CONTENT[gk]) return; curGrade=gk; showHub(); }
+
+// ---------- Loot mit Seltenheitsstufen (variable Belohnung: Hunt) ----------
+const LOOTPOOL = [
+  // [emoji, name, rarity 0=gewöhnlich 1=selten 2=episch 3=legendär]
+  ["🪵","Holzschwert",0],["🥄","Riesenlöffel",0],["🧦","Glückssocke",0],["🪨","Kiesel",0],["🥕","Power-Möhre",0],
+  ["🛡️","Eisenschild",1],["🏹","Flitzebogen",1],["🪓","Blitz-Axt",1],["🧪","Zaubertrank",1],
+  ["🗡️","Diamantschwert",2],["🎩","Zauberhut",2],["🦄","Einhorn-Freund",2],["🪄","Zauberstab",2],
+  ["👑","Königskrone",3],["🥚","Drachen-Ei",3],["🏆","Goldpokal",3],["🦜","Papagei-Kapitän",3]
+];
+const RARITY_NAMES = ["Gewöhnlich","Selten ✦","Episch ✦✦","LEGENDÄR ✦✦✦"];
+function rollLoot(){
+  const r = Math.random();
+  const tier = r < 0.05 ? 3 : r < 0.15 ? 2 : r < 0.40 ? 1 : 0;
+  const pool = LOOTPOOL.filter(l=>l[2]===tier);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+// ---------- Avatar-Shop (kein Pay-to-win: 💎 gibt es NUR durchs Spielen) ----------
+// [emoji, name, slot, preis]  – Erfolgs-Items haben preis 0 + ach-Id
+// ================= AVATAR-GRAFIK (Inline-SVG, 3 Grundtypen, einfärbbar) =================
+const AV_SKINS = [
+  ["#f6c9a0","Sand"],["#e8ac7d","Karamell"],["#c98a5e","Nuss"],["#8a5a3b","Kakao"],
+  ["#ff9d6e","Aprikose"],["#9be0c0","Minze"],["#8fd0ff","Himmel"],["#c9b6ff","Flieder"]
+];
+const AV_OUTFITS = [
+  ["#e8452e","Rot"],["#2e7de8","Blau"],["#3bb54a","Grün"],["#ffd23f","Gelb"],
+  ["#9b3fd4","Lila"],["#ff7f2a","Orange"],["#22b8b0","Türkis"],["#ff6fae","Pink"]
+];
+function darken(hex,f){ f=(f==null)?0.72:f; const n=parseInt(hex.slice(1),16);
+  let r=Math.round(((n>>16)&255)*f), g=Math.round(((n>>8)&255)*f), b=Math.round((n&255)*f);
+  return "#"+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); }
+
+// ----- Körper je Grundtyp (Kopfmitte 50,44 · Radius 25 – Gesicht/Hut sitzen bei allen gleich) -----
+function bodyMine(s,o){ const d=darken(o);
+  return '<rect x="40" y="100" width="8" height="16" rx="3" fill="'+d+'"/><rect x="52" y="100" width="8" height="16" rx="3" fill="'+d+'"/>'
+    +'<rect x="32" y="72" width="36" height="34" rx="12" fill="'+o+'"/>'
+    +'<rect x="26" y="76" width="10" height="24" rx="5" fill="'+s+'"/><rect x="64" y="76" width="10" height="24" rx="5" fill="'+s+'"/>'
+    +'<circle cx="50" cy="44" r="25" fill="'+s+'"/>'
+    +'<path d="M26 40 Q50 12 74 40 Q64 30 50 29 Q36 30 26 40 Z" fill="'+darken(s,0.55)+'"/>'; }
+function bodyTier(s,o){ const d=darken(s,0.8);
+  return '<rect x="40" y="102" width="8" height="14" rx="4" fill="'+d+'"/><rect x="52" y="102" width="8" height="14" rx="4" fill="'+d+'"/>'
+    +'<rect x="30" y="72" width="40" height="36" rx="16" fill="'+s+'"/>'
+    +'<rect x="40" y="80" width="20" height="26" rx="10" fill="'+o+'"/>'
+    +'<rect x="24" y="78" width="11" height="22" rx="5" fill="'+s+'"/><rect x="65" y="78" width="11" height="22" rx="5" fill="'+s+'"/>'
+    +'<path d="M31 30 L26 8 L45 22 Z" fill="'+s+'"/><path d="M69 30 L74 8 L55 22 Z" fill="'+s+'"/>'
+    +'<path d="M34 27 L31 14 L42 23 Z" fill="'+darken(o,0.92)+'"/><path d="M66 27 L69 14 L58 23 Z" fill="'+darken(o,0.92)+'"/>'
+    +'<circle cx="50" cy="44" r="25" fill="'+s+'"/>'
+    +'<ellipse cx="50" cy="54" rx="13" ry="10" fill="'+darken(s,0.86)+'"/><circle cx="50" cy="50" r="3.4" fill="#3a2a20"/>'; }
+function bodyRobo(s,o){ const d=darken(s,0.72);
+  return '<rect x="40" y="102" width="8" height="14" fill="'+d+'"/><rect x="52" y="102" width="8" height="14" fill="'+d+'"/>'
+    +'<rect x="30" y="72" width="40" height="34" rx="8" fill="'+s+'"/>'
+    +'<rect x="38" y="80" width="24" height="18" rx="4" fill="'+darken(o,0.5)+'"/>'
+    +'<circle cx="44" cy="89" r="2.5" fill="'+o+'"/><circle cx="50" cy="89" r="2.5" fill="'+o+'"/><circle cx="56" cy="89" r="2.5" fill="'+o+'"/>'
+    +'<rect x="23" y="76" width="9" height="22" rx="3" fill="'+s+'"/><rect x="68" y="76" width="9" height="22" rx="3" fill="'+s+'"/>'
+    +'<line x1="50" y1="12" x2="50" y2="20" stroke="'+d+'" stroke-width="3"/><circle cx="50" cy="10" r="4" fill="'+o+'"/>'
+    +'<rect x="27" y="22" width="46" height="44" rx="10" fill="'+s+'"/><rect x="33" y="34" width="34" height="22" rx="6" fill="#1e2733"/>'; }
+
+// ----- Gesicht (funktioniert auf allen Typen; Roboter = leuchtende Augen) -----
+function avFace(av){
+  const robo=av.type==="robo"; const ec=robo?"#8fe9ff":"#2a2320"; const mc=robo?"#8fe9ff":"#7a4a34";
+  const f=av.face; let eyes,mouth;
+  if(f==="zwinker") eyes='<circle cx="41" cy="44" r="3.3" fill="'+ec+'"/><path d="M55 44 q4 -4 8 0" stroke="'+ec+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  else if(f==="cool") eyes='<rect x="35" y="40" width="13" height="7" rx="2" fill="#1e1e1e"/><rect x="52" y="40" width="13" height="7" rx="2" fill="#1e1e1e"/><rect x="48" y="42" width="4" height="2" fill="#1e1e1e"/>';
+  else eyes='<circle cx="41" cy="44" r="3.4" fill="'+ec+'"/><circle cx="59" cy="44" r="3.4" fill="'+ec+'"/>';
+  if(f==="lachen") mouth='<path d="M42 53 q8 9 16 0 z" fill="'+(robo?"#8fe9ff":"#b8474f")+'"/>';
+  else if(f==="staunen") mouth='<circle cx="50" cy="55" r="4" fill="'+(robo?"#8fe9ff":"#b8474f")+'"/>';
+  else mouth='<path d="M43 53 q7 7 14 0" stroke="'+mc+'" stroke-width="3" fill="none" stroke-linecap="round"/>';
+  const cheeks=(!robo && f!=="cool")?'<circle cx="33" cy="50" r="4" fill="#ff9a9a" opacity=".55"/><circle cx="67" cy="50" r="4" fill="#ff9a9a" opacity=".55"/>':'';
+  return eyes+mouth+cheeks;
+}
+// ----- Hüte (sitzen auf dem Kopf, x=50, Oberkante ~y20) -----
+function avHat(id,av){ const o=av.outfit; switch(id){
+  case "helm": return '<path d="M28 30 Q50 6 72 30 Z" fill="#ffcf33"/><rect x="24" y="29" width="52" height="6" rx="3" fill="#e0a800"/><rect x="47" y="12" width="6" height="10" fill="#e33"/><rect x="44" y="15" width="12" height="4" fill="#e33"/>';
+  case "kappe": return '<path d="M28 31 Q50 8 72 31 Z" fill="'+o+'"/><path d="M50 31 h27 q4 0 1 5 l-29 0 Z" fill="'+darken(o)+'"/>';
+  case "krone": return '<path d="M32 31 L34 13 L42 25 L50 11 L58 25 L66 13 L68 31 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="1.5"/><circle cx="50" cy="19" r="2.6" fill="#e8452e"/>';
+  case "zauber": return '<path d="M50 2 L30 34 L70 34 Z" fill="#6a3fd4"/><rect x="26" y="32" width="48" height="6" rx="3" fill="#4a2794"/><path d="M50 12 l2 5 5 1 -4 4 1 5 -4 -3 -4 3 1 -5 -4 -4 5 -1 Z" fill="#ffd23f"/>';
+  case "schleife": return '<path d="M50 24 L38 16 L38 30 Z" fill="'+o+'"/><path d="M50 24 L62 16 L62 30 Z" fill="'+o+'"/><circle cx="50" cy="24" r="4" fill="'+darken(o)+'"/>';
+  case "party": return '<path d="M50 4 L38 34 L62 34 Z" fill="#ff6fae"/><path d="M50 4 L44 19 L56 19 Z" fill="#ffd23f"/><path d="M44 34 L56 34 L50 24 Z" fill="#2e7de8"/><circle cx="50" cy="4" r="3" fill="#ffd23f"/>';
+  } return ""; }
+// ----- Werkzeuge (rechte Hand) -----
+function avTool(id){ switch(id){
+  case "hacke": return '<line x1="70" y1="70" x2="70" y2="104" stroke="#8a5a2b" stroke-width="4"/><path d="M58 72 Q70 63 82 72" stroke="#c7ccd1" stroke-width="6" fill="none"/>';
+  case "schwert": return '<rect x="68" y="66" width="5" height="34" rx="2" fill="#d5dbe0"/><rect x="62" y="98" width="17" height="5" rx="2" fill="#8a5a2b"/><rect x="69" y="100" width="3" height="8" fill="#8a5a2b"/>';
+  case "stab": return '<line x1="70" y1="72" x2="70" y2="104" stroke="#8a5a2b" stroke-width="4"/><path d="M70 60 l3 8 8 2 -8 3 -3 8 -3 -8 -8 -3 8 -2 Z" fill="#ffd23f"/>';
+  case "buch": return '<rect x="60" y="80" width="20" height="16" rx="2" fill="#e8452e"/><rect x="69" y="80" width="2" height="16" fill="#fff"/><rect x="62" y="83" width="6" height="2" fill="#fff"/><rect x="72" y="83" width="6" height="2" fill="#fff"/>';
+  case "schild": return '<path d="M70 68 L82 72 L82 88 Q70 98 58 88 L58 72 Z" fill="#2e7de8" stroke="#1e4f9c" stroke-width="2"/><path d="M70 74 L70 90 M62 80 L78 80" stroke="#ffd23f" stroke-width="3"/>';
+  case "laterne": return '<line x1="70" y1="70" x2="70" y2="76" stroke="#8a5a2b" stroke-width="3"/><rect x="62" y="76" width="16" height="20" rx="3" fill="#ffd23f" stroke="#8a5a2b" stroke-width="2"/><rect x="66" y="80" width="8" height="12" fill="#fff6c0"/>';
+  } return ""; }
+// ----- Begleiter (unten rechts) -----
+function avPet(id){ switch(id){
+  case "schleim": return '<path d="M75 116 Q75 100 87 100 Q99 100 99 116 Z" fill="#5bd07a"/><circle cx="83" cy="108" r="2" fill="#12351f"/><circle cx="91" cy="108" r="2" fill="#12351f"/>';
+  case "vogel": return '<circle cx="88" cy="108" r="9" fill="#ffd23f"/><circle cx="85" cy="106" r="1.8" fill="#222"/><path d="M79 108 l-4 2 4 2 Z" fill="#ff7f2a"/><path d="M92 100 q8 2 6 8 q-4 -3 -6 -3 Z" fill="#ffb020"/>';
+  case "katze": return '<circle cx="88" cy="109" r="9" fill="#9a6a3a"/><path d="M81 102 l-2 -6 5 4 Z" fill="#9a6a3a"/><path d="M95 102 l2 -6 -5 4 Z" fill="#9a6a3a"/><circle cx="85" cy="108" r="1.6" fill="#222"/><circle cx="91" cy="108" r="1.6" fill="#222"/>';
+  case "hund": return '<circle cx="88" cy="109" r="9" fill="#c79a63"/><ellipse cx="80" cy="110" rx="3" ry="6" fill="#8a5a2b"/><circle cx="85" cy="108" r="1.6" fill="#222"/><circle cx="91" cy="108" r="1.6" fill="#222"/><circle cx="88" cy="112" r="2" fill="#3a2a20"/>';
+  case "drache": return '<ellipse cx="88" cy="110" rx="10" ry="8" fill="#3bb54a"/><path d="M83 103 l-2 -5 4 3 Z" fill="#2a8a38"/><path d="M90 102 l2 -5 -4 3 Z" fill="#2a8a38"/><path d="M97 105 q6 -1 5 5 q-3 -2 -5 -2 Z" fill="#2a8a38"/><circle cx="85" cy="108" r="1.7" fill="#111"/>';
+  } return ""; }
+// ----- Gesamt-Avatar -----
+function avatarSVG(av,extra){
+  const body = av.type==="tier"?bodyTier(av.skin,av.outfit) : av.type==="robo"?bodyRobo(av.skin,av.outfit) : bodyMine(av.skin,av.outfit);
+  return '<svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" '+(extra||"")+'>'
+    + body + avPet(av.pet) + avFace(av) + avHat(av.hat,av) + avTool(av.tool) + '</svg>';
+}
+// ----- Katalog fürs Studio ([id, Name, Preis]; Preis 0 = frei) -----
+const AVA = {
+  type:[["mine","Minen-Kind",0],["tier","Tier",0],["robo","Roboter",0]],
+  hat:[["none","ohne",0],["helm","Helm",0],["kappe","Kappe",20],["schleife","Schleife",20],["party","Partyhut",40],["zauber","Zauberhut",90],["krone","Krone",150]],
+  tool:[["none","ohne",0],["hacke","Spitzhacke",0],["schild","Schild",40],["buch","Buch",40],["schwert","Schwert",70],["laterne","Laterne",70],["stab","Zauberstab",120]],
+  pet:[["none","ohne",0],["schleim","Schleim",30],["vogel","Vogel",50],["katze","Katze",70],["hund","Hund",70],["drache","Drache",200]]
+};
+// Erfolge: [id, icon, titel, beschreibung, slot, prüf-funktion, freigeschaltetes Avatar-Teil "slot:id"]
+const ACHIEVEMENTS = [
+  ["serie8","😎","Serien-Meister","8 richtige Antworten am Stück!","hat", s=>s.bestStreak>=8, "hat:zauber"],
+  ["lvl10","🏆","Monster-Jäger","10 Monster besiegt!","hand", s=>s.levelsDone>=10, "tool:schwert"],
+  ["perfekt3","🥇","Fehlerfrei-Profi","3 Level ohne einen Fehler!","hand", s=>s.perfects>=3, "tool:stab"],
+  ["gems500","👽","Edelstein-Magnet","500 Edelsteine verdient!","pet", s=>s.earned>=500, "pet:drache"],
+  ["tage3","🌈","Treuer Held","3 Tage in Folge gespielt!","pet", s=>s.dayStreak>=3, "pet:katze"],
+  ["allstars","🔥","Wörter-Legende","Alle Level gemeistert!","hat", s=>Object.keys(s.stars).length>=LEVELS.length, "hat:krone"]
+];
+
+// ---------- Speicherstand ----------
+const DEFAULTS = {gems:0, stars:{}, loot:[], dayStreak:0, lastDay:"",
+  av:{type:"mine", skin:"#f6c9a0", outfit:"#e8452e", face:"froh", hat:"helm", tool:"hacke", pet:"none"},
+  avOwned:[],
+  nCorrect:0, earned:0, bestStreak:0, levelsDone:0, perfects:0, ach:[],
+  sound:true, damage:false, fails:[], dailyDone:"", nWrong:0};
+function loadState(){
+  let st;
+  try{ st = Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem("wortwelt"))||{}); }
+  catch(e){ st = Object.assign({}, DEFAULTS); }
+  // Übungskiste ins Spaced-Repetition-Format bringen (altes Format ohne Fach verwerfen; ohne Klasse → Klasse 1)
+  const t = new Date().toISOString().slice(0,10);
+  st.fails = (st.fails||[]).filter(f=>f && f.s && f.t && ('item' in f))
+    .map(f=>({g:f.g||"k1", s:f.s, t:f.t, item:f.item, box:f.box||0, due:f.due||t}));
+  return st;
+}
+function saveState(){ try{ localStorage.setItem("wortwelt", JSON.stringify(state)); }catch(e){} }
+let state = loadState();
+
+// ---------- Laufzeit ----------
+let cur=null, curIdx=0, rounds=[], ri=0, streak=0, mistakes=0, locked=false, hp=ROUNDS, sessionLevels=0;
+const $ = id => document.getElementById(id);
+const shuffle = a => [...a].sort(()=>Math.random()-.5);
+const pick = a => a[Math.floor(Math.random()*a.length)];
+
+// ---------- Sound (WebAudio, dezent) ----------
+let AC=null;
+function tone(f,d,type,when,vol){
+  if(state.sound===false) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(), g=AC.createGain();
+    o.type=type||"square"; o.frequency.value=f;
+    g.gain.value=vol||0.12;
+    g.gain.setTargetAtTime(0, AC.currentTime+(when||0)+d*0.7, 0.04);
+    o.connect(g); g.connect(AC.destination);
+    o.start(AC.currentTime+(when||0)); o.stop(AC.currentTime+(when||0)+d+0.1);
+  }catch(e){}
+}
+const sHit   = ()=>{ tone(240,.08); tone(180,.09,"square",.05); };
+const sCrit  = ()=>{ tone(880,.07); tone(1175,.1,"square",.06); tone(1568,.12,"square",.12); };
+const sWrong = ()=>  tone(110,.22,"sawtooth",0,.08);
+const sWin   = ()=> [523,659,784,1047].forEach((f,i)=>tone(f,.14,"square",i*.11));
+const sChest = ()=> [392,494,587,784,988].forEach((f,i)=>tone(f,.11,"triangle",i*.08,.14));
+
+// ---------- Sprache ----------
+let bestVoice = null;
+function pickVoice(){
+  try{
+    const de = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith("de"));
+    if(!de.length) return;
+    const score = v => {
+      const n = v.name.toLowerCase(); let s = 0;
+      if(n.includes("premium")) s+=100;
+      if(n.includes("enhanced")||n.includes("erweitert")) s+=90;
+      if(n.includes("siri")) s+=80;
+      if(n.includes("anna")||n.includes("petra")||n.includes("helena")) s+=60;
+      if(n.includes("google")) s+=50;
+      if(n.includes("eloquence")||n.includes("compact")||n.includes("fred")) s-=100;
+      if(v.localService) s+=5;
+      return s;
+    };
+    bestVoice = de.sort((a,b)=>score(b)-score(a))[0];
+  }catch(e){}
+}
+pickVoice();
+try{ speechSynthesis.onvoiceschanged = pickVoice; }catch(e){}
+const natural = t => t.split(/\s+/).map(w => w.length>1 && w===w.toUpperCase() ? w.charAt(0)+w.slice(1).toLowerCase() : w).join(" ");
+function speak(text, slow){
+  if(state.sound===false) return;
+  try{
+    const u = new SpeechSynthesisUtterance(natural(text));
+    u.lang="de-DE"; if(bestVoice) u.voice=bestVoice;
+    u.rate = slow?0.8:0.95; u.pitch = 1.05;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+const CHEERS = ["Super!","Klasse!","Stark!","Toll gemacht!","Wow!","Spitze!","Volltreffer!"];
+// Rechenterm vorlesen (für Nichtleser): Symbole in Wörter wandeln
+function sayTerm(t, slow){
+  const s = String(t)
+    .replace(/\+/g," plus ").replace(/\-/g," minus ")
+    .replace(/=/g," gleich ").replace(/·/g," mal ")
+    .replace(/\s+/g," ").trim();
+  speak(s, slow!==false);
+}
+
+// ---------- HUD & Effekte ----------
+function updateHud(){
+  $("gems").textContent = state.gems;
+  $("streak").textContent = streak;
+  $("streakbox").classList.toggle("hot", streak>=3);
+  $("prog").textContent = cur ? (Math.min(ri+1,ROUNDS))+"/"+ROUNDS : "";
+}
+function flyGem(n){
+  for(let i=0;i<Math.min(n,4);i++){
+    setTimeout(()=>{
+      const g=document.createElement("div"); g.className="gemfly"; g.textContent="💎";
+      g.style.left=(46+Math.random()*8)+"%"; g.style.top="40%";
+      const t=$("gems").getBoundingClientRect();
+      g.style.setProperty("--dx",(t.left-innerWidth/2)+"px");
+      g.style.setProperty("--dy",(t.top-innerHeight*0.4)+"px");
+      document.body.appendChild(g); setTimeout(()=>g.remove(),800);
+    }, i*90);
+  }
+}
+
+// ---------- Avatar ----------
+function currentAv(){ return Object.assign({}, DEFAULTS.av, state.av||{}); }
+function renderHero(){ $("hero").innerHTML = avatarSVG(currentAv()); if($("heropet")) $("heropet").innerHTML=""; }
+function avatarHTML(){ return avatarSVG(currentAv()); }
+
+// ---------- Avatar-Studio ----------
+function setAv(k,v){ state.av = Object.assign({}, currentAv(), {[k]:v}); saveState(); }
+function partOwned(slot,id,price){ return price===0 || (state.avOwned||[]).includes(slot+":"+id); }
+function studioColorSection(st,title,slot,list,av){
+  const t=document.createElement("div"); t.className="slottitle"; t.textContent=title; st.appendChild(t);
+  const g=document.createElement("div"); g.className="swatchrow"; st.appendChild(g);
+  list.forEach(([col,nm])=>{
+    const b=document.createElement("button"); b.className="swatch"+(av[slot]===col?" sel":"");
+    b.style.background=col; b.title=nm;
+    b.onclick=()=>{ setAv(slot,col); sHit(); showStudio(); };
+    g.appendChild(b);
+  });
+}
+function studioPartSection(st,title,slot,list,av){
+  const t=document.createElement("div"); t.className="slottitle"; t.textContent=title; st.appendChild(t);
+  const g=document.createElement("div"); g.className="shopgrid"; st.appendChild(g);
+  list.forEach(([id,nm,price])=>{
+    const owned=partOwned(slot,id,price);
+    const preview=Object.assign({}, av, {[slot]:id});
+    const b=document.createElement("button");
+    b.className="partbtn"+(av[slot]===id?" sel":"")+(owned?"":" locked");
+    b.innerHTML=avatarSVG(preview)+'<div class="price">'+(owned?nm:(price+" 💎"))+'</div>';
+    b.onclick=()=>{
+      if(owned){ setAv(slot,id); sHit(); showStudio(); }
+      else if(state.gems>=price){
+        state.gems-=price; (state.avOwned=state.avOwned||[]).push(slot+":"+id);
+        setAv(slot,id); sChest(); updateHud(); showStudio(); speak(nm+"! Steht dir super!");
+      } else speak("Dafür brauchst du noch "+(price-state.gems)+" Edelsteine. Du schaffst das!");
+    };
+    g.appendChild(b);
+  });
+}
+function showStudio(){
+  const av=currentAv();
+  $("studiogems").textContent = state.gems;
+  $("studiopreview").innerHTML = avatarSVG(av);
+  const st=$("studio"); st.innerHTML="";
+  studioPartSection(st,"🧍 Grundtyp","type",AVA.type,av);
+  studioColorSection(st,"🎨 Farbe","skin",AV_SKINS,av);
+  studioColorSection(st,"👕 Outfit","outfit",AV_OUTFITS,av);
+  studioPartSection(st,"😊 Gesicht","face",[["froh","Froh"],["lachen","Lachen"],["zwinker","Zwinkern"],["staunen","Staunen"],["cool","Cool"]],av);
+  studioPartSection(st,"🎩 Hut","hat",AVA.hat,av);
+  studioPartSection(st,"🛠️ Werkzeug","tool",AVA.tool,av);
+  studioPartSection(st,"🐾 Begleiter","pet",AVA.pet,av);
+  $("studioov").classList.remove("hidden");
+}
+$("studioclose").onclick=()=>{ $("studioov").classList.add("hidden"); renderHero(); showMenu(); };
+
+// ---------- Erfolge prüfen ----------
+let achQueue=[];
+function checkAchievements(){
+  ACHIEVEMENTS.forEach(([id,e,titel,desc,slot,test,part])=>{
+    if(!state.ach.includes(id) && test(state)){
+      state.ach.push(id);
+      if(part){ state.avOwned=state.avOwned||[]; if(!state.avOwned.includes(part)) state.avOwned.push(part); }
+      saveState();
+      achQueue.push([e,titel,desc]);
+    }
+  });
+  showNextAch();
+}
+function showNextAch(){
+  if(!achQueue.length || !$("achov").classList.contains("hidden")) return;
+  const [e,titel,desc]=achQueue.shift();
+  $("achico").textContent=e;
+  $("achtext").innerHTML="<b>"+titel+"</b><br>"+desc+"<br>🎨 Neues Avatar-Teil im Studio freigeschaltet!";
+  $("achov").classList.remove("hidden");
+  sWin();
+  speak("Erfolg freigeschaltet: "+titel+"!");
+}
+$("achbtn").onclick=()=>{ $("achov").classList.add("hidden"); showNextAch(); };
+
+// ---------- Kampf-Szene ----------
+function renderHearts(){
+  $("hearts").textContent = "❤️".repeat(hp) + "🖤".repeat(ROUNDS-hp);
+}
+function attack(crit){
+  const b=$("battle");
+  const s=document.createElement("div");
+  s.className="fx swordfly"; s.textContent="🗡️";
+  s.style.left="calc(50% - min(9vw,60px))"; s.style.top="30%";
+  b.appendChild(s);
+  setTimeout(()=>{
+    s.remove();
+    hp=Math.max(0,hp-1); renderHearts();
+    const m=$("monster");
+    m.classList.remove("hit"); void m.offsetWidth; m.classList.add("hit");
+    const d=document.createElement("div");
+    d.className="fx dmg"+(crit?" crit":""); d.textContent=crit?"KRITISCH! 💥":"💥";
+    d.style.left="calc(50% + min(4vw,30px))"; d.style.top="10%";
+    b.appendChild(d); setTimeout(()=>d.remove(),800);
+    if(crit) sCrit(); else sHit();
+    if(hp<=0){ m.classList.add("dead"); }
+  }, 300);
+}
+
+// ---------- Menü ----------
+function totalStars(){ return Object.values(state.stars).reduce((a,b)=>a+b,0); }
+function isUnlocked(i){ return i===0 || (state.stars[LEVELS[i-1].id]||0) >= 1; }
+function menuButton(label, fn, dim){
+  const b=document.createElement("button"); b.className="bigbtn";
+  b.style.fontSize="19px"; b.style.padding="10px 16px";
+  if(dim){ b.style.filter="grayscale(1) brightness(.7)"; }
+  b.innerHTML=label; b.onclick=fn;
+  return b;
+}
+function showMenu(){
+  cur=null; locked=false;
+  $("game").style.display="none";
+  $("hub").style.display="none";
+  ["winov","introov","lootov","setov","rankov","parentsov","failov"].forEach(id=>$(id).classList.add("hidden"));
+  const m=$("menu"); m.style.display="block"; m.innerHTML="";
+  const h=document.createElement("div");
+  h.innerHTML = '<h1>'+curContent().title+'</h1><div class="sub">'+totalStars()+' ⭐ gesammelt · '
+    + (state.dayStreak>1 ? state.dayStreak+' Tage in Folge 🔥' : 'Schön, dass du da bist!')+'</div>';
+  m.appendChild(h);
+  const row=document.createElement("div"); row.className="menubtnrow";
+  row.appendChild(menuButton("🏠 Startseite", showHub));
+  const today=new Date().toISOString().slice(0,10);
+  row.appendChild(menuButton(state.dailyDone===today ? "🌞 Challenge ✅" : "🌞 Tages-Challenge", startDaily));
+  const srDue=dueFails().length, srTot=subjectFails().length;
+  const srLabel = srDue>0 ? "🎯 Übungs-Challenge ("+srDue+")" : (srTot>0 ? "🎯 Üben ("+srTot+")" : "🎯 Üben (0)");
+  row.appendChild(menuButton(srLabel,
+    srTot? startTraining : ()=>speak("Deine Übungskiste ist leer. Stark!"),
+    !srTot));
+  m.appendChild(row);
+  let lastWorld="", grid=null;
+  LEVELS.forEach((lv,i)=>{
+    if(lv.w!==lastWorld){
+      lastWorld=lv.w;
+      const wt=document.createElement("div"); wt.className="worldtitle"; wt.textContent=lv.w; m.appendChild(wt);
+      grid=document.createElement("div"); grid.className="lvlgrid"; m.appendChild(grid);
+    }
+    const unlocked=isUnlocked(i);
+    const st=state.stars[lv.id]||0;
+    const b=document.createElement("button");
+    b.className="lvl"+(unlocked?"":" locked");
+    b.innerHTML='<div class="ico">'+(unlocked?MONSTER[i][0]:"🔒")+'</div><div class="nm">'+lv.nm+'</div><div class="st">'
+      +(st? "⭐".repeat(st)+"☆".repeat(3-st) : (unlocked?"⚔️ Kampf!":"Gesperrt"))+'</div>';
+    if(unlocked) b.onclick=()=>showIntro(i);
+    grid.appendChild(b);
+  });
+  updateHud();
+}
+
+// ---------- Hauptseite (Hub): Fächer, Klassen, Ranking, Einstellungen ----------
+// Reihenfolge der Fächer im Hub (nur vorhandene werden gezeigt)
+const SUBJECT_ORDER = ["deutsch","mathe","sach","musik","englisch"];
+// Klassenstufen (open = Inhalte vorhanden)
+const GRADES = [
+  {key:"vor", ico:"🐣", nm:"Vorschule"},
+  {key:"k1",  ico:"1️⃣", nm:"Klasse 1"},
+  {key:"k2",  ico:"2️⃣", nm:"Klasse 2"},
+  {key:"k3",  ico:"3️⃣", nm:"Klasse 3"},
+  {key:"k4",  ico:"4️⃣", nm:"Klasse 4"}
+];
+function showHub(){
+  cur=null; locked=false;
+  $("game").style.display="none";
+  $("menu").style.display="none";
+  ["winov","introov","lootov","setov","rankov","parentsov","failov","studioov"].forEach(id=>$(id).classList.add("hidden"));
+  const hub=$("hub"); hub.style.display="block"; hub.innerHTML="";
+  const h=document.createElement("div");
+  h.innerHTML='<h1 style="text-align:center;color:#fff;font-size:min(10vw,52px);text-shadow:3px 3px 0 #1e1e1e;margin:6px 0 2px;">⛏️ WortWelt</h1>'
+    +'<div class="sub" style="text-align:center;color:#1e3a12;font-size:17px;">Spielend lernen · '+totalStars()+' ⭐ · '+state.gems+' 💎'
+    +(state.dayStreak>1?' · '+state.dayStreak+' Tage 🔥':'')+'</div>';
+  hub.appendChild(h);
+  // Avatar in der Mitte (tippen → Studio)
+  const av=document.createElement("div");
+  av.style.textAlign="center"; av.style.margin="8px 0";
+  av.innerHTML='<div class="avpreview" style="cursor:pointer">'+avatarHTML()+'</div><div style="color:#fff;font-size:14px;text-shadow:1px 1px 0 #1e1e1e;">Tippen zum Umstylen 🧑‍🎨</div>';
+  av.onclick=showStudio;
+  hub.appendChild(av);
+  // Klassenwahl
+  const gt=document.createElement("div"); gt.className="worldtitle"; gt.textContent="Deine Klasse"; hub.appendChild(gt);
+  const gg=document.createElement("div"); gg.className="lvlgrid"; hub.appendChild(gg);
+  GRADES.forEach(g=>{
+    const open=!!GRADE_CONTENT[g.key];
+    const b=document.createElement("button");
+    b.className="lvl"+(open?"":" locked");
+    b.innerHTML='<div class="ico">'+g.ico+'</div><div class="nm">'+g.nm+'</div><div class="st">'+(open?(g.key===curGrade?"✅ gewählt":"wählen"):"Bald! 🔜")+'</div>';
+    if(open) b.onclick=()=>setGrade(g.key);
+    gg.appendChild(b);
+  });
+  // Fächerwahl (nur Fächer der aktuellen Klasse)
+  const ft=document.createElement("div"); ft.className="worldtitle"; ft.textContent="Fächer"; hub.appendChild(ft);
+  const fg=document.createElement("div"); fg.className="lvlgrid"; hub.appendChild(fg);
+  const avail=GRADE_CONTENT[curGrade]||{};
+  SUBJECT_ORDER.forEach(key=>{
+    const meta=SUBJECT_META[key]; if(!meta) return;
+    const open=!!avail[key];
+    const b=document.createElement("button");
+    b.className="lvl"+(open?"":" locked");
+    b.innerHTML='<div class="ico">'+meta.ico+'</div><div class="nm">'+meta.nm+'</div><div class="st">'+(open?"▶️ Spielen":"Bald! 🔜")+'</div>';
+    if(open) b.onclick=()=>setSubject(key);
+    fg.appendChild(b);
+  });
+  // Untere Knopfreihe
+  const row=document.createElement("div"); row.className="menubtnrow"; row.style.marginTop="18px";
+  row.appendChild(menuButton("🏅 Bestenliste", showRanking));
+  row.appendChild(menuButton("🏆 Schatzkammer", showLoot));
+  row.appendChild(menuButton("⚙️ Einstellungen", showSettings));
+  row.appendChild(menuButton("👨‍👩‍👧 Erwachsenen-Ecke", showParents));
+  hub.appendChild(row);
+  updateHud();
+}
+
+// ---------- Bestenliste (lokal; Klassen-Ranking folgt mit Klassencode) ----------
+function showRanking(){
+  const rows=[
+    ["🔥","Beste Antwort-Serie", state.bestStreak],
+    ["⚔️","Monster besiegt", state.levelsDone],
+    ["🥇","Perfekte Level", state.perfects],
+    ["⭐","Sterne gesamt", totalStars()+" / "+(LEVELS.length*3)],
+    ["💎","Edelsteine verdient (gesamt)", state.earned],
+    ["📅","Tage-Streak", state.dayStreak],
+    ["🏆","Schätze gefunden", state.loot.length+" / "+LOOTPOOL.length],
+    ["🏅","Erfolge", state.ach.length+" / "+ACHIEVEMENTS.length]
+  ];
+  $("rankbody").innerHTML = '<table style="border-collapse:collapse;color:#fff;font-size:17px;margin:0 auto;">'
+    + rows.map(r=>'<tr><td style="border:2px solid #555;padding:6px 12px;">'+r[0]+' '+r[1]+'</td><td style="border:2px solid #555;padding:6px 12px;text-align:right;"><b>'+r[2]+'</b></td></tr>').join("")
+    + '</table>';
+  $("rankov").classList.remove("hidden");
+}
+$("rankclose").onclick=()=>$("rankov").classList.add("hidden");
+
+// ---------- Einstellungen ----------
+let resetArmed=false;
+function showSettings(){
+  resetArmed=false;
+  const list=$("setlist"); list.innerHTML="";
+  const mk=(label,fn)=>{ const b=menuButton(label,fn); b.style.fontSize="20px"; list.appendChild(b); };
+  mk((state.sound!==false?"🔊 Sound: AN":"🔇 Sound: AUS"), ()=>{ state.sound=(state.sound===false); saveState(); renderSnd(); showSettings(); });
+  mk((state.damage?"💔 Schaden-Modus: AN (schwer)":"🛡️ Schaden-Modus: AUS (sanft)"), ()=>{ state.damage=!state.damage; saveState(); showSettings(); });
+  const info=document.createElement("p");
+  info.style.fontSize="15px"; info.style.maxWidth="420px";
+  info.textContent = state.damage
+    ? "Schaden-Modus: Bei falschen Antworten verliert dein Held eines von 3 Herzen. Bei 0 Herzen gewinnt das Monster – Edelsteine bleiben aber immer deine!"
+    : "Sanfter Modus: Falsche Antworten kosten nur die Serie, nie Herzen.";
+  list.appendChild(info);
+  mk(resetArmed?"⚠️ WIRKLICH ALLES löschen?":"🗑️ Fortschritt zurücksetzen", ()=>{
+    if(!resetArmed){ resetArmed=true; showSettings0(); }
+    else { try{ localStorage.removeItem("wortwelt"); }catch(e){} state=loadState(); updateHud(); renderSnd(); $("setov").classList.add("hidden"); showHub(); }
+  });
+  function showSettings0(){ // nur Knöpfe neu zeichnen, resetArmed behalten
+    const keep=resetArmed; showSettings(); resetArmed=keep;
+    list.lastChild.textContent="⚠️ WIRKLICH ALLES löschen?";
+  }
+  $("setov").classList.remove("hidden");
+}
+$("setclose").onclick=()=>$("setov").classList.add("hidden");
+
+// ---------- Erwachsenen-Ecke ----------
+const TYPENAMES={anlaut:"Anlaute hören", grossklein:"Groß/Klein", silben:"Silben bauen", wortbild:"Wörter lesen", blitz:"Blitzlesen", luecke:"Lückenwörter", satzbild:"Sätze lesen", quatsch:"Satzverständnis", baumeister:"Wörter schreiben"};
+function showParents(){
+  const p=$("parents");
+  const mine=subjectFails();
+  const failsByType={};
+  mine.forEach(f=>{ failsByType[f.t]=(failsByType[f.t]||0)+1; });
+  const quote = state.nCorrect+state.nWrong>0 ? Math.round(100*state.nCorrect/(state.nCorrect+state.nWrong)) : 0;
+  // Kompetenz-Fortschritt im aktuellen Fach: gemeisterte Level (mind. 1 Stern)
+  const done=LEVELS.filter(lv=>(state.stars[lv.id]||0)>=1).length;
+  const gold=LEVELS.filter(lv=>(state.stars[lv.id]||0)>=3).length;
+  let html='<p style="font-size:16px;max-width:540px;"><b>'+curContent().title+'</b><br>'
+    +'Kompetenz-Fortschritt: <b>'+done+' / '+LEVELS.length+'</b> Level geschafft ('+gold+'× mit voller Punktzahl ⭐⭐⭐)<br>'
+    +'Antworten insgesamt richtig: <b>'+state.nCorrect+'</b> · Fehler: <b>'+state.nWrong+'</b> · Quote: <b>'+quote+' %</b></p>';
+  html+='<table><tr><th>Level</th><th>Sterne</th></tr>';
+  LEVELS.forEach(lv=>{
+    const st=state.stars[lv.id]||0;
+    html+='<tr><td>'+lv.nm+'</td><td>'+(st?"⭐".repeat(st):"–")+'</td></tr>';
+  });
+  html+='</table>';
+  if(mine.length){
+    const due=dueFails().length;
+    const weak=mine.filter(f=>(f.box||0)===0).length;
+    html+='<p style="font-size:16px;margin-top:10px;"><b>Übungskiste (Spaced Repetition):</b><br>'
+      + mine.length+' Aufgabe(n) in Übung · davon '+due+' heute fällig · '+weak+' noch ganz frisch<br>'
+      + 'Nach Typ: '+Object.entries(failsByType).map(([t,n])=>(TYPENAMES[t]||t)+" ("+n+")").join(" · ")
+      + '<br>→ In der 🎯 Übungs-Challenge kommen die <b>schwächsten Aufgaben zuerst</b>; erst nach mehrmals richtig (an verschiedenen Tagen) gilt eine Aufgabe als gelernt.</p>';
+  } else {
+    html+='<p style="font-size:16px;margin-top:10px;">Übungskiste ist leer – in diesem Fach sitzt alles! 🎉</p>';
+  }
+  p.innerHTML=html;
+  $("parentsov").classList.remove("hidden");
+}
+$("parentsclose").onclick=()=>$("parentsov").classList.add("hidden");
+
+// ---------- Sound-Knopf ----------
+function renderSnd(){ $("sndbtn").textContent = state.sound===false ? "🔇" : "🔊"; }
+$("sndbtn").onclick=()=>{ state.sound=(state.sound===false); saveState(); renderSnd(); if(state.sound!==false) sHit(); };
+
+// ---------- Schatzkammer ----------
+function showLoot(){
+  const list=$("lootlist"); list.innerHTML="";
+  LOOTPOOL.forEach(([e,n,r])=>{
+    const owned = state.loot.includes(e);
+    const d=document.createElement("div");
+    d.className="lootitem r"+r;
+    d.innerHTML = (owned? e : "❓") + '<div class="lootname">'+(owned? n : RARITY_NAMES[r])+'</div>';
+    if(!owned){ d.style.filter="grayscale(1) brightness(.55)"; }
+    list.appendChild(d);
+  });
+  $("lootcount").textContent = state.loot.length+" von "+LOOTPOOL.length+" Schätzen gefunden";
+  $("lootov").classList.remove("hidden");
+}
+$("lootclose").onclick=()=>$("lootov").classList.add("hidden");
+
+// ---------- Zwischensequenz: Level-Intro ----------
+function showIntro(i){
+  curIdx=i;
+  const [me,mn]=MONSTER[i];
+  $("intromon").textContent=me;
+  $("introtitle").textContent=mn+"!";
+  $("introtext").textContent="„"+pick(["Grrr! Du kommst hier nicht vorbei!","Muhaha! Meine Aufgaben schaffst du nie!","Halt! Dieser Weg gehört mir!","Zisch! Ich fresse deine Buchstaben!"])+"“ – Besiege es mit "+ROUNDS+" richtigen Aufgaben!";
+  $("introov").classList.remove("hidden");
+  speak("Ein "+mn+" versperrt den Weg! Besiege es!");
+}
+$("introbtn").onclick=()=>{ $("introov").classList.add("hidden"); startLevel(curIdx); };
+
+// ---------- Levelstart ----------
+let curMon=["🧟","Monster"], pHP=3, lastStart=null;
+function renderPHearts(){
+  $("phearts").textContent = state.damage ? "❤️".repeat(pHP)+"🖤".repeat(3-pHP) : "";
+}
+function beginFight(mon){
+  curMon=mon; ri=0; streak=0; mistakes=0; locked=false; hp=ROUNDS; pHP=3;
+  $("menu").style.display="none";
+  $("hub").style.display="none";
+  $("game").style.display="flex";
+  const m=$("monster"); m.classList.remove("dead","hit");
+  m.textContent=mon[0];
+  $("mname").textContent=mon[1];
+  renderHero(); renderHearts(); renderPHearts();
+  showRound();
+}
+function startLevel(i){
+  cur=LEVELS[i]; curIdx=i;
+  rounds = shuffle(cur.set).slice(0, ROUNDS);
+  while(rounds.length<ROUNDS) rounds.push(pick(cur.set));
+  lastStart=()=>startLevel(i);
+  beginFight(MONSTER[i]);
+}
+
+// ---------- Übungs-Challenge (Spaced Repetition: schwächste Aufgaben zuerst) ----------
+function startTraining(){
+  const pool=trainingPool(); if(!pool.length) return;
+  cur={id:"train", nm:"Übungs-Challenge", type:"mix"};
+  rounds=[]; for(let k=0;k<ROUNDS;k++) rounds.push(pool[k%pool.length]); // schwächste zuerst, ggf. Wiederholung
+  lastStart=startTraining;
+  beginFight(["🤖","Übungs-Roboter"]);
+  speak("Übungs-Challenge! Wir üben genau das, was noch wackelt.");
+}
+
+// ---------- Tages-Challenge (für alle gleich, per Datums-Seed) ----------
+function dayseed(){
+  const d=new Date().toISOString().slice(0,10); let h=0;
+  for(const c of d) h=(h*31+c.charCodeAt(0))|0;
+  return Math.abs(h)||1;
+}
+function seededRand(seed){
+  let s=seed%2147483647; if(s<=0)s+=2147483646;
+  return ()=>((s=s*16807%2147483647)-1)/2147483646;
+}
+function startDaily(){
+  cur={id:"daily", nm:"Tages-Challenge", type:"mix"};
+  const rng=seededRand(dayseed());
+  const avail=LEVELS.filter((lv,i)=>isUnlocked(i));
+  rounds=[];
+  for(let k=0;k<ROUNDS;k++){
+    const lv=avail[Math.floor(rng()*avail.length)];
+    rounds.push({t:lv.type, item:lv.set[Math.floor(rng()*lv.set.length)]});
+  }
+  lastStart=startDaily;
+  beginFight(MONSTER[dayseed()%MONSTER.length]);
+  speak("Die Tages-Challenge beginnt!");
+}
+
+// ---------- Niederlage (nur Schaden-Modus) ----------
+function failLevel(){
+  locked=true;
+  $("failmon").textContent=curMon[0];
+  $("failov").classList.remove("hidden");
+  speak("Oh nein! Das Monster war stärker. Versuch es gleich nochmal!");
+}
+$("retrybtn").onclick=()=>{ $("failov").classList.add("hidden"); if(lastStart) lastStart(); };
+$("failmap").onclick=()=>{ $("failov").classList.add("hidden"); showMenu(); };
+
+// ---------- Runden ----------
+function resetBoard(){
+  ["picture","slots","tiles","msg","task"].forEach(id=>$(id).innerHTML="");
+  $("bigword").classList.add("hidden");
+  $("bigword").style.fontSize="";
+  $("speakbtn").style.display="";
+  locked=false;
+  updateHud();
+}
+function makeTile(label, onTap, emoji){
+  const b=document.createElement("button");
+  b.className="tile"+(emoji?" emojitile":"");
+  b.textContent=label;
+  b.onclick=()=>{ if(!locked) onTap(b); };
+  $("tiles").appendChild(b);
+  return b;
+}
+// Variable Belohnung: 2–5 💎, Streak x2, seltener Krit-Treffer
+function correct(btn, spokenWord){
+  locked=true;
+  if(btn) btn.classList.add("good");
+  streak++;
+  const crit = Math.random()<0.12;
+  let g = 2+Math.floor(Math.random()*4);       // 2–5
+  if(streak>=3) g*=2;
+  if(crit) g+=5;
+  state.gems += g;
+  state.earned += g;
+  state.nCorrect++;
+  if(streak>state.bestStreak) state.bestStreak=streak;
+  if(cur && cur.id==="train" && curRound) promoteFail(curRound); // richtig geübt → höhere Leitner-Box
+  saveState();
+  updateHud(); flyGem(g); attack(crit);
+  $("msg").textContent = "⭐ +"+g+" 💎 "+(crit?"KRITISCHER TREFFER!":(streak>=3?"🔥 Streak-Bonus!":pick(CHEERS)));
+  speak((spokenWord? spokenWord+"! " : "") + (crit? "Kritischer Treffer!" : pick(CHEERS)));
+  ri++;
+  setTimeout(()=> ri<ROUNDS ? showRound() : finishLevel(), 1500);
+}
+function wrong(btn, hint){
+  mistakes++; streak=0; state.nWrong++; updateHud(); sWrong();
+  if(cur && curRound){ if(cur.id==="train") demoteFail(curRound); else addFail(curRound.t, curRound.item); }
+  if(btn){ btn.classList.add("wrong"); setTimeout(()=>btn.classList.remove("wrong"),450); }
+  // Schaden-Modus: Monster schlägt zurück
+  if(state.damage && cur){
+    pHP=Math.max(0,pHP-1); renderPHearts();
+    const h=$("hero");
+    h.classList.remove("hit"); void h.offsetWidth; h.classList.add("hit");
+    const m=$("monster");
+    m.style.transform="translateX(-18px) scale(1.15)";
+    setTimeout(()=>{ m.style.transform=""; }, 200);
+    if(pHP<=0){ saveState(); failLevel(); return; }
+  }
+  $("msg").textContent = hint || pick(["Das Monster blockt! Versuch's nochmal 💪","Knapp daneben – du schaffst das!","Nochmal – gleich hast du es!"]);
+}
+let speakCurrent = ()=>{};
+$("speakbtn").onclick = ()=> speakCurrent();
+
+// ---------- Übungskiste mit Spaced Repetition (Leitner-Boxen, pro Fach) ----------
+// Jeder Fehler: {s:Fach, t:Typ, item:Aufgabe, box:0..3, due:"YYYY-MM-DD"}
+// box 0 = ganz frisch/schwach · nach jeder richtigen Wiederholung box+1 · box 3 = gelernt (raus)
+let curRound=null; // {s, t, item} der aktuellen Runde
+const SR_GRAD=3;               // ab Box 3 gilt die Aufgabe als gelernt
+const SR_INTERVAL=[1,2,4];     // Tage bis zur nächsten Wiederholung nach Box 0→1, 1→2, 2→3
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function addDaysStr(iso,n){ const d=new Date(iso+"T00:00:00Z"); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); }
+function findFail(g,s,t,item){ const k=JSON.stringify([g,s,t,item]); return state.fails.find(f=>JSON.stringify([f.g,f.s,f.t,f.item])===k); }
+function addFail(t,item){
+  const g=curGrade, s=curSubject, ex=findFail(g,s,t,item);
+  if(ex){ ex.box=0; ex.due=todayStr(); }
+  else {
+    state.fails.push({g:g,s:s,t:t,item:item,box:0,due:todayStr()});
+    const mine=state.fails.filter(f=>f.g===g&&f.s===s);
+    if(mine.length>30){ const i=state.fails.findIndex(f=>f.g===g&&f.s===s); if(i>=0) state.fails.splice(i,1); }
+  }
+  saveState();
+}
+function promoteFail(r){       // richtig im Training → höhere Box / gelernt
+  const ex=findFail(r.g||curGrade, r.s||curSubject, r.t, r.item); if(!ex) return;
+  ex.box=(ex.box||0)+1;
+  if(ex.box>=SR_GRAD){ state.fails=state.fails.filter(f=>f!==ex); }
+  else ex.due=addDaysStr(todayStr(), SR_INTERVAL[ex.box-1]||1);
+  saveState();
+}
+function demoteFail(r){        // falsch im Training → zurück auf Box 0
+  const ex=findFail(r.g||curGrade, r.s||curSubject, r.t, r.item);
+  if(ex){ ex.box=0; ex.due=todayStr(); saveState(); }
+}
+function subjectFails(){ return state.fails.filter(f=>f.g===curGrade && f.s===curSubject); }
+function dueFails(){ const t=todayStr(); return subjectFails().filter(f=>(f.due||t)<=t); }
+// schwächste zuerst (niedrigste Box, älteste Fälligkeit); fällige bevorzugt
+function trainingPool(){
+  const t=todayStr();
+  const mine=subjectFails().slice().sort((a,b)=> ((a.box||0)-(b.box||0)) || ((a.due||"")<(b.due||"")?-1:1) );
+  const due=mine.filter(f=>(f.due||t)<=t);
+  return due.length?due:mine;
+}
+
+function showRound(){
+  resetBoard();
+  const entry=rounds[ri];
+  let t=cur.type, item=entry;
+  if(t==="mix"){ t=entry.t; item=entry.item; } // Übungs-Challenge & Tages-Challenge
+  curRound={g:(entry&&entry.g)?entry.g:curGrade, s:(entry&&entry.s)?entry.s:curSubject, t:t, item:item};
+  if(t==="anlaut") roundAnlaut(item);
+  else if(t==="grossklein") roundGrossKlein(item);
+  else if(t==="silben") roundSilben(item);
+  else if(t==="wortbild") roundWortBild(item);
+  else if(t==="blitz") roundBlitz(item);
+  else if(t==="luecke") roundLuecke(item);
+  else if(t==="satzbild") roundSatzBild(item);
+  else if(t==="quatsch") roundQuatsch(item);
+  else if(t==="baumeister") roundBaumeister(item);
+}
+
+// Wort-Baumeister: ganzes Wort aus Buchstaben legen
+function roundBaumeister(item){
+  const [emoji,word]=item;
+  const letters=word.split("");
+  let li=0;
+  $("task").textContent="Baue das ganze Wort aus Buchstaben!";
+  $("picture").textContent=emoji;
+  speakCurrent=()=>speak(word,true); speakCurrent();
+  letters.forEach(()=>{ const d=document.createElement("div"); d.className="slot"; d.style.minWidth="56px"; d.textContent="_"; $("slots").appendChild(d); });
+  const extra=shuffle(BAULETTERS.split("").filter(l=>!letters.includes(l))).slice(0,3);
+  shuffle([...letters.map((l,i)=>({l,i})),...extra.map(l=>({l,i:-1}))]).forEach(o=>{
+    makeTile(o.l, b=>{
+      if(o.l===letters[li]){
+        b.classList.add("used");
+        const slot=document.querySelectorAll(".slot")[li];
+        slot.textContent=o.l; slot.classList.add("done");
+        li++;
+        if(li>=letters.length) correct(null, word);
+      } else {
+        wrong(b,"Hör genau hin: "+word+" 🔊");
+        speak(word,true);
+      }
+    });
+  });
+}
+
+function roundAnlaut(graph){
+  const [emoji,word]=pick(ANLAUT[graph]);
+  $("task").textContent="Mit welchem Buchstaben beginnt das Wort?";
+  $("picture").textContent=emoji;
+  speakCurrent=()=>speak(word,true); speakCurrent();
+  const others=shuffle(Object.keys(ANLAUT).filter(g=>g!==graph && word.toUpperCase().indexOf(g.toUpperCase())!==0)).slice(0,3);
+  shuffle([graph,...others]).forEach(g=>{
+    makeTile(g, b=> g===graph ? correct(b,word) : wrong(b,"Hör nochmal: "+word));
+  });
+}
+function roundGrossKlein(letter){
+  $("task").textContent="Finde den kleinen Buchstaben!";
+  $("picture").textContent=letter;
+  speakCurrent=()=>speak(letter,true); speakCurrent();
+  const others=shuffle((cur.set||GKALL()).filter(l=>l!==letter)).slice(0,3);
+  shuffle([letter,...others]).forEach(l=>{
+    makeTile(l.toLowerCase(), b=> l===letter ? correct(b,letter) : wrong(b));
+  });
+}
+function roundSilben(item){
+  const [emoji,syls]=item;
+  let si=0;
+  $("task").textContent="Baue das Wort aus Silben!";
+  $("picture").textContent=emoji;
+  speakCurrent=()=>speak(syls.join(" "),true); speakCurrent();
+  syls.forEach(()=>{ const d=document.createElement("div"); d.className="slot"; d.textContent="?"; $("slots").appendChild(d); });
+  const extra=shuffle(DISTRACT.filter(d=>!syls.includes(d))).slice(0,2);
+  shuffle([...syls.map((s,i)=>({s,i})),...extra.map(s=>({s,i:-1}))]).forEach(o=>{
+    makeTile(o.s, b=>{
+      if(o.s===syls[si]){
+        b.classList.add("used");
+        const slot=document.querySelectorAll(".slot")[si];
+        slot.textContent=o.s; slot.classList.add("done");
+        si++;
+        if(si>=syls.length) correct(null, syls.join(""));
+      } else {
+        wrong(b,"Hör genau hin! 🔊");
+        speak(syls.slice(0,si+1).join(" "),true);
+      }
+    });
+  });
+}
+function roundWortBild(item){
+  const [emoji,word]=item;
+  const isMath = curSubject==="mathe";
+  const isTerm = /[+\-=]/.test(word);
+  if(isMath){
+    $("task").textContent = isTerm ? "Rechne aus! Welches Bild zeigt das Ergebnis?" : "Welches Bild zeigt die Zahl?";
+    speakCurrent=()=>sayTerm(word);
+  } else {
+    $("task").textContent="Lies das Wort. Welches Bild passt?";
+    speakCurrent=()=>speak("Finde das Bild!");
+  }
+  $("bigword").textContent=word; $("bigword").classList.remove("hidden");
+  if(isMath) speakCurrent();
+  const others=shuffle((cur.set||WORTALL).filter(x=>x[1]!==word)).slice(0,3);
+  shuffle([item,...others]).forEach(o=>{
+    makeTile(o[0], b=> o[1]===word ? (isMath?correct(b):correct(b,word)) : wrong(b, isMath?"Zähl nochmal genau!":"Lies nochmal genau!"), true);
+  });
+}
+function roundBlitz(item){
+  const [emoji,word,dis]=item;
+  $("task").textContent="Merk dir das Blitz-Wort!";
+  $("picture").textContent="⚡";
+  $("bigword").textContent=word; $("bigword").classList.remove("hidden");
+  $("speakbtn").style.display="none";
+  speakCurrent=()=>{};
+  locked=true;
+  setTimeout(()=>{
+    $("bigword").classList.add("hidden");
+    $("task").textContent="Welches Wort hast du gesehen?";
+    locked=false;
+    shuffle([word,...dis]).forEach(w=>{
+      makeTile(w, b=> w===word ? correct(b,word) : wrong(b,"Das war ein anderes Wort!"));
+    });
+  }, 1600);
+}
+function roundLuecke(item){
+  const [emoji,word,pos,opts]=item;
+  const isMath = curSubject==="mathe";
+  const missing=opts[0];
+  const shown = word.slice(0,pos) + "_" + word.slice(pos+missing.length);
+  $("task").textContent = isMath ? "Welche Zahl fehlt?" : "Welcher Buchstabe fehlt?";
+  $("picture").textContent=emoji;
+  $("bigword").textContent=shown; $("bigword").classList.remove("hidden");
+  speakCurrent = isMath ? (()=>sayTerm(shown.replace("_"," wie viel "))) : (()=>speak(word,true));
+  speakCurrent();
+  shuffle([...opts]).forEach(l=>{
+    makeTile(l, b=>{
+      if(l===missing){ $("bigword").textContent=word; isMath?correct(b):correct(b,word); }
+      else wrong(b, isMath?"Rechne nochmal!":("Hör nochmal: "+word));
+    });
+  });
+}
+function roundSatzBild(item){
+  const [satz,emoji,dis]=item;
+  $("task").textContent = curSubject==="deutsch" ? "Lies den Satz. Welches Bild passt?" : "Hör gut zu! Welches Bild passt?";
+  $("bigword").textContent=satz; $("bigword").classList.remove("hidden");
+  $("bigword").style.fontSize="min(6.5vw,34px)";
+  speakCurrent=()=>speak(satz);
+  if(curSubject!=="deutsch") speakCurrent();
+  const missHint = curSubject==="deutsch" ? "Lies den Satz nochmal!" : "Hör nochmal gut zu! 🔊";
+  shuffle([emoji,...dis]).forEach(e=>{
+    makeTile(e, b=> e===emoji ? correct(b) : wrong(b, missHint), true);
+  });
+}
+function roundQuatsch(item){
+  const [satz,ok]=item;
+  const isMathEq = curSubject==="mathe" && /[+\-=]/.test(satz);
+  $("task").textContent="Stimmt das – oder ist das Quatsch?";
+  $("bigword").textContent=satz; $("bigword").classList.remove("hidden");
+  $("bigword").style.fontSize="min(6.5vw,34px)";
+  speakCurrent = isMathEq ? (()=>sayTerm(satz)) : (()=>speak(satz));
+  if(curSubject!=="deutsch") speakCurrent();
+  const wrongVerb = curSubject==="mathe" ? "Rechne nochmal" : curSubject==="deutsch" ? "Lies nochmal" : "Hör nochmal gut zu";
+  makeTile("✅ Stimmt", b=> ok ? correct(b) : wrong(b, wrongVerb+" – das ist Quatsch! 🤪"));
+  makeTile("🤪 Quatsch", b=> !ok ? correct(b) : wrong(b, "Das stimmt doch! "+wrongVerb+"."));
+}
+
+// ---------- Sieg (Zwischensequenz + Truhe) ----------
+function spawnConfetti(){
+  const em=["🎉","⭐","💎","✨","🎊"];
+  for(let i=0;i<26;i++){
+    const c=document.createElement("div");
+    c.className="confetti"; c.textContent=pick(em);
+    c.style.left=(Math.random()*100)+"vw";
+    c.style.animationDuration=(1.3+Math.random()*1.6)+"s";
+    c.style.animationDelay=(Math.random()*0.5)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3600);
+  }
+}
+function finishLevel(){
+  sessionLevels++;
+  const special = cur.id==="train" || cur.id==="daily";
+  const stars = mistakes===0?3 : mistakes<=2?2 : 1;
+  if(!special){
+    const old = state.stars[cur.id]||0;
+    if(stars>old) state.stars[cur.id]=stars;
+    state.levelsDone++;
+    if(mistakes===0) state.perfects++;
+  }
+  // Tages-Challenge: Extra-Bonus, einmal pro Tag
+  let dailyBonus=0;
+  const today=new Date().toISOString().slice(0,10);
+  if(cur.id==="daily" && state.dailyDone!==today){
+    state.dailyDone=today; dailyBonus=25;
+    state.gems+=25; state.earned+=25;
+  }
+  saveState(); sWin();
+  const mn=curMon[1];
+  setTimeout(()=>{
+    $("wintitle").textContent = cur.id==="train" ? "Training geschafft! 💪"
+      : cur.id==="daily" ? "Challenge geschafft! 🌞"+(dailyBonus?" +25 💎":"")
+      : mn+" besiegt! 🎉";
+    $("stars").textContent="⭐".repeat(stars)+"☆".repeat(3-stars);
+    $("chest").textContent="🧰"; $("chest").style.animation="";
+    $("chestmsg").textContent="Tippe auf die Truhe!";
+    $("teaser").classList.add("hidden");
+    $("nextbtn").classList.add("hidden");
+    $("winov").classList.remove("hidden");
+    if(stars===3) spawnConfetti();
+    speak(cur.id==="train" ? "Training geschafft! Du wirst immer besser!" : "Du hast das Monster besiegt! Super gemacht!");
+    checkAchievements(); // Erfolge poppen über dem Sieg-Bildschirm auf
+  }, 1100); // Zeit für die Sterbe-Animation
+}
+$("chest").onclick=function(){
+  if($("chest").textContent!=="🧰") return;
+  sChest();
+  const [e,n,r]=rollLoot();
+  let txt;
+  if(state.loot.includes(e)){
+    const dub=5+r*5; state.gems+=dub;
+    txt = e+" "+n+" (schon da) → +"+dub+" 💎!";
+  } else {
+    state.loot.push(e);
+    txt = "<span style='font-size:44px'>"+e+"</span> "+n+"<br><b>"+RARITY_NAMES[r]+"</b> – neu in deiner Schatzkammer!";
+    if(r>=2) speak("Wow! Ein "+RARITY_NAMES[r].replace(/✦/g,"")+"er Schatz: "+n+"!");
+  }
+  state.gems+=5; saveState(); updateHud();
+  $("chest").textContent="✨"; $("chest").style.animation="none";
+  $("chestmsg").innerHTML = txt+"<br>+5 💎";
+  // Offene Schleife: Teaser auf den nächsten Gegner
+  if(cur && cur.id!=="train" && cur.id!=="daily" && curIdx+1<LEVELS.length){
+    $("teaser").innerHTML="Als Nächstes wartet: "+MONSTER[curIdx+1][0]+" <b>"+MONSTER[curIdx+1][1]+"</b> …";
+    $("teaser").classList.remove("hidden");
+  }
+  if(sessionLevels>0 && sessionLevels%3===0){
+    $("teaser").innerHTML += "<br><br>🌟 Drei Monster besiegt – super für heute! Dein Fortschritt ist sicher.";
+  }
+  $("nextbtn").classList.remove("hidden");
+};
+$("nextbtn").onclick=showMenu;
+$("homebtn").onclick=showMenu;
+
+// ---------- Tages-Streak (Trigger + Investment) ----------
+function checkDaily(){
+  const today = new Date().toISOString().slice(0,10);
+  if(state.lastDay===today) return;
+  const yesterday = new Date(Date.now()-864e5).toISOString().slice(0,10);
+  state.dayStreak = (state.lastDay===yesterday) ? state.dayStreak+1 : 1;
+  state.lastDay = today;
+  const bonus = Math.min(5+ (state.dayStreak-1)*5, 25);
+  saveState();
+  $("dailytext").innerHTML = (state.dayStreak>1
+    ? "🔥 <b>"+state.dayStreak+" Tage in Folge!</b> Dein Treue-Bonus: "+bonus+" 💎"
+    : "Schön, dass du heute spielst! Startbonus: "+bonus+" 💎");
+  $("dailybtn").onclick=()=>{
+    state.gems+=bonus; state.earned+=bonus; saveState(); updateHud(); sChest();
+    $("dailyov").classList.add("hidden");
+    checkAchievements();
+  };
+  $("dailyov").classList.remove("hidden");
+}
+
+renderSnd();
+showHub();
+checkDaily();
+</script>
+</body>
+</html>
