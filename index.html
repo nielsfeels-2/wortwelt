@@ -1006,6 +1006,458 @@ const LEVELS_MU2=[
   {w:"Welt 3 · Noten, Singen & Rhythmus", id:"mu2_r1", ico:"👏", nm:"Rhythmus & Takt", type:"quatsch", set:U2_RHYTH}
 ];
 
+// ================= KLASSE 3 · Deutsch (NRW) =================
+const MONSTER_DE3 = [
+  ["🧩","Vorsilben-Vampir"],["📏","Verlängerungs-Vogel"],["💨","Dehnungs-Dämon"],["✍️","Schreib-Sphinx"],
+  ["📐","Steigerungs-Stier"],["🌳","Wortfamilien-Wolf"],["⏳","Zeiten-Zyklop"],["🎭","Satzglied-Geist"],
+  ["💬","Rede-Rabe"],["📚","Lese-Lich"],["🔎","Sinn-Spinne"],["📖","Wörterbuch-Wyvern"]
+];
+const D3_VERLAENG=[
+  ["🐕","HUND",3,["D","T","P","G"]],["📅","TAG",2,["G","K","D","B"]],["🚲","RAD",2,["D","T","P","B"]],
+  ["👗","KLEID",4,["D","T","P","G"]],["🚶","WEG",2,["G","K","D","B"]],["🐄","KALB",3,["B","P","D","G"]]
+];
+const D3_DEHNH=[
+  ["🚂","BAHN",2,["H","CH","K","T"]],["🦷","ZAHN",2,["H","CH","K","T"]],["🪑","STUHL",3,["H","CH","K","W"]],
+  ["🌾","MEHL",2,["H","CH","K","W"]],["🏠","WOHNUNG",2,["H","CH","K","W"]],["🦌","REH",2,["H","CH","K","T"]]
+];
+const D3_BAU=[
+  ["🐘","ELEFANT"],["🚀","RAKETE"],["🏰","SCHLOSS"],["🌈","REGENBOGEN"],["🧙","ZAUBERER"],["⚽","FUSSBALL"],["🦖","DINOSAURIER"],["💻","COMPUTER"]
+];
+const D3_VORSILB=[
+  ["🧠","VERSTEHEN",0,["VER","ENT","BE","GE"]],["🎁","BEKOMMEN",0,["BE","VER","ENT","GE"]],["🔍","ENTDECKEN",0,["ENT","VER","BE","GE"]],
+  ["🏆","GEWINNEN",0,["GE","VER","ENT","BE"]],["💭","VERGESSEN",0,["VER","ENT","BE","GE"]],["🏡","BESUCHEN",0,["BE","VER","ENT","GE"]]
+];
+const D3_ADJ=[
+  ["Die Steigerung von schön ist schöner, am schönsten.",true],["Die Steigerung von groß ist größer, am größten.",true],
+  ["Der Komparativ von schnell ist schnellsten.",false],["Positiv, Komparativ und Superlativ sind die drei Steigerungsformen.",true],
+  ["Die Steigerung von gut ist guter, am gutesten.",false],["Am + Adjektiv + -sten bildet man oft den Superlativ.",true],
+  ["Klein, kleiner, am kleinsten ist eine richtige Steigerung.",true],["Die Steigerung von viel ist vieler, am vielsten.",false]
+];
+const D3_WORTFAM=[
+  ["Fahren, Fahrer und Ausfahrt gehören zur Wortfamilie fahren.",true],["Blume und blau gehören zur gleichen Wortfamilie.",false],
+  ["Spielen, Spieler und Spielplatz gehören zur Wortfamilie spielen.",true],["Haus, Häuser und Hausaufgabe gehören zur Wortfamilie Haus.",true],
+  ["Schwimmen und Schwamm gehören zur gleichen Wortfamilie.",true],["Tisch und Tischler gehören zur gleichen Wortfamilie.",true],
+  ["Lachen und Kuchen gehören zur gleichen Wortfamilie.",false],["Wörter aus einer Wortfamilie haben den gleichen Wortstamm.",true]
+];
+const D3_ZEITEN=[
+  ["„Ich spiele.“ steht im Präsens (Gegenwart).",true],["„Ich spielte.“ steht im Präteritum (Vergangenheit).",true],
+  ["„Ich werde spielen.“ ist die Vergangenheit.",false],["Präsens beschreibt, was gerade passiert.",true],
+  ["„Er lief schnell.“ steht im Präteritum.",true],["Präteritum nennt man auch die Zukunft.",false],
+  ["„Sie lacht.“ steht im Präsens.",true],["Das Präteritum wird oft beim Erzählen von Geschichten benutzt.",true]
+];
+const D3_SATZGLIEDER=[
+  ["Der Hund läuft schnell über die Wiese.","🐶",["🐱","🐦"]],["Die Katze schläft auf dem Sofa.","🐱",["🐶","🐟"]],
+  ["Das Mädchen malt ein buntes Bild.","👧",["👦","👴"]],["Der Vogel singt hoch oben im Baum.","🐦",["🐕","🐠"]],
+  ["Die Kinder spielen fröhlich im Garten.","🧒",["👵","🐘"]],["Der Bäcker backt frisches Brot.","🧑‍🍳",["👨‍🚒","👩‍⚕️"]]
+];
+const D3_REDE=[
+  ["Wörtliche Rede steht in Anführungszeichen.",true],["„Komm her!“, ruft Mama. – Das ist wörtliche Rede.",true],
+  ["Vor der wörtlichen Rede kann ein Doppelpunkt stehen.",true],["Wörtliche Rede erkennt man an einem Fragezeichen.",false],
+  ["Der Redebegleitsatz sagt, wer spricht.",true],["„Wie geht es dir?“, fragt Tom. – Das ist wörtliche Rede.",true],
+  ["Man schreibt wörtliche Rede nie mit Anführungszeichen.",false],["Nach der wörtlichen Rede steht oft ein Komma vor dem Redebegleitsatz.",true]
+];
+const D3_LESEN1=[
+  ["Im Frühling wachen die Igel aus dem Winterschlaf auf.","🦔",["🐸","🦋"]],["Die Kinder bauen am Strand eine große Sandburg.","🏖️",["⛰️","🏙️"]],
+  ["Der Bauer erntet im Herbst die reifen Äpfel.","🍎",["🍇","🥕"]],["Ein Schmetterling schlüpft aus seiner Puppe.","🦋",["🐛","🐝"]],
+  ["Die Feuerwehr löscht das brennende Haus mit viel Wasser.","🚒",["🚑","🚓"]],["Astronauten fliegen mit einer Rakete ins Weltall.","🚀",["✈️","🚁"]]
+];
+const D3_LESEN2=[
+  ["Ein Wal ist ein Säugetier, das im Meer lebt.",true],["Bäume atmen Kohlendioxid ein und geben Sauerstoff ab.",true],
+  ["Ein Buch hat immer nur eine Seite.",false],["Regenwürmer helfen dabei, den Boden locker zu halten.",true],
+  ["Ein Jahr hat 365 oder manchmal 366 Tage.",true],["Fische können ohne Wasser tagelang leben.",false],
+  ["Ein Kalender zeigt uns Tage, Wochen und Monate.",true],["Ein Globus zeigt die Erde als Kugel.",true]
+];
+const D3_WOERTERBUCH=[
+  ["Im Wörterbuch stehen die Wörter alphabetisch geordnet.",true],["Nomen werden im Wörterbuch großgeschrieben.",true],
+  ["Im Wörterbuch kommt „Fisch“ vor „Fuchs“.",true],["Im Wörterbuch kommt „Zebra“ vor „Apfel“.",false],
+  ["Ein Wörterbuch hilft bei der richtigen Schreibweise.",true],["Im Wörterbuch stehen auch Erklärungen zu Wörtern.",true],
+  ["Im ABC kommt K vor F.",false],["Ein Lexikon kann man auch als Wörterbuch benutzen.",true]
+];
+const LEVELS_DE3=[
+  {w:"Welt 1 · Richtig schreiben", id:"d3_verlaeng", ico:"📏", nm:"Verlängern (b/d/g)", type:"luecke", set:D3_VERLAENG},
+  {w:"Welt 1 · Richtig schreiben", id:"d3_dehnh", ico:"💨", nm:"Dehnungs-h", type:"luecke", set:D3_DEHNH},
+  {w:"Welt 1 · Richtig schreiben", id:"d3_bau", ico:"🧰", nm:"Wörter schreiben", type:"baumeister", set:D3_BAU},
+  {w:"Welt 2 · Wortbausteine & Wortarten", id:"d3_vorsilb", ico:"🧩", nm:"Vorsilben", type:"luecke", set:D3_VORSILB},
+  {w:"Welt 2 · Wortbausteine & Wortarten", id:"d3_adj", ico:"📐", nm:"Adjektive steigern", type:"quatsch", set:D3_ADJ},
+  {w:"Welt 2 · Wortbausteine & Wortarten", id:"d3_wortfam", ico:"🌳", nm:"Wortfamilien", type:"quatsch", set:D3_WORTFAM},
+  {w:"Welt 3 · Sätze & Satzglieder", id:"d3_zeiten", ico:"⏳", nm:"Präsens & Präteritum", type:"quatsch", set:D3_ZEITEN},
+  {w:"Welt 3 · Sätze & Satzglieder", id:"d3_satzglieder", ico:"🎭", nm:"Wer oder was?", type:"satzbild", set:D3_SATZGLIEDER},
+  {w:"Welt 3 · Sätze & Satzglieder", id:"d3_rede", ico:"💬", nm:"Wörtliche Rede", type:"quatsch", set:D3_REDE},
+  {w:"Welt 4 · Lesen & Nachschlagen", id:"d3_lesen1", ico:"🔎", nm:"Lesen: Was passt?", type:"satzbild", set:D3_LESEN1},
+  {w:"Welt 4 · Lesen & Nachschlagen", id:"d3_lesen2", ico:"📖", nm:"Lesen: Stimmt das?", type:"quatsch", set:D3_LESEN2},
+  {w:"Welt 4 · Lesen & Nachschlagen", id:"d3_woerterbuch", ico:"📚", nm:"Das Wörterbuch", type:"quatsch", set:D3_WOERTERBUCH}
+];
+
+// ================= KLASSE 3 · Mathe (NRW – Zahlenraum 1000, Einmaleins komplett) =================
+const MONSTER_MA3=[
+  ["💯","Tausender-Titan"],["🔢","Zahlen-Zauberer"],["🎚️","Vergleichs-Viper"],["➕","Additions-Alien"],["➖","Subtraktions-Spuk"],
+  ["📝","Rechen-Rüpel"],["3️⃣","Dreier-Dämon"],["6️⃣","Sechser-Schreck"],["➗","Divisions-Drache"],["📏","Längen-Lurch"],
+  ["⚖️","Gewichts-Gremlin"],["⏰","Zeit-Zombie"],["🔲","Flächen-Fantom"],["🛒","Sach-Sirene"],["✨","Verdopplungs-Vieh"]
+];
+const M3_STELLEN=[
+  ["356 hat 3 Hunderter, 5 Zehner und 6 Einer.",true],["Die Zahl 999 ist die größte dreistellige Zahl.",true],
+  ["1000 hat vier Stellen.",true],["230 hat 2 Hunderter und 3 Zehner.",true],["Die Zahl 90 ist größer als 900.",false],
+  ["500 besteht aus 5 Hundertern.",true],["Die Zahl 45 ist eine dreistellige Zahl.",false],["707 hat 0 Zehner.",true]
+];
+const M3_NACHBAR=[
+  ["🔢","399 400 401",4,["400","399","401","410"]],["🔢","699 700 701",4,["700","699","701","710"]],
+  ["🔢","899 900 901",4,["900","899","901","890"]],["🔢","500 501 502",4,["501","500","502","510"]],
+  ["🔢","249 250 251",4,["250","249","251","260"]],["🔢","999 1000 1001",4,["1000","999","1001","1010"]]
+];
+const M3_VERGL=[
+  ["489 ist größer als 498.",false],["350 ist kleiner als 530.",true],["700 ist genauso groß wie 700.",true],
+  ["999 ist die größte Zahl im Zahlenraum bis 1000.",true],["123 ist größer als 321.",false],
+  ["0 ist kleiner als jede andere Zahl bis 1000.",true],["456 ist kleiner als 465.",true],["800 ist größer als 799.",true]
+];
+const M3_PLUS=[
+  ["🎲","230+150=380",8,["380","280","480","390"]],["🎲","410+280=690",8,["690","590","790","680"]],
+  ["🎲","150+250=400",8,["400","300","500","410"]],["🎲","320+340=660",8,["660","560","760","650"]],
+  ["🎲","205+185=390",8,["390","290","490","380"]],["🎲","440+260=700",8,["700","600","800","710"]]
+];
+const M3_MINUS=[
+  ["🎲","580-230=350",8,["350","250","450","360"]],["🎲","690-280=410",8,["410","310","510","400"]],
+  ["🎲","750-350=400",8,["400","300","500","410"]],["🎲","820-320=500",8,["500","400","600","510"]],
+  ["🎲","960-460=500",8,["500","400","600","510"]],["🎲","645-245=400",8,["400","300","500","410"]]
+];
+const M3_SCHRIFT=[
+  ["245 + 138 = 383",true],["512 - 236 = 276",true],["407 + 298 = 705",true],["630 - 145 = 495",false],
+  ["389 + 214 = 503",false],["725 - 468 = 257",true],["156 + 344 = 500",true],["900 - 275 = 725",false]
+];
+const M3_1X3=[
+  ["🎲","3·4=12",4,["12","9","15","16"]],["🎲","3·6=18",4,["18","15","21","16"]],["🎲","3·8=24",4,["24","21","27","18"]],
+  ["🎲","4·3=12",4,["12","9","15","16"]],["🎲","4·6=24",4,["24","20","28","18"]],["🎲","4·9=36",4,["36","32","40","28"]]
+];
+const M3_1X6=[
+  ["🎲","6·3=18",4,["18","15","21","24"]],["🎲","6·5=30",4,["30","25","35","24"]],["🎲","6·7=42",4,["42","36","48","35"]],
+  ["🎲","7·3=21",4,["21","18","24","28"]],["🎲","7·6=42",4,["42","36","48","49"]],["🎲","7·8=56",4,["56","49","63","48"]]
+];
+const M3_GETEILT=[
+  ["20 : 4 = 5",true],["18 : 3 = 5",false],["36 : 6 = 6",true],["49 : 7 = 7",true],["24 : 8 = 4",false],
+  ["45 : 5 = 9",true],["Geteiltrechnen ist das Gegenteil vom Malnehmen.",true],["56 : 7 = 9",false]
+];
+const M3_LAENGE=[
+  ["1 Meter sind 100 Zentimeter.",true],["1 Kilometer sind 1000 Meter.",true],["1 Zentimeter sind 100 Meter.",false],
+  ["Ein Lineal misst meistens 30 Zentimeter.",true],["Ein Fußballfeld ist ungefähr 100 Meter lang.",true],
+  ["10 Millimeter sind 1 Zentimeter.",true],["Eine Ameise ist ungefähr 1 Meter lang.",false],["Eine Turnhalle kann man gut in Metern messen.",true]
+];
+const M3_GEWICHT=[
+  ["1 Kilogramm sind 1000 Gramm.",true],["Ein Elefant wiegt mehr als eine Maus.",true],["1 Tonne ist leichter als 1 Gramm.",false],
+  ["Ein Apfel wiegt ungefähr 150 Gramm.",true],["Auf einer Waage kann man das Gewicht ablesen.",true],
+  ["1000 Kilogramm sind 1 Tonne.",true],["Ein Auto wiegt ungefähr so viel wie ein Buch.",false],["Gramm ist eine Einheit für das Gewicht.",true]
+];
+const M3_ZEIT=[
+  ["Eine Stunde hat 60 Minuten.",true],["Ein Tag hat 24 Stunden.",true],["Viertel nach 3 ist 3:15 Uhr.",true],
+  ["Halb 5 bedeutet 5:30 Uhr.",false],["Viertel vor 8 ist 7:45 Uhr.",true],["Eine Woche hat 7 Tage.",true],
+  ["Eine Minute hat 100 Sekunden.",false],["Zwischen 8:00 Uhr und 9:00 Uhr liegt genau eine Stunde.",true]
+];
+const M3_FLAECHE=[
+  ["Der Umfang ist die Länge der Außenlinie einer Figur.",true],["Ein Quadrat hat vier gleich lange Seiten.",true],
+  ["Die Fläche gibt an, wie groß eine Figur innen ist.",true],["Ein Rechteck hat immer vier gleich lange Seiten.",false],
+  ["Den Umfang eines Rechtecks berechnet man, indem man alle Seiten addiert.",true],["Ein Dreieck hat vier Ecken.",false],
+  ["Ein Quadrat mit 4 cm Seitenlänge hat einen Umfang von 16 cm.",true],["Eine Fläche misst man zum Beispiel in Quadratzentimetern.",true]
+];
+const M3_SACH=[
+  ["Lisa hat 3 Kisten mit je 3 Äpfeln. Wie viele Äpfel sind das?","🍎🍎🍎🍎🍎🍎🍎🍎🍎",["🍎🍎🍎🍎🍎🍎","🍎🍎🍎🍎🍎🍎🍎🍎"]],
+  ["Im Bus sitzen 6 Kinder, an der Haltestelle steigen 3 aus. Wie viele bleiben?","🧒🧒🧒",["🧒🧒","🧒🧒🧒🧒"]],
+  ["Tom hat 4 Tüten mit je 2 Bonbons. Wie viele Bonbons sind das?","🍬🍬🍬🍬🍬🍬🍬🍬",["🍬🍬🍬🍬🍬🍬","🍬🍬🍬🍬🍬🍬🍬"]],
+  ["8 Kekse werden auf 2 Teller gleich verteilt. Wie viele Kekse pro Teller?","🍪🍪🍪🍪",["🍪🍪","🍪🍪🍪"]],
+  ["5 Kinder haben je 2 Luftballons. Wie viele Luftballons sind das?","🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈",["🎈🎈🎈🎈🎈🎈🎈🎈","🎈🎈🎈🎈🎈🎈🎈🎈🎈"]],
+  ["9 Blumen werden auf 3 Vasen gleich verteilt. Wie viele Blumen pro Vase?","🌸🌸🌸",["🌸🌸","🌸🌸🌸🌸"]]
+];
+const M3_DOP=[
+  ["Das Doppelte von 45 ist 90.",true],["Die Hälfte von 60 ist 30.",true],["Das Doppelte von 120 ist 240.",true],
+  ["Die Hälfte von 100 ist 40.",false],["In der Zahlenreihe 5, 10, 15, 20 kommt als nächstes 25.",true],
+  ["In der Zahlenreihe 100, 90, 80 kommt als nächstes 60.",false],["Das Doppelte von 250 ist 500.",true],["Die Hälfte von 88 ist 44.",true]
+];
+const LEVELS_MA3=[
+  {w:"Welt 1 · Zahlen bis 1000", id:"m3_stellen", ico:"💯", nm:"Stellenwerte", type:"quatsch", set:M3_STELLEN},
+  {w:"Welt 1 · Zahlen bis 1000", id:"m3_nachbar", ico:"🔢", nm:"Zahlen-Nachbarn", type:"luecke", set:M3_NACHBAR},
+  {w:"Welt 1 · Zahlen bis 1000", id:"m3_vergl", ico:"🎚️", nm:"Zahlen vergleichen", type:"quatsch", set:M3_VERGL},
+  {w:"Welt 2 · Plus & Minus bis 1000", id:"m3_plus", ico:"➕", nm:"Plus (glatt)", type:"luecke", set:M3_PLUS},
+  {w:"Welt 2 · Plus & Minus bis 1000", id:"m3_minus", ico:"➖", nm:"Minus (glatt)", type:"luecke", set:M3_MINUS},
+  {w:"Welt 2 · Plus & Minus bis 1000", id:"m3_schrift", ico:"📝", nm:"Stimmt die Rechnung?", type:"quatsch", set:M3_SCHRIFT},
+  {w:"Welt 3 · Einmaleins komplett", id:"m3_1x3", ico:"3️⃣", nm:"3er & 4er-Reihe", type:"luecke", set:M3_1X3},
+  {w:"Welt 3 · Einmaleins komplett", id:"m3_1x6", ico:"6️⃣", nm:"6er & 7er-Reihe", type:"luecke", set:M3_1X6},
+  {w:"Welt 3 · Einmaleins komplett", id:"m3_geteilt", ico:"➗", nm:"Geteiltrechnen", type:"quatsch", set:M3_GETEILT},
+  {w:"Welt 4 · Größen", id:"m3_laenge", ico:"📏", nm:"Längen", type:"quatsch", set:M3_LAENGE},
+  {w:"Welt 4 · Größen", id:"m3_gewicht", ico:"⚖️", nm:"Gewichte", type:"quatsch", set:M3_GEWICHT},
+  {w:"Welt 4 · Größen", id:"m3_zeit", ico:"⏰", nm:"Zeit & Uhr", type:"quatsch", set:M3_ZEIT},
+  {w:"Welt 5 · Flächen, Umfang & Sachrechnen", id:"m3_flaeche", ico:"🔲", nm:"Fläche & Umfang", type:"quatsch", set:M3_FLAECHE},
+  {w:"Welt 5 · Flächen, Umfang & Sachrechnen", id:"m3_sach", ico:"🛒", nm:"Sachaufgaben", type:"satzbild", set:M3_SACH},
+  {w:"Welt 5 · Flächen, Umfang & Sachrechnen", id:"m3_dop", ico:"✨", nm:"Verdoppeln & Reihen", type:"quatsch", set:M3_DOP}
+];
+
+// ================= KLASSE 3 · Sachunterricht (NRW) =================
+const MONSTER_SU3=[
+  ["💧","Kreislauf-Kobold"],["🧊","Zustands-Zombie"],["🌪️","Wetter-Wicht"],["🌱","Pflanzen-Phantom"],["🐝","Bestäubungs-Biest"],["🐸","Verwandlungs-Vieh"],
+  ["⚡","Strom-Sprite"],["🔋","Energie-Elf"],["⚙️","Erfinder-Emu"],["🗺️","Karten-Kobold"],["🇩🇪","Bundesland-Barde"],["🏺","Steinzeit-Spuk"],
+  ["🥗","Ernährungs-Eule"],["🩹","Erste-Hilfe-Hexe"],["📱","Medien-Monster"]
+];
+const S3_KREISLAUF=[
+  ["Wasser verdunstet, wenn die Sonne es erwärmt.",true],["Wolken entstehen aus Wasserdampf.",true],
+  ["Regen fällt aus Wolken auf die Erde.",true],["Der Wasserkreislauf hat einen Anfang, aber kein Ende.",false],
+  ["Flüsse fließen meistens ins Meer.",true],["Wasser kann verdunsten, sich sammeln und wieder abregnen.",true],
+  ["Grundwasser befindet sich unter der Erde.",true],["Wolken bestehen aus festem Gestein.",false]
+];
+const S3_ZUSTAND=[
+  ["Wasser hat drei Zustände: fest, flüssig und gasförmig.",true],["Eis ist der feste Zustand von Wasser.",true],
+  ["Wasserdampf ist der gasförmige Zustand von Wasser.",true],["Wenn Eis schmilzt, wird es zu Wasserdampf.",false],
+  ["Wenn Wasser kocht, entsteht Wasserdampf.",true],["Wasser gefriert bei 0 Grad Celsius zu Eis.",true],
+  ["Feste Stoffe haben immer eine eigene Form.",true],["Gase haben eine feste Form wie Steine.",false]
+];
+const S3_KLIMA=[
+  ["Ein Gewitter besteht aus Blitz und Donner.",true],["Ein Regenbogen entsteht, wenn Sonne auf Regentropfen trifft.",true],
+  ["Hagel besteht aus kleinen Eiskörnern.",true],["Nebel entsteht nur im Sommer.",false],
+  ["Wind entsteht durch bewegte Luft.",true],["Ein Thermometer misst den Luftdruck.",false],
+  ["Ein Barometer misst den Luftdruck.",true],["Schnee fällt nur, wenn es sehr warm ist.",false]
+];
+const S3_PFLANZE=[
+  ["Eine Pflanze besteht aus Wurzel, Stängel, Blatt und Blüte.",true],["Die Wurzel nimmt Wasser und Nährstoffe aus dem Boden auf.",true],
+  ["In den Blättern findet die Fotosynthese statt.",true],["Pflanzen brauchen kein Licht zum Wachsen.",false],
+  ["Blüten können sich zu Früchten entwickeln.",true],["Der Stängel transportiert Wasser zu den Blättern.",true],
+  ["Pflanzen atmen Sauerstoff ein und Kohlendioxid aus.",false],["Ohne Sonnenlicht können die meisten Pflanzen nicht wachsen.",true]
+];
+const S3_BESTAEUB=[
+  ["Bienen tragen Pollen von Blüte zu Blüte.",true],["Bestäubung hilft Pflanzen, Samen zu bilden.",true],
+  ["Nur der Wind kann Pflanzen bestäuben.",false],["Schmetterlinge können auch Blüten bestäuben.",true],
+  ["Aus einer bestäubten Blüte kann eine Frucht wachsen.",true],["Pollen ist der gelbe Blütenstaub.",true],
+  ["Bienen sammeln auch Nektar für Honig.",true],["Bestäubung ist für Pflanzen völlig unwichtig.",false]
+];
+const S3_LEBENSZYKLUS=[
+  ["Aus dem Ei schlüpft die Kaulquappe, dann wird sie zum Frosch.","🐸",["🐟","🐦"]],["Die Raupe verpuppt sich und wird zum Schmetterling.","🦋",["🐛","🐝"]],
+  ["Aus dem Samen wächst zuerst ein kleiner Keimling.","🌱",["🍂","🪨"]],["Ein Küken schlüpft aus dem Hühnerei.","🐣",["🐠","🐍"]],
+  ["Der Frosch legt seine Eier im Wasser ab.","🥚",["🍎","🧊"]],["Aus der Kaulquappe entwickeln sich langsam Beine.","🐸",["🐛","🦋"]]
+];
+const S3_STROM=[
+  ["Ein Stromkreis braucht eine Batterie, Kabel und eine Lampe.",true],["Strom fließt nur, wenn der Stromkreis geschlossen ist.",true],
+  ["Ein Schalter kann den Stromkreis unterbrechen.",true],["Metall leitet Strom meistens gut.",true],
+  ["Holz leitet Strom sehr gut.",false],["Strom kann gefährlich sein, deshalb ist Vorsicht wichtig.",true],
+  ["Eine Steckdose sollte man mit nassen Händen anfassen.",false],["Ein Kabel leitet den Strom von der Batterie zur Lampe.",true]
+];
+const S3_ENERGIE=[
+  ["Sonnenenergie kommt von der Sonne.",true],["Windenergie wird durch Windräder genutzt.",true],
+  ["Kohle und Erdöl sind fossile Energieträger.",true],["Erneuerbare Energie geht nie zur Neige.",true],
+  ["Solarzellen wandeln Sonnenlicht in Strom um.",true],["Fossile Energieträger sind unbegrenzt vorhanden.",false],
+  ["Wasserkraft nutzt die Energie von fließendem Wasser.",true],["Strom sparen schont die Umwelt.",true]
+];
+const S3_ERFINDUNG=[
+  ["Das Rad ist eine sehr alte Erfindung der Menschheit.",true],["Das Telefon dient zum Sprechen über weite Entfernungen.",true],
+  ["Früher gab es keine Autos, sondern Pferdekutschen.",true],["Der Computer wurde schon in der Steinzeit erfunden.",false],
+  ["Glühbirnen wandeln Strom in Licht um.",true],["Ein Kühlschrank hält Lebensmittel kalt und frisch.",true],
+  ["Die Waschmaschine erleichtert das Wäschewaschen.",true],["Früher schrieb man Briefe nur mit dem Computer.",false]
+];
+const S3_KARTEN=[
+  ["Eine Karte zeigt eine Landschaft von oben.",true],["Ein Maßstab zeigt, wie stark eine Karte verkleinert ist.",true],
+  ["Auf Karten ist Norden meistens oben.",true],["Eine Kartenlegende erklärt die Symbole auf der Karte.",true],
+  ["Auf einer Karte ist Süden immer links.",false],["Flüsse werden auf Karten oft blau dargestellt.",true],
+  ["Ein Kompass zeigt immer nach Norden.",true],["Eine Karte kann bei der Orientierung helfen.",true]
+];
+const S3_BUNDESLAENDER=[
+  ["Deutschland hat 16 Bundesländer.",true],["Berlin ist die Hauptstadt von Deutschland.",true],
+  ["Deutschland grenzt an mehrere andere Länder.",true],["Deutschland liegt in Afrika.",false],
+  ["Nordrhein-Westfalen ist ein Bundesland in Deutschland.",true],["Deutschland hat eine Nordsee- und eine Ostseeküste.",true],
+  ["In Deutschland spricht man hauptsächlich Deutsch.",true],["Deutschland hat nur ein einziges Bundesland.",false]
+];
+const S3_STEINZEIT=[
+  ["In der Steinzeit stellten Menschen Werkzeuge aus Stein her.",true],["Früher gab es noch keinen elektrischen Strom.",true],
+  ["Die Steinzeit war vor sehr, sehr langer Zeit.",true],["In der Steinzeit fuhren die Menschen schon Auto.",false],
+  ["Höhlenmalereien sind Zeichnungen aus der Steinzeit.",true],["Ein Kalender hilft, die Zeit einzuteilen.",true],
+  ["Museen zeigen oft Gegenstände aus früherer Zeit.",true],["Früher lebten Menschen genauso wie heute.",false]
+];
+const S3_ERNAEHR=[
+  ["Obst und Gemüse sollte man reichlich essen.",true],["Süßigkeiten sollte man nur selten essen.",true],
+  ["Wasser ist der beste Durstlöscher.",true],["Die Ernährungspyramide zeigt, wie viel man von was essen sollte.",true],
+  ["Fette und Süßes stehen ganz oben in der Pyramide – man isst wenig davon.",true],["Man sollte nur Süßigkeiten essen und nichts anderes.",false],
+  ["Vollkornbrot ist gesünder als sehr viel Zucker.",true],["Getreideprodukte wie Brot und Nudeln liefern Energie.",true]
+];
+const S3_ERSTEHILFE=[
+  ["Bei einer kleinen Wunde hilft ein Pflaster.",true],["Der Notruf in Deutschland ist 112.",true],
+  ["Bei einem Unfall sollte man ruhig bleiben und Hilfe holen.",true],["Man sollte bei jeder kleinen Verletzung sofort weinen und weglaufen.",false],
+  ["Das Herz pumpt Blut durch unseren Körper.",true],["Die Lunge ist zum Atmen da.",true],
+  ["Bei starkem Bluten sollte man die Wunde fest abdrücken.",true],["Man muss einen Notruf niemals ernst nehmen.",false]
+];
+const S3_MEDIEN=[
+  ["Bücher, Zeitungen und das Internet sind Medien.",true],["Nicht alles im Internet stimmt.",true],
+  ["Ein Feuerwehrmann löscht Brände.",true],["Ein Arzt hilft kranken Menschen.",true],
+  ["Man sollte persönliche Daten nicht einfach im Internet weitergeben.",true],["Alles, was im Internet steht, ist immer wahr.",false],
+  ["Ein Bäcker backt Brot und Brötchen.",true],["Fernsehen ist die einzige Art von Medium.",false]
+];
+const LEVELS_SU3=[
+  {w:"Welt 1 · Wasser & Wetter vertieft", id:"su3_kreislauf", ico:"💧", nm:"Der Wasserkreislauf", type:"quatsch", set:S3_KREISLAUF},
+  {w:"Welt 1 · Wasser & Wetter vertieft", id:"su3_zustand", ico:"🧊", nm:"Fest, flüssig, gasförmig", type:"quatsch", set:S3_ZUSTAND},
+  {w:"Welt 1 · Wasser & Wetter vertieft", id:"su3_klima", ico:"🌪️", nm:"Wetterphänomene", type:"quatsch", set:S3_KLIMA},
+  {w:"Welt 2 · Pflanzen & Tiere vertieft", id:"su3_pflanze", ico:"🌱", nm:"Aufbau der Pflanze", type:"quatsch", set:S3_PFLANZE},
+  {w:"Welt 2 · Pflanzen & Tiere vertieft", id:"su3_bestaeub", ico:"🐝", nm:"Bestäubung", type:"quatsch", set:S3_BESTAEUB},
+  {w:"Welt 2 · Pflanzen & Tiere vertieft", id:"su3_lebenszyklus", ico:"🐸", nm:"Lebenszyklen", type:"satzbild", set:S3_LEBENSZYKLUS},
+  {w:"Welt 3 · Strom, Energie & Technik", id:"su3_strom", ico:"⚡", nm:"Der Stromkreis", type:"quatsch", set:S3_STROM},
+  {w:"Welt 3 · Strom, Energie & Technik", id:"su3_energie", ico:"🔋", nm:"Energiequellen", type:"quatsch", set:S3_ENERGIE},
+  {w:"Welt 3 · Strom, Energie & Technik", id:"su3_erfindung", ico:"⚙️", nm:"Erfindungen & Technik", type:"quatsch", set:S3_ERFINDUNG},
+  {w:"Welt 4 · Deutschland, Karten & Zeit", id:"su3_karten", ico:"🗺️", nm:"Karten lesen", type:"quatsch", set:S3_KARTEN},
+  {w:"Welt 4 · Deutschland, Karten & Zeit", id:"su3_bundeslaender", ico:"🇩🇪", nm:"Deutschland", type:"quatsch", set:S3_BUNDESLAENDER},
+  {w:"Welt 4 · Deutschland, Karten & Zeit", id:"su3_steinzeit", ico:"🏺", nm:"Früher & heute", type:"quatsch", set:S3_STEINZEIT},
+  {w:"Welt 5 · Gesundheit & Zusammenleben", id:"su3_ernaehr", ico:"🥗", nm:"Ernährungspyramide", type:"quatsch", set:S3_ERNAEHR},
+  {w:"Welt 5 · Gesundheit & Zusammenleben", id:"su3_erstehilfe", ico:"🩹", nm:"Erste Hilfe & Körper", type:"quatsch", set:S3_ERSTEHILFE},
+  {w:"Welt 5 · Gesundheit & Zusammenleben", id:"su3_medien", ico:"📱", nm:"Medien & Berufe", type:"quatsch", set:S3_MEDIEN}
+];
+
+// ================= KLASSE 3 · Musik (NRW) =================
+const MONSTER_MU3=[
+  ["🎵","Notenwert-Nixe"],["🎶","Takt-Troll"],["🥁","Rhythmus-Ranger"],["🎻","Orchester-Oger"],["🎺","Instrumenten-Imp"],
+  ["🎼","Komponisten-Kobold"],["🐺","Klangbild-Wolf"],["🎤","Kanon-Kobold"],["💫","Gefühls-Geist"]
+];
+const U3_NOTENWERT=[
+  ["Eine ganze Note dauert am längsten.",true],["Eine Viertelnote ist kürzer als eine halbe Note.",true],
+  ["Eine Achtelnote ist die längste Note.",false],["Zwei Halbe Noten ergeben eine Ganze.",true],
+  ["Eine Pause bedeutet: hier wird nicht gespielt.",true],["Eine Viertelnote ist genauso lang wie eine Achtelnote.",false],
+  ["Vier Viertelnoten ergeben eine Ganze.",true],["Noten zeigen, wie lang und wie hoch ein Ton ist.",true]
+];
+const U3_TAKT=[
+  ["Ein 4/4-Takt hat vier Schläge pro Takt.",true],["Ein 3/4-Takt passt gut zu einem Walzer.",true],
+  ["Ein 2/4-Takt hat vier Schläge pro Takt.",false],["Der Takt gibt die Grundordnung der Musik an.",true],
+  ["Man kann den Takt mitklatschen.",true],["Ein Marsch steht oft im 4/4-Takt.",true],
+  ["Ein Takt hat immer genau fünf Schläge.",false],["Der Taktstrich trennt die einzelnen Takte.",true]
+];
+const U3_RHYTHMUS=[
+  ["Ein Rhythmus ist ein Muster aus langen und kurzen Tönen.",true],["Man kann Rhythmen klatschen, stampfen oder trommeln.",true],
+  ["Jeder Rhythmus klingt genau gleich.",false],["Ein Rhythmus kann sich wiederholen.",true],
+  ["Trommeln eignen sich gut, um Rhythmen zu spielen.",true],["Ein Rhythmus hat nichts mit Musik zu tun.",false],
+  ["Man kann einen Rhythmus auch mit den Füßen stampfen.",true],["Rhythmusinstrumente nennt man auch Schlaginstrumente.",true]
+];
+const U3_ORCHESTER=[
+  ["Welches Instrument gehört zu den Streichern?","🎻",["🎺","🥁"]],["Welches Instrument gehört zu den Holzbläsern?","🎷",["🎻","🥁"]],
+  ["Welches Instrument gehört zu den Blechbläsern?","🎺",["🎻","🎹"]],["Welches Instrument gehört zum Schlagwerk?","🥁",["🎻","🎺"]],
+  ["Welches Instrument hat Tasten?","🎹",["🎻","🥁"]],["Welches Instrument hat Saiten zum Zupfen?","🎸",["🎺","🥁"]]
+];
+const U3_INSTRWISSEN=[
+  ["Ein Orchester besteht aus vielen verschiedenen Instrumentengruppen.",true],["Streichinstrumente werden mit einem Bogen gespielt.",true],
+  ["Blechbläser bestehen meistens aus Holz.",false],["Ein Dirigent leitet das Orchester.",true],
+  ["Das Schlagwerk gibt oft den Rhythmus vor.",true],["Eine Harfe hat viele Saiten.",true],
+  ["Alle Instrumente eines Orchesters klingen exakt gleich.",false],["Ein Konzert ist eine Aufführung von Musik.",true]
+];
+const U3_KOMPONIST=[
+  ["Ludwig van Beethoven war ein berühmter Komponist.",true],["Wolfgang Amadeus Mozart hat schon als Kind komponiert.",true],
+  ["Ein Komponist schreibt Musikstücke.",true],["Komponisten schreiben nur Bücher, keine Musik.",false],
+  ["Johann Sebastian Bach war ein berühmter Komponist.",true],["Beethoven wurde später im Leben taub, komponierte aber weiter.",true],
+  ["Ein Komponist braucht keine Noten zu kennen.",false],["Berühmte Musikstücke werden manchmal noch heute in Konzerten gespielt.",true]
+];
+const U3_KLANGBILD=[
+  ["In „Peter und der Wolf“ stellt jedes Instrument eine Figur dar.",true],["Musik kann Bilder oder Geschichten im Kopf erzeugen.",true],
+  ["Programmmusik erzählt oft eine Geschichte mit Tönen.",true],["In „Peter und der Wolf“ steht die Flöte für den Wolf.",false],
+  ["Musik kann fröhlich oder traurig klingen.",true],["Klangbilder können zum Beispiel ein Gewitter darstellen.",true],
+  ["Musik kann niemals eine Stimmung ausdrücken.",false],["Man kann beim Hören von Musik an Bilder denken.",true]
+];
+const U3_KANON=[
+  ["Bei einem Kanon singen alle die gleiche Melodie, aber zeitversetzt.",true],["„Bruder Jakob“ kann man als Kanon singen.",true],
+  ["Ein Kanon klingt nur richtig, wenn alle exakt gleichzeitig einsetzen.",false],["Ein Lied kann einen Refrain haben, der sich wiederholt.",true],
+  ["Eine Strophe ist ein Abschnitt eines Liedes.",true],["Beim Singen im Chor singen mehrere Menschen zusammen.",true],
+  ["Ein Kanon braucht mindestens zwei Sänger oder Gruppen.",true],["Man kann einen Kanon auch alleine singen wie einen normalen Song.",false]
+];
+const U3_GEFUEHL=[
+  ["Musik kann traurig, fröhlich oder aufregend klingen.",true],["Schnelle, laute Musik wirkt oft aufregend.",true],
+  ["Langsame, leise Musik kann beruhigend wirken.",true],["Musik hat niemals einen Einfluss auf unsere Stimmung.",false],
+  ["Ein Schlaflied klingt meist sanft und ruhig.",true],["Filmmusik kann eine Szene spannender machen.",true],
+  ["Alle Menschen empfinden Musik immer genau gleich.",false],["Musik kann helfen, Gefühle auszudrücken.",true]
+];
+const LEVELS_MU3=[
+  {w:"Welt 1 · Noten & Rhythmus vertieft", id:"mu3_n1", ico:"🎵", nm:"Notenwerte", type:"quatsch", set:U3_NOTENWERT},
+  {w:"Welt 1 · Noten & Rhythmus vertieft", id:"mu3_t1", ico:"🎶", nm:"Taktarten", type:"quatsch", set:U3_TAKT},
+  {w:"Welt 1 · Noten & Rhythmus vertieft", id:"mu3_r1", ico:"🥁", nm:"Rhythmus-Muster", type:"quatsch", set:U3_RHYTHMUS},
+  {w:"Welt 2 · Instrumente & Orchester", id:"mu3_o1", ico:"🎻", nm:"Orchestergruppen", type:"satzbild", set:U3_ORCHESTER},
+  {w:"Welt 2 · Instrumente & Orchester", id:"mu3_o2", ico:"🎺", nm:"Instrumenten-Wissen", type:"quatsch", set:U3_INSTRWISSEN},
+  {w:"Welt 2 · Instrumente & Orchester", id:"mu3_k1", ico:"🎼", nm:"Komponisten", type:"quatsch", set:U3_KOMPONIST},
+  {w:"Welt 3 · Musik hören & singen", id:"mu3_k2", ico:"🐺", nm:"Musik erzählt Geschichten", type:"quatsch", set:U3_KLANGBILD},
+  {w:"Welt 3 · Musik hören & singen", id:"mu3_k3", ico:"🎤", nm:"Kanon & Lieder", type:"quatsch", set:U3_KANON},
+  {w:"Welt 3 · Musik hören & singen", id:"mu3_g1", ico:"💫", nm:"Musik & Gefühle", type:"quatsch", set:U3_GEFUEHL}
+];
+
+// ================= KLASSE 3 · Englisch (NRW – Beginn Englischunterricht) =================
+const MONSTER_EN3=[
+  ["👋","Greeting-Ghoul"],["🔢","Number-Gnome"],["🌈","Colour-Kobold"],["🐾","Animal-Ogre"],["👪","Family-Fiend"],["🐹","Pet-Pixie"],
+  ["🎒","School-Sprite"],["👁️","Body-Beast"],["📢","Classroom-Creature"],["🍔","Food-Phantom"],["🌦️","Weather-Wraith"],["😊","Feeling-Fox"],
+  ["✏️","Sentence-Serpent"],["📅","Weekday-Wyrm"],["👑","Mix-Master-Dragon"]
+];
+const EN3_GREET=[
+  ["'Hello' means 'Hallo'.",true],["'Goodbye' means 'Auf Wiedersehen'.",true],["'Please' means 'Danke'.",false],
+  ["'Thank you' means 'Danke'.",true],["'Good morning' means 'Guten Morgen'.",true],["'Yes' means 'Nein'.",false],
+  ["'My name is...' means 'Ich heiße...'.",true],["'Sorry' means 'Es tut mir leid'.",true]
+];
+const EN3_NUMBERS=[
+  ["🔵","ONE"],["🔵🔵","TWO"],["🔵🔵🔵","THREE"],["🔵🔵🔵🔵","FOUR"],["🔵🔵🔵🔵🔵","FIVE"],["🔵🔵🔵🔵🔵🔵","SIX"],["🔵🔵🔵🔵🔵🔵🔵","SEVEN"],["🔵🔵🔵🔵🔵🔵🔵🔵","EIGHT"]
+];
+const EN3_COLOURS=[
+  ["🔴","RED"],["🔵","BLUE"],["🟢","GREEN"],["🟡","YELLOW"],["⚫","BLACK"],["⚪","WHITE"],["🟠","ORANGE"],["🟣","PURPLE"]
+];
+const EN3_ANIMALS=[
+  ["🐶","DOG"],["🐱","CAT"],["🐟","FISH"],["🐦","BIRD"],["🐴","HORSE"],["🐰","RABBIT"],["🐮","COW"],["🐷","PIG"]
+];
+const EN3_FAMILY=[
+  ["This is my mother.","👩",["👨","👦"]],["This is my father.","👨",["👩","👧"]],["This is my sister.","👧",["👦","👴"]],
+  ["This is my brother.","👦",["👧","👵"]],["This is my grandmother.","👵",["👴","👶"]],["This is my grandfather.","👴",["👵","👶"]]
+];
+const EN3_PETS=[
+  ["🐱","CAT",1,["A","O","E","I"]],["🐕","DOG",1,["O","A","E","U"]],["🐹","HAMSTER",1,["A","O","E","I"]],
+  ["🐠","FISH",1,["I","A","O","E"]],["🐦","BIRD",1,["I","A","O","E"]],["🐰","RABBIT",1,["A","O","E","I"]]
+];
+const EN3_SCHOOL=[
+  ["🎒","BAG"],["📚","BOOKS"],["✏️","PENCIL"],["📏","RULER"],["🖍️","CRAYON"],["✂️","SCISSORS"],["🖊️","PEN"],["🎨","PAINT"]
+];
+const EN3_BODY=[
+  ["👀","EYES"],["👃","NOSE"],["👂","EAR"],["👄","MOUTH"],["✋","HAND"],["🦶","FOOT"],["🦷","TEETH"],["💇","HAIR"]
+];
+const EN3_CLASSPHRASES=[
+  ["'Stand up' means you should sit down.",false],["'Sit down' means you should sit down.",true],
+  ["'Open your book' means you should open your book.",true],["'Be quiet' means you should talk loudly.",false],
+  ["'Listen carefully' means you should listen well.",true],["'Line up' means you should stand in a line.",true],
+  ["'Close the door' means you should open the door.",false],["'Raise your hand' means you should put your hand up.",true]
+];
+const EN3_FOOD=[
+  ["🍎","APPLE"],["🍌","BANANA"],["🍞","BREAD"],["🧀","CHEESE"],["🥛","MILK"],["🍕","PIZZA"],["🍪","COOKIE"],["🥕","CARROT"]
+];
+const EN3_WEATHER=[
+  ["'It's sunny' means the sun is shining.",true],["'It's raining' means the sun is shining.",false],
+  ["'It's snowing' means snow is falling.",true],["'It's windy' means it is very quiet.",false],
+  ["'It's cloudy' means there are clouds in the sky.",true],["'It's cold' is the opposite of 'It's hot'.",true],
+  ["Summer is usually hot.",true],["Winter is usually very hot.",false]
+];
+const EN3_FEELINGS=[
+  ["I am happy.","😊",["😢","😠"]],["I am sad.","😢",["😊","😴"]],["I am angry.","😠",["😊","😴"]],
+  ["I am tired.","😴",["😢","😠"]],["I am scared.","😨",["😊","😴"]],["I am hungry.","😋",["😢","😨"]]
+];
+const EN3_SENTENCES=[
+  ["'I have a dog.' is a correct English sentence.",true],["'Dog a have I.' is a correct English sentence.",false],
+  ["'I like apples.' means 'Ich mag Äpfel.'",true],["'She is my friend.' is a correct English sentence.",true],
+  ["'He are happy.' is a correct English sentence.",false],["'We are playing.' is a correct English sentence.",true],
+  ["'This is my cat.' means 'Das ist meine Katze.'",true],["'I am seven years old.' is a correct English sentence.",true]
+];
+const EN3_DAYS=[
+  ["'Monday' is the first day of the school week.",true],["'Sunday' is a weekend day.",true],
+  ["There are seven days in a week.",true],["'Friday' comes before 'Thursday'.",false],
+  ["'Saturday' is a weekend day.",true],["A week has ten days.",false],
+  ["'Tuesday' comes after 'Monday'.",true],["'Wednesday' is in the middle of the school week.",true]
+];
+const EN3_MIX=[
+  ["'Cat' means 'Katze' in German.",true],["'Red' is a colour.",true],["'Three' is a number.",true],
+  ["'Happy' is a feeling.",true],["'Apple' is an animal.",false],["'Monday' is a colour.",false],
+  ["'Dog' is an animal.",true],["'Blue' means 'Blau'.",true]
+];
+const LEVELS_EN3=[
+  {w:"Welt 1 · Hello & Numbers", id:"en3_greet", ico:"👋", nm:"Greetings", type:"quatsch", set:EN3_GREET},
+  {w:"Welt 1 · Hello & Numbers", id:"en3_numbers", ico:"🔢", nm:"Numbers 1-8", type:"wortbild", set:EN3_NUMBERS},
+  {w:"Welt 1 · Hello & Numbers", id:"en3_colours", ico:"🌈", nm:"Colours", type:"wortbild", set:EN3_COLOURS},
+  {w:"Welt 2 · Animals & Family", id:"en3_animals", ico:"🐾", nm:"Animals", type:"wortbild", set:EN3_ANIMALS},
+  {w:"Welt 2 · Animals & Family", id:"en3_family", ico:"👪", nm:"My Family", type:"satzbild", set:EN3_FAMILY},
+  {w:"Welt 2 · Animals & Family", id:"en3_pets", ico:"🐹", nm:"Pets", type:"luecke", set:EN3_PETS},
+  {w:"Welt 3 · School & Body", id:"en3_school", ico:"🎒", nm:"School Things", type:"wortbild", set:EN3_SCHOOL},
+  {w:"Welt 3 · School & Body", id:"en3_body", ico:"👁️", nm:"My Body", type:"wortbild", set:EN3_BODY},
+  {w:"Welt 3 · School & Body", id:"en3_class", ico:"📢", nm:"Classroom Phrases", type:"quatsch", set:EN3_CLASSPHRASES},
+  {w:"Welt 4 · Food & Weather", id:"en3_food", ico:"🍔", nm:"Food", type:"wortbild", set:EN3_FOOD},
+  {w:"Welt 4 · Food & Weather", id:"en3_weather", ico:"🌦️", nm:"Weather", type:"quatsch", set:EN3_WEATHER},
+  {w:"Welt 4 · Food & Weather", id:"en3_feelings", ico:"😊", nm:"Feelings", type:"satzbild", set:EN3_FEELINGS},
+  {w:"Welt 5 · Sentences & Fun Facts", id:"en3_sentences", ico:"✏️", nm:"Simple Sentences", type:"quatsch", set:EN3_SENTENCES},
+  {w:"Welt 5 · Sentences & Fun Facts", id:"en3_days", ico:"📅", nm:"Days of the Week", type:"quatsch", set:EN3_DAYS},
+  {w:"Welt 5 · Sentences & Fun Facts", id:"en3_mix", ico:"👑", nm:"Mixed Review", type:"quatsch", set:EN3_MIX}
+];
+
 // ---------- Klassen & Fächer: aktive Level/Monster umschaltbar ----------
 const GRADE_CONTENT = {
   k1:{
@@ -1019,6 +1471,13 @@ const GRADE_CONTENT = {
     mathe:  {title:"🔢 Mathe · Klasse 2",   LEVELS:LEVELS_MA2, MONSTER:MONSTER_MA2},
     sach:   {title:"🌍 Sachunterricht · Klasse 2", LEVELS:LEVELS_SU2, MONSTER:MONSTER_SU2},
     musik:  {title:"🎵 Musik · Klasse 2",   LEVELS:LEVELS_MU2, MONSTER:MONSTER_MU2}
+  },
+  k3:{
+    deutsch:{title:"📖 Deutsch · Klasse 3", LEVELS:LEVELS_DE3, MONSTER:MONSTER_DE3},
+    mathe:  {title:"🔢 Mathe · Klasse 3",   LEVELS:LEVELS_MA3, MONSTER:MONSTER_MA3},
+    sach:   {title:"🌍 Sachunterricht · Klasse 3", LEVELS:LEVELS_SU3, MONSTER:MONSTER_SU3},
+    musik:  {title:"🎵 Musik · Klasse 3",   LEVELS:LEVELS_MU3, MONSTER:MONSTER_MU3},
+    englisch:{title:"🇬🇧 Englisch · Klasse 3", LEVELS:LEVELS_EN3, MONSTER:MONSTER_EN3}
   }
 };
 const SUBJECT_META = {
@@ -1201,22 +1660,25 @@ const sChest = ()=> [392,494,587,784,988].forEach((f,i)=>tone(f,.11,"triangle",i
 
 // ---------- Sprache ----------
 let bestVoice = null;
+let bestVoiceEN = null;
 function pickVoice(){
   try{
-    const de = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith("de"));
-    if(!de.length) return;
     const score = v => {
       const n = v.name.toLowerCase(); let s = 0;
       if(n.includes("premium")) s+=100;
       if(n.includes("enhanced")||n.includes("erweitert")) s+=90;
       if(n.includes("siri")) s+=80;
-      if(n.includes("anna")||n.includes("petra")||n.includes("helena")) s+=60;
+      if(n.includes("anna")||n.includes("petra")||n.includes("helena")||n.includes("daniel")||n.includes("kate")) s+=60;
       if(n.includes("google")) s+=50;
       if(n.includes("eloquence")||n.includes("compact")||n.includes("fred")) s-=100;
       if(v.localService) s+=5;
       return s;
     };
-    bestVoice = de.sort((a,b)=>score(b)-score(a))[0];
+    const voices = speechSynthesis.getVoices();
+    const de = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith("de"));
+    if(de.length) bestVoice = de.sort((a,b)=>score(b)-score(a))[0];
+    const en = voices.filter(v => v.lang && (v.lang.toLowerCase().startsWith("en-gb")||v.lang.toLowerCase().startsWith("en")));
+    if(en.length) bestVoiceEN = en.sort((a,b)=>score(b)-score(a))[0];
   }catch(e){}
 }
 pickVoice();
@@ -1226,7 +1688,9 @@ function speak(text, slow){
   if(state.sound===false) return;
   try{
     const u = new SpeechSynthesisUtterance(natural(text));
-    u.lang="de-DE"; if(bestVoice) u.voice=bestVoice;
+    const en = curSubject==="englisch";
+    u.lang = en?"en-GB":"de-DE";
+    u.voice = en ? (bestVoiceEN||null) : (bestVoice||null);
     u.rate = slow?0.8:0.95; u.pitch = 1.05;
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
@@ -1838,16 +2302,20 @@ function roundSilben(item){
 function roundWortBild(item){
   const [emoji,word]=item;
   const isMath = curSubject==="mathe";
+  const isEnglisch = curSubject==="englisch";
   const isTerm = /[+\-=]/.test(word);
   if(isMath){
     $("task").textContent = isTerm ? "Rechne aus! Welches Bild zeigt das Ergebnis?" : "Welches Bild zeigt die Zahl?";
     speakCurrent=()=>sayTerm(word);
+  } else if(isEnglisch){
+    $("task").textContent="Hör zu und schau genau hin! Welches Bild passt?";
+    speakCurrent=()=>speak(word);
   } else {
     $("task").textContent="Lies das Wort. Welches Bild passt?";
     speakCurrent=()=>speak("Finde das Bild!");
   }
   $("bigword").textContent=word; $("bigword").classList.remove("hidden");
-  if(isMath) speakCurrent();
+  if(isMath||isEnglisch) speakCurrent();
   const others=shuffle((cur.set||WORTALL).filter(x=>x[1]!==word)).slice(0,3);
   shuffle([item,...others]).forEach(o=>{
     makeTile(o[0], b=> o[1]===word ? (isMath?correct(b):correct(b,word)) : wrong(b, isMath?"Zähl nochmal genau!":"Lies nochmal genau!"), true);

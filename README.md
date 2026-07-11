@@ -1,6 +1,6 @@
-# ⛏️ WortWelt – Lernspiel für Klasse 1
+# ⛏️ WortWelt – Lernspiel für die Grundschule (Klasse 1–3)
 
-Ein gamifiziertes, browserbasiertes Lernspiel für die Grundschule (Klasse 1, Lehrplan NRW).
+Ein gamifiziertes, browserbasiertes Lernspiel für die Grundschule (Lehrplan NRW).
 Offline lauffähig, anonym, ohne Anmeldung – optimiert fürs iPad.
 
 **▶️ Live spielen:** https://nielsfeels-2.github.io/wortwelt/
@@ -9,16 +9,17 @@ Offline lauffähig, anonym, ohne Anmeldung – optimiert fürs iPad.
 
 ## Klassen
 
-Oben im Hub lässt sich die **Klassenstufe** wählen. Verfügbar: **Klasse 1** und **Klasse 2** (Klasse 3, 4 und Vorschule folgen). Jede Klasse hat dieselben Fächer, aufbauend auf den Kompetenzen des Schuljahres.
+Oben im Hub lässt sich die **Klassenstufe** wählen. Verfügbar: **Klasse 1, Klasse 2 und Klasse 3** (Klasse 4 und Vorschule folgen). Jede Klasse hat eigene, altersgerecht aufbauende Level je Fach.
 
 ## Fächer (NRW)
 
-- **📖 Deutsch** – Anlaute, Groß-/Kleinschreibung, Silben, Wörter lesen, Blitzlesen, Lückenwörter, Wörter schreiben, Sätze & Satzverständnis
-- **🔢 Mathe** – Zählen & Mengen bis 10, Plus & Minus bis 10, Rechnen bis 20 (mit Zehnerübergang), Zahlzerlegung und Sachaufgaben
-- **🌍 Sachunterricht** – alle fünf Lehrplan-Bereiche: Körper/Sinne/Gesundheit, Tiere & Pflanzen, Jahreszeiten & Wetter, Verkehr & Umwelt, Zeit & Zusammenleben
-- **🎵 Musik** – Instrumente erkennen, laut/leise · hoch/tief · schnell/langsam, Singen, Reime & Rhythmus
+- **📖 Deutsch** – Klasse 1: Anlaute, Groß-/Kleinschreibung, Silben, Wörter lesen, Blitzlesen, Lückenwörter, Wörter schreiben, Sätze & Satzverständnis. Klasse 2: ie/ck/Doppelmitlaute/sp-st/Umlaute, Wortarten, Satzzeichen, Lesen, ABC. Klasse 3: Verlängern (b/d/g), Dehnungs-h, Vorsilben, Adjektive steigern, Wortfamilien, Präsens/Präteritum, Satzglieder, wörtliche Rede, Lesen, Wörterbuch
+- **🔢 Mathe** – Klasse 1: Zählen & Mengen bis 10, Plus & Minus bis 10, Rechnen bis 20. Klasse 2: Zahlenraum 100, kleines 1×1, Geld, Uhr, Sachrechnen. Klasse 3: Zahlenraum 1000, schriftliches Plus/Minus, komplettes 1×1 inkl. Geteiltrechnen, Längen/Gewichte/Zeit, Fläche & Umfang, Sachrechnen
+- **🌍 Sachunterricht** – alle Lehrplan-Bereiche pro Klassenstufe, in Klasse 3 vertieft: Wasserkreislauf & Wetter, Pflanzen & Lebenszyklen, Strom & Energie, Karten & Deutschland, Ernährung & Erste Hilfe
+- **🎵 Musik** – Instrumente, laut/leise · hoch/tief · schnell/langsam, Singen & Rhythmus, in Klasse 3 vertieft: Notenwerte, Taktarten, Orchestergruppen, Komponisten, Programmmusik & Kanon
+- **🇬🇧 Englisch** – ab Klasse 3 (Beginn des Englischunterrichts in NRW): Greetings, Numbers, Colours, Animals, Family, Pets, School Things, Body, Classroom Phrases, Food, Weather, Feelings, Simple Sentences, Days – mit automatischer englischer Sprachausgabe
 
-Englisch beginnt in NRW erst ab Klasse 3 und ist daher (noch) kein Fach. Oben im Startbildschirm („Hub") lässt sich zwischen den Fächern umschalten. Avatar, Edelsteine und Erfolge sind fächerübergreifend, die Level-Fortschritte pro Fach getrennt. Jedes Fach ist so aufgebaut, dass am Ende die für Klasse 1 erwartete Kompetenzstufe erreicht wird.
+Oben im Startbildschirm („Hub") lässt sich zwischen Klassenstufe und Fach umschalten. Avatar, Edelsteine und Erfolge sind fächer- und klassenübergreifend, die Level-Fortschritte pro Klasse und Fach getrennt.
 
 ## Üben, was noch wackelt (Spaced Repetition)
 
