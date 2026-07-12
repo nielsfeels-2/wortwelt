@@ -1,4 +1,4 @@
-# ⛏️ WortWelt – Lernspiel für die Grundschule (Klasse 1–3)
+# ⛏️ WortWelt – Lernspiel für Vorschule bis Klasse 4
 
 Ein gamifiziertes, browserbasiertes Lernspiel für die Grundschule (Lehrplan NRW).
 Offline lauffähig, anonym, ohne Anmeldung – optimiert fürs iPad.
@@ -9,15 +9,15 @@ Offline lauffähig, anonym, ohne Anmeldung – optimiert fürs iPad.
 
 ## Klassen
 
-Oben im Hub lässt sich die **Klassenstufe** wählen. Verfügbar: **Klasse 1, Klasse 2 und Klasse 3** (Klasse 4 und Vorschule folgen). Jede Klasse hat eigene, altersgerecht aufbauende Level je Fach.
+Oben im Hub lässt sich die **Klassenstufe** wählen: **Vorschule, Klasse 1, Klasse 2, Klasse 3 und Klasse 4**. Jede Klasse hat eigene, altersgerecht aufbauende Level je Fach.
 
 ## Fächer (NRW)
 
-- **📖 Deutsch** – Klasse 1: Anlaute, Groß-/Kleinschreibung, Silben, Wörter lesen, Blitzlesen, Lückenwörter, Wörter schreiben, Sätze & Satzverständnis. Klasse 2: ie/ck/Doppelmitlaute/sp-st/Umlaute, Wortarten, Satzzeichen, Lesen, ABC. Klasse 3: Verlängern (b/d/g), Dehnungs-h, Vorsilben, Adjektive steigern, Wortfamilien, Präsens/Präteritum, Satzglieder, wörtliche Rede, Lesen, Wörterbuch
-- **🔢 Mathe** – Klasse 1: Zählen & Mengen bis 10, Plus & Minus bis 10, Rechnen bis 20. Klasse 2: Zahlenraum 100, kleines 1×1, Geld, Uhr, Sachrechnen. Klasse 3: Zahlenraum 1000, schriftliches Plus/Minus, komplettes 1×1 inkl. Geteiltrechnen, Längen/Gewichte/Zeit, Fläche & Umfang, Sachrechnen
-- **🌍 Sachunterricht** – alle Lehrplan-Bereiche pro Klassenstufe, in Klasse 3 vertieft: Wasserkreislauf & Wetter, Pflanzen & Lebenszyklen, Strom & Energie, Karten & Deutschland, Ernährung & Erste Hilfe
-- **🎵 Musik** – Instrumente, laut/leise · hoch/tief · schnell/langsam, Singen & Rhythmus, in Klasse 3 vertieft: Notenwerte, Taktarten, Orchestergruppen, Komponisten, Programmmusik & Kanon
-- **🇬🇧 Englisch** – ab Klasse 3 (Beginn des Englischunterrichts in NRW): Greetings, Numbers, Colours, Animals, Family, Pets, School Things, Body, Classroom Phrases, Food, Weather, Feelings, Simple Sentences, Days – mit automatischer englischer Sprachausgabe
+- **📖 Deutsch** – Vorschule: erste Laute, Buchstaben, Silben klatschen. Klasse 1: Anlaute, Groß-/Kleinschreibung, Silben, Wörter lesen, Blitzlesen, Lückenwörter, Wörter schreiben, Sätze & Satzverständnis. Klasse 2: ie/ck/Doppelmitlaute/sp-st/Umlaute, Wortarten, Satzzeichen, Lesen, ABC. Klasse 3: Verlängern (b/d/g), Dehnungs-h, Vorsilben, Adjektive steigern, Wortfamilien, Präsens/Präteritum, Satzglieder, wörtliche Rede, Lesen, Wörterbuch. Klasse 4: s/ss/ß, zusammengesetzte Nomen, Wortarten (Pronomen/Präpositionen), Perfekt, Satzarten, Textsorten, Synonyme, Fremdwörter, Satzzeichen
+- **🔢 Mathe** – Vorschule: Zählen bis 10, Formen, Größenvergleich, Muster. Klasse 1: Zählen & Mengen bis 10, Plus & Minus bis 10, Rechnen bis 20. Klasse 2: Zahlenraum 100, kleines 1×1, Geld, Uhr, Sachrechnen. Klasse 3: Zahlenraum 1000, schriftliches Plus/Minus, komplettes 1×1 inkl. Geteiltrechnen, Längen/Gewichte/Zeit, Fläche & Umfang, Sachrechnen. Klasse 4: Zahlenraum bis 1 Million, schriftliches Multiplizieren/Dividieren, Teiler & Vielfache, Brüche, Dezimalzahlen, Volumen, Diagramme
+- **🌍 Sachunterricht** – alle Lehrplan-Bereiche pro Klassenstufe, in Klasse 4 vertieft: Deutschland & Europa, Stromschaltungen, Trinkwasser & Klimaschutz, Verdauung & Pubertät, Mittelalter & Zeitleiste, Medienkompetenz & Berufe
+- **🎵 Musik** – Instrumente, laut/leise · hoch/tief · schnell/langsam, Singen & Rhythmus, in Klasse 4 vertieft: Notennamen, Dynamik, Weltmusik, Bandinstrumente, Musikgeschichte, digitale Musik
+- **🇬🇧 Englisch** – ab Klasse 3 (Beginn des Englischunterrichts in NRW), in Klasse 4 erweitert um Uhrzeit, Einkaufen, Wegbeschreibungen, Hobbys, Personen beschreiben, Simple Past, Fragen stellen, Wetter, Monate, Berufe, Schulfächer – mit automatischer englischer Sprachausgabe
 
 Oben im Startbildschirm („Hub") lässt sich zwischen Klassenstufe und Fach umschalten. Avatar, Edelsteine und Erfolge sind fächer- und klassenübergreifend, die Level-Fortschritte pro Klasse und Fach getrennt.
 

@@ -1458,8 +1458,639 @@ const LEVELS_EN3=[
   {w:"Welt 5 · Sentences & Fun Facts", id:"en3_mix", ico:"👑", nm:"Mixed Review", type:"quatsch", set:EN3_MIX}
 ];
 
+// ================= VORSCHULE · Deutsch (erste Laute & Buchstaben) =================
+const MONSTER_DE_V = [
+  ["🐣","Küken-Kobold"],["🐛","Raupen-Wicht"],["🦋","Flatter-Fee"],["🐌","Schnecken-Schreck"],["🐝","Summ-Biene"],["🧸","Teddy-Troll"]
+];
+const V_SIL1 = [["🐰",["HA","SE"]],["👵",["O","MA"]],["👴",["O","PA"]],["🌹",["RO","SE"]],["🛋️",["SO","FA"]],["🦆",["EN","TE"]]];
+const V_SIL2 = [["🐯",["TI","GER"]],["🦔",["I","GEL"]],["🐒",["AF","FE"]],["💡",["LAM","PE"]],["🧀",["KÄ","SE"]],["🥫",["DO","SE"]]];
+const LEVELS_DE_V = [
+  {w:"Welt 1 · Erste Laute", id:"v_an1", ico:"⛏️", nm:"Anlaut-Mine 1", type:"anlaut", set:["M","A","O","S","L"]},
+  {w:"Welt 1 · Erste Laute", id:"v_an2", ico:"⛏️", nm:"Anlaut-Mine 2", type:"anlaut", set:["I","T","N","U","E"]},
+  {w:"Welt 2 · Buchstaben", id:"v_gk1", ico:"🔠", nm:"Buchstaben 1", type:"grossklein", set:["M","A","L","O","S"]},
+  {w:"Welt 2 · Buchstaben", id:"v_gk2", ico:"🔡", nm:"Buchstaben 2", type:"grossklein", set:["I","N","T","U","H"]},
+  {w:"Welt 3 · Silben klatschen", id:"v_si1", ico:"🧱", nm:"Silben-Sammler 1", type:"silben", set:V_SIL1},
+  {w:"Welt 3 · Silben klatschen", id:"v_si2", ico:"🏗️", nm:"Silben-Sammler 2", type:"silben", set:V_SIL2}
+];
+
+// ================= VORSCHULE · Mathe (Zählen, Formen, Größen) =================
+const MONSTER_MA_V = [
+  ["🔢","Zahlen-Zwerg"],["🧮","Mengen-Molch"],["🔷","Formen-Fee"],["📏","Größen-Gnom"],["🎨","Muster-Maus"],["✨","Zähl-Zauberer"]
+];
+const V0_ZAHL1 = [["🔵","1"],["🔵🔵","2"],["🔵🔵🔵","3"],["🔵🔵🔵🔵","4"],["🔵🔵🔵🔵🔵","5"]];
+const V0_ZAHL2 = [["🔵🔵🔵🔵🔵🔵","6"],["🔵🔵🔵🔵🔵🔵🔵","7"],["🔵🔵🔵🔵🔵🔵🔵🔵","8"],["🔵🔵🔵🔵🔵🔵🔵🔵🔵","9"],["🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵","10"]];
+const V0_MENGEN=[
+  ["3 ist mehr als 1.",true],["2 ist weniger als 5.",true],["4 ist genauso viel wie 4.",true],
+  ["1 ist mehr als 3.",false],["5 ist weniger als 2.",false],["3 ist genauso viel wie 2.",false],
+  ["0 ist weniger als 1.",true],["10 ist mehr als 9.",true]
+];
+const V0_FORMEN=[
+  ["Welche Form ist ein Kreis?","🔵",["🟥","🔺"]],["Welche Form ist ein Quadrat?","🟥",["🔵","🔺"]],
+  ["Welche Form ist ein Dreieck?","🔺",["🔵","🟥"]],["Welche Form ist ein Rechteck?","🟦",["🔺","⚫"]],
+  ["Welche Form ist ein Kreis?","⚪",["🟩","🔺"]],["Welche Form ist ein Quadrat?","🟨",["🔵","🔺"]]
+];
+const V0_GROESSE=[
+  ["Ein Elefant ist größer als eine Maus.",true],["Eine Ameise ist größer als ein Hund.",false],
+  ["Ein langes Band ist länger als ein kurzes Band.",true],["Ein großer Ball ist kleiner als ein kleiner Ball.",false],
+  ["Ein Riese ist größer als ein Zwerg.",true],["Ein Baby ist größer als ein Erwachsener.",false],
+  ["Ein Turm ist hoch.",true],["Eine Schnecke ist schneller als ein Hase.",false]
+];
+const V0_MUSTER=[
+  ["Rot, Blau, Rot, Blau – was kommt als Nächstes?","🔴",["🔵","🟢"]],["Groß, Klein, Groß, Klein – was kommt als Nächstes?","⬛",["⬜","🔺"]],
+  ["Kreis, Quadrat, Kreis, Quadrat – was kommt als Nächstes?","🔵",["🟥","🔺"]],["1, 2, 1, 2 – was kommt als Nächstes?","1️⃣",["2️⃣","3️⃣"]],
+  ["Gelb, Grün, Gelb, Grün – was kommt als Nächstes?","🟡",["🟢","🔵"]],["Stern, Herz, Stern, Herz – was kommt als Nächstes?","⭐",["❤️","🔺"]]
+];
+const LEVELS_MA_V=[
+  {w:"Welt 1 · Zählen", id:"v0_zahl1", ico:"1️⃣", nm:"Zählen bis 5", type:"wortbild", set:V0_ZAHL1},
+  {w:"Welt 1 · Zählen", id:"v0_zahl2", ico:"🔟", nm:"Zählen bis 10", type:"wortbild", set:V0_ZAHL2},
+  {w:"Welt 1 · Zählen", id:"v0_mengen", ico:"🧮", nm:"Mengen vergleichen", type:"quatsch", set:V0_MENGEN},
+  {w:"Welt 2 · Formen & Größen", id:"v0_formen", ico:"🔷", nm:"Formen erkennen", type:"satzbild", set:V0_FORMEN},
+  {w:"Welt 2 · Formen & Größen", id:"v0_groesse", ico:"📏", nm:"Groß & Klein", type:"quatsch", set:V0_GROESSE},
+  {w:"Welt 2 · Formen & Größen", id:"v0_muster", ico:"🎨", nm:"Muster fortsetzen", type:"satzbild", set:V0_MUSTER}
+];
+
+// ================= VORSCHULE · Sachunterricht (erstes Weltwissen) =================
+const MONSTER_SU_V = [
+  ["🌈","Farben-Fee"],["🐾","Tierlaut-Troll"],["🍂","Jahreszeiten-Kobold"],["👶","Körper-Kobold"],["💗","Gefühls-Geist"],["🏠","Familien-Fuchs"]
+];
+const V0_FARBEN=[
+  ["Welche Farbe hat die Sonne?","🟡",["🔵","🟢"]],["Welche Farbe hat das Gras?","🟢",["🔴","🟡"]],
+  ["Welche Farbe hat der Himmel?","🔵",["🟢","🟤"]],["Welche Farbe hat eine Erdbeere?","🔴",["🔵","⚫"]],
+  ["Welche Farbe hat Schnee?","⚪",["⚫","🟠"]],["Welche Farbe hat eine Banane?","🟡",["🟣","🔵"]]
+];
+const V0_TIERE=[
+  ["Wer macht 'Muh'?","🐄",["🐶","🐱"]],["Wer macht 'Wau Wau'?","🐶",["🐱","🐄"]],
+  ["Wer macht 'Miau'?","🐱",["🐶","🐔"]],["Wer macht 'Kikeriki'?","🐓",["🐷","🐑"]],
+  ["Wer macht 'Öhm'?","🐷",["🐴","🐑"]],["Wer macht 'Mäh'?","🐑",["🐮","🐔"]]
+];
+const V0_JAHRESZEIT=[
+  ["Im Winter kann es schneien.",true],["Im Sommer ist es meistens warm.",true],
+  ["Im Herbst fallen die Blätter von den Bäumen.",true],["Im Frühling blühen viele Blumen.",true],
+  ["Im Sommer trägt man eine dicke Winterjacke.",false],["Im Winter geht man oft schwimmen im See.",false],
+  ["Ein Jahr hat vier Jahreszeiten.",true],["Im Frühling werden die Tage wieder wärmer.",true]
+];
+const V0_KOERPER=[
+  ["Womit siehst du?","👀",["👂","👃"]],["Womit hörst du?","👂",["👀","👄"]],
+  ["Womit riechst du?","👃",["👂","🦶"]],["Womit läufst du?","🦶",["✋","👀"]],
+  ["Womit greifst du?","✋",["🦶","👂"]],["Womit isst du?","👄",["👃","✋"]]
+];
+const V0_GEFUEHLE=[
+  ["Das Kind lacht. Wie fühlt es sich?","😊",["😢","😠"]],["Das Kind weint. Wie fühlt es sich?","😢",["😊","😴"]],
+  ["Das Kind stampft wütend mit dem Fuß. Wie fühlt es sich?","😠",["😊","😴"]],["Das Kind gähnt. Wie fühlt es sich?","😴",["😢","😠"]],
+  ["Das Kind hat große Angst. Wie fühlt es sich?","😨",["😊","😴"]],["Das Kind hat Hunger. Wie fühlt es sich?","😋",["😢","😨"]]
+];
+const V0_FAMILIE=[
+  ["Das ist meine Mama.","👩",["👨","👦"]],["Das ist mein Papa.","👨",["👩","👧"]],
+  ["Das ist meine Oma.","👵",["👴","👶"]],["Das ist mein Opa.","👴",["👵","👶"]],
+  ["Das ist mein Baby-Geschwisterchen.","👶",["👵","👴"]],["Das ist meine große Schwester.","👧",["👦","👴"]]
+];
+const LEVELS_SU_V=[
+  {w:"Welt 1 · Ich & meine Welt", id:"v0_farben", ico:"🌈", nm:"Farben", type:"satzbild", set:V0_FARBEN},
+  {w:"Welt 1 · Ich & meine Welt", id:"v0_tiere", ico:"🐾", nm:"Tierstimmen", type:"satzbild", set:V0_TIERE},
+  {w:"Welt 1 · Ich & meine Welt", id:"v0_jahreszeit", ico:"🍂", nm:"Jahreszeiten", type:"quatsch", set:V0_JAHRESZEIT},
+  {w:"Welt 2 · Ich & meine Familie", id:"v0_koerper", ico:"👶", nm:"Mein Körper", type:"satzbild", set:V0_KOERPER},
+  {w:"Welt 2 · Ich & meine Familie", id:"v0_gefuehle", ico:"💗", nm:"Gefühle", type:"satzbild", set:V0_GEFUEHLE},
+  {w:"Welt 2 · Ich & meine Familie", id:"v0_familie", ico:"🏠", nm:"Meine Familie", type:"satzbild", set:V0_FAMILIE}
+];
+
+// ================= VORSCHULE · Musik (erstes Musikerleben) =================
+const MONSTER_MU_V = [
+  ["🔊","Laut-Leise-Ling"],["🎶","Ton-Troll"],["🥁","Trommel-Wicht"],["👏","Klatsch-Kobold"],["🎤","Lied-Larve"],["💃","Tanz-Troll"]
+];
+const V0_LAUT=[
+  ["Ein Löwe brüllt laut.",true],["Ein Flüstern ist laut.",false],
+  ["Eine Trommel kann laut klingen.",true],["Ein Wecker klingelt eher leise.",false],
+  ["Beim Schlafen ist es meistens leise.",true],["Ein Donner ist laut.",true],
+  ["Man kann Musik laut und leise machen.",true],["Ein Schrei ist leise.",false]
+];
+const V0_HOCH=[
+  ["Ein Vogel zwitschert hoch.",true],["Ein Löwe brüllt tief.",true],
+  ["Eine kleine Glocke klingt hoch.",true],["Eine große Trommel klingt hoch.",false],
+  ["Eine Maus piepst hoch.",true],["Ein Bär brummt tief.",true],
+  ["Hoch und tief klingen genau gleich.",false],["Man kann hohe und tiefe Töne singen.",true]
+];
+const V0_INSTR=[
+  ["Welches Instrument trommelt man?","🥁",["🎻","🎺"]],["Welches Instrument bläst man?","🎺",["🥁","🎻"]],
+  ["Welches Instrument hat Saiten?","🎻",["🥁","🎺"]],["Welches Instrument hat Tasten?","🎹",["🥁","🎻"]],
+  ["Welches Instrument klingelt?","🔔",["🥁","🎺"]],["Womit klatscht man den Takt?","👏",["👃","👀"]]
+];
+const V0_RHYTH=[
+  ["Man kann mit den Händen klatschen.",true],["Man kann mit den Füßen stampfen.",true],
+  ["Klatschen macht kein Geräusch.",false],["Zu Musik kann man tanzen.",true],
+  ["Ein Rhythmus kann sich wiederholen.",true],["Man kann laut und leise klatschen.",true],
+  ["Trommeln macht niemals Spaß.",false],["Musik kann fröhlich klingen.",true]
+];
+const V0_LIED=[
+  ["Man kann ein Lied gemeinsam singen.",true],["Beim Singen benutzt man die Stimme.",true],
+  ["'Alle meine Entchen' ist ein bekanntes Kinderlied.",true],["Ein Schlaflied ist meistens sehr laut.",false],
+  ["Man kann ein Lied auch alleine singen.",true],["Beim Singen darf man niemals lächeln.",false],
+  ["Ein Geburtstagslied singt man zum Geburtstag.",true],["Musik kann fröhlich machen.",true]
+];
+const V0_BEWEGUNG=[
+  ["Zu schneller Musik kann man schnell tanzen.","💃",["🛌","📖"]],["Zu langsamer Musik kann man sich sanft wiegen.","🧘",["🏃","⚽"]],
+  ["Zu einem Marsch kann man im Takt stampfen.","🥾",["🛌","🍽️"]],["Bei einem Schlaflied wird man müde.","😴",["🏃","💃"]],
+  ["Bei fröhlicher Musik lacht man gerne.","😊",["😢","😴"]],["Trommelmusik kann man gut mitklatschen.","👏",["🛌","📖"]]
+];
+const LEVELS_MU_V=[
+  {w:"Welt 1 · Laut, leise, hoch & tief", id:"v0_laut", ico:"🔊", nm:"Laut & Leise", type:"quatsch", set:V0_LAUT},
+  {w:"Welt 1 · Laut, leise, hoch & tief", id:"v0_hoch", ico:"🎶", nm:"Hoch & Tief", type:"quatsch", set:V0_HOCH},
+  {w:"Welt 1 · Laut, leise, hoch & tief", id:"v0_instr", ico:"🥁", nm:"Instrumente hören", type:"satzbild", set:V0_INSTR},
+  {w:"Welt 2 · Singen, Klatschen & Tanzen", id:"v0_rhyth", ico:"👏", nm:"Rhythmus klatschen", type:"quatsch", set:V0_RHYTH},
+  {w:"Welt 2 · Singen, Klatschen & Tanzen", id:"v0_lied", ico:"🎤", nm:"Singen & Lieder", type:"quatsch", set:V0_LIED},
+  {w:"Welt 2 · Singen, Klatschen & Tanzen", id:"v0_bewegung", ico:"💃", nm:"Musik & Bewegung", type:"satzbild", set:V0_BEWEGUNG}
+];
+
+// ================= KLASSE 4 · Deutsch (NRW) =================
+const MONSTER_DE4 = [
+  ["🔤","Buchstaben-Baron"],["🧱","Kompositum-Kobold"],["📗","Nachschlage-Nixe"],["🔠","Wortarten-Wyvern"],
+  ["⏳","Perfekt-Phantom"],["❗","Satzarten-Spuk"],["📰","Textsorten-Titan"],["🔄","Synonym-Sphinx"],
+  ["🔍","Lese-Leviathan"],["🌍","Fremdwort-Fee"],["🧠","Versteh-Vampir"],["✒️","Zeichen-Zauberer"]
+];
+const D4_SSS=[
+  ["🦶","FUß",2,["ß","SS","S","Z"]],["🏅","FLEIß",4,["ß","SS","S","Z"]],["💧","WASSER",2,["SS","ß","S","Z"]],
+  ["🌳","GASSE",2,["SS","ß","S","Z"]],["😊","SPASS",3,["SS","ß","S","Z"]],["👖","HOSE",2,["S","SS","ß","Z"]]
+];
+const D4_KOMPOSITA=[
+  ["'Handschuh' setzt sich aus 'Hand' und 'Schuh' zusammen.",true],["Zusammengesetzte Nomen bestehen aus mindestens zwei Wörtern.",true],
+  ["'Apfelbaum' ist ein Baum, der Äpfel trägt.",true],["Bei zusammengesetzten Nomen bestimmt das erste Wort die Wortart.",false],
+  ["'Fußballschuh' ist ein zusammengesetztes Nomen aus drei Teilen.",true],["'Regenschirm' schützt vor Regen.",true],
+  ["Das letzte Wort in einem zusammengesetzten Nomen bestimmt Artikel und Wortart.",true],["'Sonnenblume' hat nichts mit der Sonne zu tun.",false]
+];
+const D4_NACHSCHLAGEN=[
+  ["Im Wörterbuch findet man die richtige Schreibweise von Wörtern.",true],["Wörter werden nach dem Alphabet geordnet nachgeschlagen.",true],
+  ["Nomen schreibt man im Wörterbuch klein.",false],["Fremdwörter stammen oft aus einer anderen Sprache.",true],
+  ["'Computer' ist ein Fremdwort.",true],["Ein Silbentrennungszeichen ist ein Bindestrich (-).",true],
+  ["Man darf jedes Wort an jeder beliebigen Stelle trennen.",false],["Wörter werden nach Sprechsilben getrennt.",true]
+];
+const D4_WORTARTEN=[
+  ["'ich', 'du' und 'er' sind Pronomen.",true],["'unter', 'auf' und 'neben' sind Präpositionen.",true],
+  ["Ein Adjektiv beschreibt ein Nomen genauer.",true],["Ein Pronomen steht oft anstelle eines Nomens.",true],
+  ["'schnell laufen' – 'laufen' ist ein Adjektiv.",false],["Präpositionen geben oft einen Ort oder eine Zeit an.",true],
+  ["'der', 'die', 'das' sind Artikel.",true],["Konjunktionen wie 'und' und 'weil' verbinden Sätze.",true]
+];
+const D4_PERFEKT=[
+  ["'Ich habe gespielt.' steht im Perfekt.",true],["Das Perfekt bildet man oft mit 'haben' oder 'sein' und dem Partizip.",true],
+  ["'Ich bin gelaufen.' steht im Perfekt.",true],["Das Partizip von 'spielen' ist 'gespielt'.",true],
+  ["Das Partizip von 'gehen' ist 'gegeht'.",false],["Im Perfekt erzählt man oft von etwas, das schon passiert ist.",true],
+  ["'Ich spiele.' steht im Perfekt.",false],["Verben mit Bewegung bilden das Perfekt oft mit 'sein'.",true]
+];
+const D4_SATZARTEN=[
+  ["Ein Aussagesatz endet mit einem Punkt.",true],["Ein Fragesatz endet mit einem Fragezeichen.",true],
+  ["Ein Aufforderungssatz kann mit einem Ausrufezeichen enden.",true],["'Komm sofort her!' ist ein Aufforderungssatz.",true],
+  ["'Wie spät ist es?' ist ein Aussagesatz.",false],["Konjunktionen wie 'weil' und 'obwohl' leiten oft Nebensätze ein.",true],
+  ["Ein Ausrufesatz drückt starke Gefühle aus.",true],["Jeder Satz ist automatisch ein Fragesatz.",false]
+];
+const D4_TEXTSORTEN=[
+  ["Ein Bericht beschreibt Ereignisse sachlich und in der richtigen Reihenfolge.",true],["Eine Erzählung kann spannend und fantasievoll sein.",true],
+  ["Ein Sachtext liefert Informationen zu einem Thema.",true],["Ein Gedicht hat oft Reime.",true],
+  ["Ein Bericht beginnt meistens mit 'Es war einmal...'.",false],["Eine Anleitung erklärt Schritt für Schritt, wie man etwas macht.",true],
+  ["In einem Sachtext stehen meist erfundene Geschichten.",false],["Ein Brief beginnt oft mit einer Anrede.",true]
+];
+const D4_SYNONYME=[
+  ["'schön' und 'hübsch' bedeuten etwas Ähnliches.",true],["'groß' und 'winzig' bedeuten das Gleiche.",false],
+  ["'sagen', 'flüstern' und 'rufen' gehören zum Wortfeld 'sprechen'.",true],["'gehen', 'rennen' und 'schleichen' gehören zum Wortfeld 'sich bewegen'.",true],
+  ["Synonyme sind Wörter mit ähnlicher Bedeutung.",true],["'kalt' ist ein Synonym für 'heiß'.",false],
+  ["Ein Wortfeld sammelt Wörter zu einem gemeinsamen Thema.",true],["'schauen' und 'blicken' bedeuten etwas Ähnliches.",true]
+];
+const D4_LESEN=[
+  ["Der Forscher untersucht die Sterne durch ein Teleskop.","🔭",["🔬","📷"]],["Die Bienen bestäuben die Blüten im Garten.","🐝",["🦋","🐞"]],
+  ["Der Kapitän steuert das Schiff sicher durch den Sturm.","🚢",["✈️","🚗"]],["Die Archäologin gräbt vorsichtig nach alten Fundstücken.","⛏️",["🎨","📚"]],
+  ["Der Pilot fliegt das Flugzeug über die Wolken.","✈️",["🚀","🚌"]],["Die Ärztin untersucht den kranken Patienten.","🩺",["🍎","📖"]]
+];
+const D4_FREMD=[
+  ["💻","COMPUTER"],["📷","KAMERA"],["🍕","PIZZA"],["🚲","FAHRRAD"],["🎮","KONSOLE"],["📱","HANDY"],["🎬","KINO"],["🏀","BASKETBALL"]
+];
+const D4_VERSTEHEN=[
+  ["Eine Zusammenfassung nennt nur die wichtigsten Informationen.",true],["Beim genauen Lesen unterstreicht man oft wichtige Wörter.",true],
+  ["Eine Überschrift verrät oft, worum es in einem Text geht.",true],["Man muss einen Text nie zweimal lesen, um ihn zu verstehen.",false],
+  ["Bilder in einem Text können das Verständnis unterstützen.",true],["Ein Absatz fasst meist einen zusammenhängenden Gedanken.",true],
+  ["Man kann Fragen zu einem Text im Text selbst beantworten.",true],["Schwierige Wörter kann man im Wörterbuch nachschlagen.",true]
+];
+const D4_ZEICHEN=[
+  ["Bei einer Aufzählung trennt man die Wörter mit Kommas.",true],["'Ich mag Äpfel, Birnen und Bananen.' – Das Komma steht richtig.",true],
+  ["Vor 'und' am Ende einer Aufzählung steht meistens kein Komma.",true],["Ein Ausrufesatz endet mit einem Komma.",false],
+  ["Wörtliche Rede wird durch Anführungszeichen markiert.",true],["Ein Nebensatz wird oft durch ein Komma vom Hauptsatz getrennt.",true],
+  ["Nach der Anrede in einem Brief steht oft ein Komma.",true],["Man setzt niemals ein Komma in einem Satz.",false]
+];
+const LEVELS_DE4=[
+  {w:"Welt 1 · Richtig schreiben", id:"d4_sss", ico:"🔤", nm:"s, ss oder ß?", type:"luecke", set:D4_SSS},
+  {w:"Welt 1 · Richtig schreiben", id:"d4_komposita", ico:"🧱", nm:"Zusammengesetzte Nomen", type:"quatsch", set:D4_KOMPOSITA},
+  {w:"Welt 1 · Richtig schreiben", id:"d4_nachschlagen", ico:"📗", nm:"Nachschlagen & Trennen", type:"quatsch", set:D4_NACHSCHLAGEN},
+  {w:"Welt 2 · Wortarten & Satzglieder", id:"d4_wortarten", ico:"🔠", nm:"Pronomen & Präpositionen", type:"quatsch", set:D4_WORTARTEN},
+  {w:"Welt 2 · Wortarten & Satzglieder", id:"d4_perfekt", ico:"⏳", nm:"Das Perfekt", type:"quatsch", set:D4_PERFEKT},
+  {w:"Welt 2 · Wortarten & Satzglieder", id:"d4_satzarten", ico:"❗", nm:"Satzarten", type:"quatsch", set:D4_SATZARTEN},
+  {w:"Welt 3 · Textsorten & Wortschatz", id:"d4_textsorten", ico:"📰", nm:"Textsorten unterscheiden", type:"quatsch", set:D4_TEXTSORTEN},
+  {w:"Welt 3 · Textsorten & Wortschatz", id:"d4_synonyme", ico:"🔄", nm:"Wortfelder & Synonyme", type:"quatsch", set:D4_SYNONYME},
+  {w:"Welt 3 · Textsorten & Wortschatz", id:"d4_lesen", ico:"🔍", nm:"Lesen: Was passt?", type:"satzbild", set:D4_LESEN},
+  {w:"Welt 4 · Sicher schreiben & verstehen", id:"d4_fremd", ico:"🌍", nm:"Fremdwörter schreiben", type:"baumeister", set:D4_FREMD},
+  {w:"Welt 4 · Sicher schreiben & verstehen", id:"d4_verstehen", ico:"🧠", nm:"Textverständnis", type:"quatsch", set:D4_VERSTEHEN},
+  {w:"Welt 4 · Sicher schreiben & verstehen", id:"d4_zeichen", ico:"✒️", nm:"Satzzeichen", type:"quatsch", set:D4_ZEICHEN}
+];
+
+// ================= KLASSE 4 · Mathe (NRW – Zahlenraum bis 1 Million) =================
+const MONSTER_MA4=[
+  ["🔟","Millionen-Moloch"],["🔄","Rundungs-Ratte"],["🔢","Zahlen-Zyklop"],["✖️","Mal-Monster"],["➗","Divisions-Dämon"],
+  ["🧩","Teiler-Troll"],["🍰","Bruch-Biest"],["🧮","Dezimal-Dino"],["💶","Geld-Geist"],["🔲","Flächen-Fee"],
+  ["📦","Volumen-Vieh"],["📊","Diagramm-Drache"],["🛒","Sach-Sirene"],["🧠","Strategie-Sphinx"],["👑","Mathe-König"]
+];
+const M4_GROSSZAHL=[
+  ["Eine Million hat sieben Stellen.",true],["1000 mal 1000 ergibt eine Million.",true],
+  ["500.000 ist die Hälfte einer Million.",true],["100.000 ist mehr als eine Million.",false],
+  ["Eine Million schreibt man 1.000.000.",true],["999.999 ist kleiner als eine Million.",true],
+  ["10.000 hat fünf Stellen.",true],["Eine Million ist kleiner als 100.000.",false]
+];
+const M4_RUNDEN=[
+  ["Rundet man 452 auf Zehner, erhält man 450.",true],["Rundet man 786 auf Hunderter, erhält man 800.",true],
+  ["Rundet man 234 auf Hunderter, erhält man 300.",false],["Ein Überschlag hilft, ein Ergebnis grob zu prüfen.",true],
+  ["Rundet man 5 auf Zehner ab, erhält man 0.",true],["Rundet man 999 auf Hunderter, erhält man 1000.",true],
+  ["Beim Runden schaut man auf die nächste Ziffer.",true],["Rundet man 349 auf Hunderter, erhält man 400.",false]
+];
+const M4_VERGL=[
+  ["🔢","9999 10000 10001",5,["10000","9999","10001","10010"]],["🔢","49999 50000 50001",6,["50000","49999","50001","50010"]],
+  ["🔢","19999 20000 20001",6,["20000","19999","20001","20010"]],["🔢","99999 100000 100001",6,["100000","99999","100001","100010"]],
+  ["🔢","29999 30000 30001",6,["30000","29999","30001","30010"]],["🔢","999999 1000000 1000001",7,["1000000","999999","1000001","1000010"]]
+];
+const M4_MULT=[
+  ["24 × 3 = 72",true],["45 × 2 = 80",false],["123 × 4 = 492",true],["36 × 5 = 180",true],
+  ["27 × 6 = 172",false],["58 × 3 = 174",true],["19 × 8 = 152",true],["42 × 7 = 296",false]
+];
+const M4_DIV=[
+  ["96 : 4 = 24",true],["84 : 3 = 27",false],["144 : 6 = 24",true],["96 : 8 = 12",true],
+  ["135 : 5 = 27",true],["108 : 9 = 11",false],["165 : 5 = 33",true],["189 : 7 = 27",true]
+];
+const M4_TEILER=[
+  ["12 ist durch 3 teilbar.",true],["15 ist durch 4 teilbar.",false],
+  ["Eine Zahl ist durch 2 teilbar, wenn sie gerade ist.",true],["7 ist eine Primzahl.",true],
+  ["20 ist ein Vielfaches von 5.",true],["9 ist durch 2 teilbar.",false],
+  ["Eine Zahl ist durch 5 teilbar, wenn sie auf 0 oder 5 endet.",true],["4 ist ein Teiler von 10.",false]
+];
+const M4_BRUCH=[
+  ["Ein halber Kuchen ist 1/2.",true],["1/4 ist weniger als 1/2.",true],
+  ["Bei einem Bruch zeigt der Nenner, in wie viele Teile geteilt wird.",true],["3/4 ist mehr als 1/2.",true],
+  ["1/2 und 2/4 sind gleich groß.",true],["Der Zähler steht beim Bruch unten.",false],
+  ["1/3 ist größer als 1/2.",false],["Ein ganzer Kuchen entspricht 4/4.",true]
+];
+const M4_DEZIMAL=[
+  ["1,5 Meter sind 1 Meter und 50 Zentimeter.",true],["0,5 ist die Hälfte von 1.",true],
+  ["2,0 kg sind 2 Kilogramm.",true],["1,25 Euro sind 1 Euro und 25 Cent.",true],
+  ["0,75 ist mehr als 0,5.",true],["3,1 ist kleiner als 3,05.",false],
+  ["Ein Komma trennt bei Dezimalzahlen die ganzen Zahlen von den Teilen.",true],["1,0 ist kleiner als 0,9.",false]
+];
+const M4_GELD2=[
+  ["Tim kauft 3 Hefte zu je 2 Euro. Wie viel bezahlt er?","💶💶💶💶💶💶",["💶💶💶💶","💶💶💶💶💶"]],
+  ["Lea hat 10 Euro und kauft für 4 Euro ein Buch. Wie viel bleibt übrig?","💶💶💶💶💶💶",["💶💶💶💶","💶💶💶💶💶💶💶"]],
+  ["4 Freunde teilen sich 12 Kekse gleich. Wie viele bekommt jeder?","🍪🍪🍪",["🍪🍪","🍪🍪🍪🍪"]],
+  ["Ben kauft 5 Äpfel zu je 1 Euro. Wie viel bezahlt er?","💶💶💶💶💶",["💶💶💶💶","💶💶💶💶💶💶"]],
+  ["Mia hat 20 Euro und gibt 8 Euro aus. Wie viel bleibt übrig?","💶💶💶💶💶💶💶💶💶💶💶💶",["💶💶💶💶💶💶💶💶","💶💶💶💶💶💶💶💶💶💶"]],
+  ["6 Kinder teilen sich 18 Bonbons gleich. Wie viele bekommt jedes Kind?","🍬🍬🍬",["🍬🍬","🍬🍬🍬🍬"]]
+];
+const M4_FLAECHE2=[
+  ["Ein Rechteck mit 5 cm und 3 cm hat eine Fläche von 15 cm².",true],["Der Umfang eines Rechtecks mit 4 cm und 2 cm ist 12 cm.",true],
+  ["Ein Quadrat mit 6 cm Seitenlänge hat eine Fläche von 36 cm².",true],["Fläche berechnet man mit Länge mal Breite.",true],
+  ["Ein Rechteck mit 5 cm und 3 cm hat eine Fläche von 8 cm².",false],["Der Umfang eines Quadrats mit 5 cm Seitenlänge ist 20 cm.",true],
+  ["Flächen misst man in Zentimetern, nicht in Quadratzentimetern.",false],["Ein größeres Rechteck hat meist eine größere Fläche.",true]
+];
+const M4_VOLUMEN=[
+  ["1 Liter sind 1000 Milliliter.",true],["Ein Würfel hat sechs gleich große Flächen.",true],
+  ["Rauminhalt gibt an, wie viel Platz ein Körper einnimmt.",true],["1 Liter Wasser wiegt ungefähr 1 Kilogramm.",true],
+  ["Ein Quader hat immer nur vier Seitenflächen.",false],["Volumen misst man zum Beispiel in Kubikzentimetern.",true],
+  ["Eine Kugel hat Ecken und Kanten.",false],["Ein Würfel mit 2 cm Kantenlänge hat ein Volumen von 8 cm³.",true]
+];
+const M4_DIAGRAMM=[
+  ["Ein Balkendiagramm zeigt Daten mit unterschiedlich langen Balken.",true],["In einer Tabelle stehen Daten geordnet in Zeilen und Spalten.",true],
+  ["Ein höherer Balken zeigt meist einen größeren Wert.",true],["Diagramme helfen, Zahlen übersichtlich darzustellen.",true],
+  ["Ein Kreisdiagramm kann Anteile eines Ganzen zeigen.",true],["In einer Tabelle darf man keine Zahlen eintragen.",false],
+  ["Eine Skala an der Seite eines Diagramms hilft beim Ablesen der Werte.",true],["Diagramme sind immer nur für Erwachsene gedacht.",false]
+];
+const M4_SACH2=[
+  ["3 Bäcker backen je 4 Brote. Wie viele Brote insgesamt?","🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞",["🍞🍞🍞🍞🍞🍞🍞🍞","🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞"]],
+  ["24 Stifte werden auf 4 Kinder gleich verteilt. Wie viele pro Kind?","✏️✏️✏️✏️✏️✏️",["✏️✏️✏️✏️","✏️✏️✏️✏️✏️✏️✏️✏️"]],
+  ["4 Kisten mit je 3 Flaschen. Wie viele Flaschen insgesamt?","🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾",["🍾🍾🍾🍾🍾🍾🍾🍾","🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾🍾"]],
+  ["30 Muffins werden auf 6 Teller gleich verteilt. Wie viele pro Teller?","🧁🧁🧁🧁🧁",["🧁🧁🧁🧁","🧁🧁🧁🧁🧁🧁"]],
+  ["4 Teams mit je 3 Spielern. Wie viele Spieler insgesamt?","🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑",["🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑","🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑🧑"]],
+  ["27 Bonbons werden auf 3 Kinder gleich verteilt. Wie viele pro Kind?","🍬🍬🍬🍬🍬🍬🍬🍬🍬",["🍬🍬🍬🍬🍬🍬🍬🍬","🍬🍬🍬🍬🍬🍬🍬🍬🍬🍬"]]
+];
+const M4_STRATEGIE=[
+  ["Beim Überschlagen rundet man Zahlen, um schnell zu rechnen.",true],["Eine Rechenprobe hilft, das Ergebnis zu kontrollieren.",true],
+  ["Man kann eine Additionsaufgabe mit einer Subtraktion überprüfen.",true],["Kopfrechnen braucht man beim Rechnen nie.",false],
+  ["Geschicktes Rechnen kann Aufgaben vereinfachen, z. B. 99+58 wie 100+58-1.",true],["Ein Überschlag ersetzt immer das genaue Ergebnis.",false],
+  ["Zwischenschritte helfen, den Rechenweg nachzuvollziehen.",true],["Beim schriftlichen Rechnen schreibt man die Zahlen stellengerecht untereinander.",true]
+];
+const M4_MIX=[
+  ["Das kleine 1×1 reicht von 1×1 bis 10×10.",true],["Ein rechter Winkel misst 90 Grad.",true],
+  ["Eine Woche hat 7 Tage, ein Jahr hat 12 Monate.",true],["1 km sind 100 m.",false],
+  ["Ein Quadrat ist auch ein Rechteck.",true],["Halbieren bedeutet, etwas durch 2 zu teilen.",true],
+  ["Ein Kilogramm ist leichter als ein Gramm.",false],["Die Summe ist das Ergebnis einer Addition.",true]
+];
+const LEVELS_MA4=[
+  {w:"Welt 1 · Große Zahlen", id:"m4_grosszahl", ico:"🔟", nm:"Zahlenraum bis 1 Million", type:"quatsch", set:M4_GROSSZAHL},
+  {w:"Welt 1 · Große Zahlen", id:"m4_runden", ico:"🔄", nm:"Runden & Überschlagen", type:"quatsch", set:M4_RUNDEN},
+  {w:"Welt 1 · Große Zahlen", id:"m4_vergl", ico:"🔢", nm:"Große Zahlen-Nachbarn", type:"luecke", set:M4_VERGL},
+  {w:"Welt 2 · Schriftlich rechnen", id:"m4_mult", ico:"✖️", nm:"Schriftlich Malnehmen", type:"quatsch", set:M4_MULT},
+  {w:"Welt 2 · Schriftlich rechnen", id:"m4_div", ico:"➗", nm:"Schriftlich Teilen", type:"quatsch", set:M4_DIV},
+  {w:"Welt 2 · Schriftlich rechnen", id:"m4_teiler", ico:"🧩", nm:"Teiler & Vielfache", type:"quatsch", set:M4_TEILER},
+  {w:"Welt 3 · Brüche & Dezimalzahlen", id:"m4_bruch", ico:"🍰", nm:"Brüche", type:"quatsch", set:M4_BRUCH},
+  {w:"Welt 3 · Brüche & Dezimalzahlen", id:"m4_dezimal", ico:"🧮", nm:"Dezimalzahlen", type:"quatsch", set:M4_DEZIMAL},
+  {w:"Welt 3 · Brüche & Dezimalzahlen", id:"m4_geld2", ico:"💶", nm:"Geld & Verteilen", type:"satzbild", set:M4_GELD2},
+  {w:"Welt 4 · Flächen, Umfang & Volumen", id:"m4_flaeche2", ico:"🔲", nm:"Fläche & Umfang", type:"quatsch", set:M4_FLAECHE2},
+  {w:"Welt 4 · Flächen, Umfang & Volumen", id:"m4_volumen", ico:"📦", nm:"Volumen", type:"quatsch", set:M4_VOLUMEN},
+  {w:"Welt 4 · Flächen, Umfang & Volumen", id:"m4_diagramm", ico:"📊", nm:"Diagramme lesen", type:"quatsch", set:M4_DIAGRAMM},
+  {w:"Welt 5 · Sachrechnen & Strategien", id:"m4_sach2", ico:"🛒", nm:"Sachaufgaben", type:"satzbild", set:M4_SACH2},
+  {w:"Welt 5 · Sachrechnen & Strategien", id:"m4_strategie", ico:"🧠", nm:"Rechenstrategien", type:"quatsch", set:M4_STRATEGIE},
+  {w:"Welt 5 · Sachrechnen & Strategien", id:"m4_mix", ico:"👑", nm:"Gemischte Wiederholung", type:"quatsch", set:M4_MIX}
+];
+
+// ================= KLASSE 4 · Sachunterricht (NRW) =================
+const MONSTER_SU4=[
+  ["🇩🇪","Deutschland-Drache"],["🇪🇺","Europa-Elf"],["🗺️","Karten-Kraken"],["⚡","Schaltungs-Sprite"],["💧","Kläranlage-Kobold"],["🌍","Klima-Kobra"],
+  ["🍽️","Verdauungs-Vampir"],["🥗","Ernährungs-Elf"],["🌱","Wandel-Wicht"],["🏰","Mittelalter-Monster"],["⏳","Zeitleisten-Zombie"],["💡","Erfindungs-Elf"],
+  ["📱","Medien-Mumie"],["💼","Berufe-Biest"],["🚲","Verkehrs-Vieh"]
+];
+const S4_DEUTSCHLAND=[
+  ["Deutschland liegt in Europa.",true],["Die Nordsee und die Ostsee liegen im Norden Deutschlands.",true],
+  ["Der Rhein ist einer der längsten Flüsse Deutschlands.",true],["Deutschland hat keine Nachbarländer.",false],
+  ["Die Zugspitze ist der höchste Berg Deutschlands.",true],["München liegt in Bayern.",true],
+  ["Deutschland hat mehr als 80 Millionen Einwohner.",true],["Berlin liegt im Süden Deutschlands.",false]
+];
+const S4_EUROPA=[
+  ["Europa ist ein Kontinent.",true],["Frankreich ist ein Nachbarland von Deutschland.",true],
+  ["Die Europäische Union verbindet viele Länder in Europa.",true],["Italien liegt nördlich von Deutschland.",false],
+  ["Der Euro ist die Währung in vielen europäischen Ländern.",true],["Spanien liegt in Europa.",true],
+  ["Europa hat nur ein einziges Land.",false],["Viele Menschen in Europa sprechen unterschiedliche Sprachen.",true]
+];
+const S4_KARTEN2=[
+  ["Ein Atlas ist eine Sammlung von Karten.",true],["Der Maßstab zeigt das Verhältnis von Karte zu Wirklichkeit.",true],
+  ["Auf einer Karte im Maßstab 1:100 ist 1 cm in Wirklichkeit 100 cm.",true],["Gebirge werden auf Karten oft braun dargestellt.",true],
+  ["Auf jeder Karte ist Süden oben.",false],["Eine Legende erklärt die Symbole einer Karte.",true],
+  ["Ein Globus zeigt die Erde verkleinert als Kugel.",true],["Flüsse werden auf Karten meist rot dargestellt.",false]
+];
+const S4_STROM2=[
+  ["Bei einer Reihenschaltung fließt der Strom nur auf einem Weg.",true],["Bei einer Parallelschaltung gibt es mehrere Wege für den Strom.",true],
+  ["Fällt bei einer Reihenschaltung eine Lampe aus, gehen oft alle Lampen aus.",true],["Bei einer Parallelschaltung leuchten die anderen Lampen weiter, wenn eine ausfällt.",true],
+  ["Ein Stromkreis funktioniert auch ohne geschlossenen Kreislauf.",false],["Ein Schalter kann den Stromkreis öffnen oder schließen.",true],
+  ["Strom sparen schont Umwelt und Geldbeutel.",true],["Batterien liefern elektrische Energie.",true]
+];
+const S4_WASSER2=[
+  ["Trinkwasser muss sauber und keimfrei sein.",true],["Eine Kläranlage reinigt Abwasser.",true],
+  ["Man sollte Wasser nicht unnötig verschwenden.",true],["Nur ein kleiner Teil des Wassers auf der Erde ist Trinkwasser.",true],
+  ["Abwasser darf man einfach in Flüsse leiten, ohne es zu reinigen.",false],["Wasserhähne sollte man nach Gebrauch zudrehen.",true],
+  ["Regenwasser kann man zum Blumengießen sammeln.",true],["Trinkwasser kommt direkt unbehandelt aus dem Meer.",false]
+];
+const S4_KLIMA=[
+  ["Der Klimawandel führt zu einer Erwärmung der Erde.",true],["Mülltrennung hilft beim Recycling.",true],
+  ["Fahrradfahren verursacht weniger Abgase als Autofahren.",true],["Bäume produzieren Sauerstoff.",true],
+  ["Plastikmüll im Meer schadet Tieren.",true],["Klimaschutz geht uns alle nichts an.",false],
+  ["Energie sparen hilft dem Klima.",true],["Man kann unendlich viel Müll produzieren, ohne dass es schadet.",false]
+];
+const S4_VERDAUUNG=[
+  ["Die Verdauung beginnt schon im Mund beim Kauen.",true],["Der Magen zerkleinert die Nahrung weiter.",true],
+  ["Im Darm werden Nährstoffe ins Blut aufgenommen.",true],["Die Speiseröhre transportiert die Nahrung zum Magen.",true],
+  ["Verdauung findet nur im Mund statt.",false],["Wasser ist wichtig für eine gute Verdauung.",true],
+  ["Ballaststoffe aus Obst und Gemüse unterstützen die Verdauung.",true],["Der Darm ist mehrere Meter lang.",true]
+];
+const S4_ERNAEHR2=[
+  ["Eiweiß, Fett und Kohlenhydrate sind wichtige Nährstoffe.",true],["Vitamine sind wichtig für unseren Körper.",true],
+  ["Zu viel Zucker kann ungesund sein.",true],["Vollkornprodukte enthalten mehr Ballaststoffe als Weißmehlprodukte.",true],
+  ["Wasser trinken ist für den Körper unwichtig.",false],["Obst und Gemüse liefern viele Vitamine.",true],
+  ["Fast Food sollte man jeden Tag essen.",false],["Eine ausgewogene Ernährung enthält viele verschiedene Lebensmittel.",true]
+];
+const S4_PUBERTAET=[
+  ["In der Pubertät verändert sich der Körper.",true],["Jeder Mensch durchläuft irgendwann die Pubertät.",true],
+  ["Während der Pubertät kann man schneller wachsen.",true],["Gefühle können sich in der Pubertät stärker verändern.",true],
+  ["Die Pubertät beginnt bei allen Menschen am exakt gleichen Tag.",false],["Hygiene wird in der Pubertät wichtiger.",true],
+  ["Man darf über Veränderungen des Körpers mit Vertrauenspersonen sprechen.",true],["Die Pubertät dauert nur einen einzigen Tag.",false]
+];
+const S4_GESCHICHTE=[
+  ["Im Mittelalter lebten Menschen oft in Burgen.",true],["Ritter trugen im Mittelalter oft eine Rüstung.",true],
+  ["Früher gab es noch kein elektrisches Licht.",true],["Im Mittelalter gab es schon Smartphones.",false],
+  ["Ein Museum bewahrt Gegenstände aus der Vergangenheit auf.",true],["Geschichte erzählt, was in der Vergangenheit passiert ist.",true],
+  ["Chroniken und Urkunden können uns etwas über früher erzählen.",true],["Früher lebten die Menschen genauso wie heute.",false]
+];
+const S4_ZEITLEISTE=[
+  ["Eine Zeitleiste zeigt Ereignisse in ihrer zeitlichen Reihenfolge.",true],["Ein Jahrhundert hat 100 Jahre.",true],
+  ["Ein Jahrzehnt hat 10 Jahre.",true],["Die Vergangenheit liegt vor der Gegenwart.",true],
+  ["Die Zukunft ist bereits passiert.",false],["Ein Kalender hilft, Zeit einzuteilen.",true],
+  ["Ereignisse auf einer Zeitleiste stehen in zufälliger Reihenfolge.",false],["Ein Jahr hat 365 oder 366 Tage.",true]
+];
+const S4_ERFINDUNGEN2=[
+  ["Die Erfindung des Buchdrucks veränderte die Verbreitung von Wissen.",true],["Früher wurden Briefe oft mit der Kutsche transportiert.",true],
+  ["Das Auto wurde erst nach dem Fahrrad erfunden.",true],["Die Eisenbahn ermöglichte schnelleres Reisen.",true],
+  ["Das Internet gab es schon im Mittelalter.",false],["Neue Erfindungen können das Leben der Menschen verändern.",true],
+  ["Der elektrische Strom hat viele neue Erfindungen ermöglicht.",true],["Fortschritt bedeutet, dass sich nichts verändert.",false]
+];
+const S4_MEDIEN2=[
+  ["Nicht alle Informationen im Internet sind wahr.",true],["Man sollte persönliche Daten im Internet schützen.",true],
+  ["Cybermobbing ist nicht in Ordnung.",true],["Man sollte fremde Nachrichten und Bilder kritisch hinterfragen.",true],
+  ["Man darf einfach alle Fotos von anderen Kindern posten.",false],["Passwörter sollte man nicht mit Fremden teilen.",true],
+  ["Medienzeit sollte gut eingeteilt werden.",true],["Alles, was im Internet steht, muss man sofort glauben.",false]
+];
+const S4_BERUFE=[
+  ["Ein Landwirt baut Getreide und Gemüse an.",true],["Ein Ingenieur plant und entwickelt technische Dinge.",true],
+  ["Menschen tauschen Waren und Dienstleistungen gegen Geld.",true],["Ein Handwerker stellt oder repariert Dinge mit den Händen.",true],
+  ["Alle Menschen üben genau den gleichen Beruf aus.",false],["Ausbildung und Schule bereiten auf einen Beruf vor.",true],
+  ["Geld verdient man meist durch Arbeit.",true],["Ein Supermarkt verkauft ausschließlich Autos.",false]
+];
+const S4_VERKEHR2=[
+  ["Beim Fahrradfahren sollte man Verkehrsregeln beachten.",true],["Ein Fahrrad braucht funktionierende Bremsen.",true],
+  ["Handzeichen zeigen anderen, wohin man abbiegen möchte.",true],["Bei Rot an der Ampel darf man einfach weiterfahren.",false],
+  ["Reflektoren machen das Fahrrad in der Dunkelheit sichtbar.",true],["Ein Helm schützt den Kopf bei einem Sturz.",true],
+  ["Auf dem Gehweg darf man mit dem Fahrrad immer rasen.",false],["Vor dem Abbiegen sollte man nach hinten schauen.",true]
+];
+const LEVELS_SU4=[
+  {w:"Welt 1 · Deutschland & Europa", id:"su4_deutschland2", ico:"🇩🇪", nm:"Deutschland", type:"quatsch", set:S4_DEUTSCHLAND},
+  {w:"Welt 1 · Deutschland & Europa", id:"su4_europa", ico:"🇪🇺", nm:"Europa", type:"quatsch", set:S4_EUROPA},
+  {w:"Welt 1 · Deutschland & Europa", id:"su4_karten2", ico:"🗺️", nm:"Karten & Maßstab", type:"quatsch", set:S4_KARTEN2},
+  {w:"Welt 2 · Strom, Wasser & Umwelt", id:"su4_strom2", ico:"⚡", nm:"Schaltungen", type:"quatsch", set:S4_STROM2},
+  {w:"Welt 2 · Strom, Wasser & Umwelt", id:"su4_wasser2", ico:"💧", nm:"Trinkwasser & Kläranlage", type:"quatsch", set:S4_WASSER2},
+  {w:"Welt 2 · Strom, Wasser & Umwelt", id:"su4_klima", ico:"🌍", nm:"Klima & Umweltschutz", type:"quatsch", set:S4_KLIMA},
+  {w:"Welt 3 · Körper, Ernährung & Gesundheit", id:"su4_verdauung", ico:"🍽️", nm:"Verdauung", type:"quatsch", set:S4_VERDAUUNG},
+  {w:"Welt 3 · Körper, Ernährung & Gesundheit", id:"su4_ernaehr2", ico:"🥗", nm:"Ernährung vertieft", type:"quatsch", set:S4_ERNAEHR2},
+  {w:"Welt 3 · Körper, Ernährung & Gesundheit", id:"su4_pubertaet", ico:"🌱", nm:"Mein Körper verändert sich", type:"quatsch", set:S4_PUBERTAET},
+  {w:"Welt 4 · Geschichte & Zeit", id:"su4_geschichte", ico:"🏰", nm:"Früher: Mittelalter", type:"quatsch", set:S4_GESCHICHTE},
+  {w:"Welt 4 · Geschichte & Zeit", id:"su4_zeitleiste", ico:"⏳", nm:"Zeitleiste", type:"quatsch", set:S4_ZEITLEISTE},
+  {w:"Welt 4 · Geschichte & Zeit", id:"su4_erfindungen2", ico:"💡", nm:"Erfindungen & Fortschritt", type:"quatsch", set:S4_ERFINDUNGEN2},
+  {w:"Welt 5 · Medien, Berufe & Verkehr", id:"su4_medien2", ico:"📱", nm:"Medienkompetenz", type:"quatsch", set:S4_MEDIEN2},
+  {w:"Welt 5 · Medien, Berufe & Verkehr", id:"su4_berufe", ico:"💼", nm:"Berufe & Wirtschaft", type:"quatsch", set:S4_BERUFE},
+  {w:"Welt 5 · Medien, Berufe & Verkehr", id:"su4_verkehr2", ico:"🚲", nm:"Fahrrad & Verkehr", type:"quatsch", set:S4_VERKEHR2}
+];
+
+// ================= KLASSE 4 · Musik (NRW) =================
+const MONSTER_MU4=[
+  ["🎼","Noten-Necromant"],["🔊","Dynamik-Drache"],["🥁","Takt-Titan"],["🌍","Weltmusik-Wicht"],["🎸","Band-Barde"],
+  ["📜","Geschichts-Geist"],["💻","Digital-Dämon"],["🎶","Kompositions-Kobold"],["🎤","Konzert-Kobra"]
+];
+const U4_NOTENNAMEN=[
+  ["Die Notennamen sind C, D, E, F, G, A, H.",true],["Nach dem Ton C kommt der Ton D.",true],
+  ["Die Notenlinien und Zwischenräume zeigen die Tonhöhe.",true],["Ein Notenschlüssel steht am Anfang jeder Notenzeile.",true],
+  ["Nach H kommt wieder C, eine Oktave höher.",true],["Es gibt nur drei verschiedene Notennamen.",false],
+  ["Der Violinschlüssel wird oft für hohe Töne verwendet.",true],["Noten kann man auf einem Notensystem mit fünf Linien schreiben.",true]
+];
+const U4_DYNAMIK2=[
+  ["'Piano' bedeutet leise spielen.",true],["'Forte' bedeutet laut spielen.",true],
+  ["'Crescendo' bedeutet lauter werdend.",true],["'Decrescendo' bedeutet lauter werdend.",false],
+  ["Dynamikzeichen sagen, wie laut oder leise man spielen soll.",true],["'Piano' und 'Forte' klingen genau gleich.",false],
+  ["Man kann Musik langsam lauter werden lassen.",true],["Dynamik hat nichts mit Lautstärke zu tun.",false]
+];
+const U4_TAKT2=[
+  ["Ein 6/8-Takt kommt oft in Wiegenliedern vor.",true],["Der Takt gibt die Betonung der Musik vor.",true],
+  ["In einem 3/4-Takt wird meist der erste Schlag betont.",true],["Ein Taktwechsel bedeutet, dass sich die Taktart ändert.",true],
+  ["Alle Musikstücke haben immer die gleiche Taktart.",false],["Man kann einen Takt dirigieren.",true],
+  ["Der Dirigent gibt oft mit den Händen den Takt vor.",true],["Ein Takt hat niemals eine feste Anzahl an Schlägen.",false]
+];
+const U4_WELTMUSIK=[
+  ["Es gibt auf der Welt viele unterschiedliche Musikstile.",true],["Eine Djembe ist eine westafrikanische Trommel.",true],
+  ["Der Didgeridoo stammt ursprünglich aus Australien.",true],["Überall auf der Welt klingt Musik genau gleich.",false],
+  ["Volksmusik gehört zur Kultur eines Landes.",true],["Ein Sitar ist ein indisches Saiteninstrument.",true],
+  ["Reggae-Musik stammt ursprünglich aus Jamaika.",true],["Musik gibt es nur in Europa.",false]
+];
+const U4_BANDINSTR=[
+  ["Welches Instrument spielt oft die E-Gitarre in einer Band?","🎸",["🎻","🎹"]],["Welches Instrument gibt in einer Band den Rhythmus vor?","🥁",["🎤","🎹"]],
+  ["Wer singt meistens die Lieder einer Band?","🎤",["🥁","🎸"]],["Welches Instrument hat schwarze und weiße Tasten?","🎹",["🎸","🥁"]],
+  ["Welches Instrument spielt tiefe Töne in einer Band?","🎸",["🎤","🎹"]],["Welches Instrument nutzt man beim DJ-Auflegen?","🎧",["🎻","📯"]]
+];
+const U4_MUSIKGESCH=[
+  ["Johann Sebastian Bach lebte vor mehr als 250 Jahren.",true],["Musik gibt es schon seit sehr langer Zeit.",true],
+  ["Früher wurde Musik oft ohne elektrischen Strom gespielt.",true],["Die E-Gitarre wurde erst im 20. Jahrhundert erfunden.",true],
+  ["Es gab niemals Musik ohne moderne Technik.",false],["Ludwig van Beethoven komponierte auch Sinfonien.",true],
+  ["Musik hat sich im Laufe der Zeit verändert.",true],["Alte Instrumente werden heute nie mehr gespielt.",false]
+];
+const U4_DIGITAL=[
+  ["Man kann Musik heute auch am Computer machen.",true],["Ein Mikrofon nimmt Töne auf.",true],
+  ["Kopfhörer geben Musik zum Anhören wieder.",true],["Musik-Apps können beim Musikmachen helfen.",true],
+  ["Digitale Musik klingt niemals wie echte Instrumente.",false],["Man kann eigene Lieder aufnehmen und abspielen.",true],
+  ["Ein Lautsprecher gibt Musik hörbar wieder.",true],["Streaming bedeutet, Musik über das Internet zu hören.",true]
+];
+const U4_KOMPOSITION=[
+  ["Man kann eigene kleine Melodien erfinden.",true],["Beim Improvisieren spielt man Musik spontan.",true],
+  ["Eine Melodie besteht aus einer Abfolge von Tönen.",true],["Musik komponieren bedeutet, Musikstücke zu erschaffen.",true],
+  ["Nur berühmte Komponisten dürfen Musik erfinden.",false],["Rhythmusinstrumente eignen sich gut zum Improvisieren.",true],
+  ["Eine eigene Melodie kann man aufschreiben oder aufnehmen.",true],["Kreativität spielt beim Musikmachen keine Rolle.",false]
+];
+const U4_KONZERT=[
+  ["Bei einem Konzert spielen Musiker vor Publikum.",true],["Ein Orchesterkonzert kann viele verschiedene Instrumente zeigen.",true],
+  ["Bei einer Aufführung übt man vorher meistens.",true],["Applaus zeigt, dass dem Publikum die Musik gefallen hat.",true],
+  ["Bei einem Konzert ist es meistens still, wenn gespielt wird.",true],["Man darf während eines leisen Stücks laut schreien.",false],
+  ["Musiker können vor einem Konzert nervös sein.",true],["Ein Konzert dauert immer nur eine Minute.",false]
+];
+const LEVELS_MU4=[
+  {w:"Welt 1 · Noten lesen", id:"mu4_noten", ico:"🎼", nm:"Notennamen", type:"quatsch", set:U4_NOTENNAMEN},
+  {w:"Welt 1 · Noten lesen", id:"mu4_dyn2", ico:"🔊", nm:"Dynamik (piano/forte)", type:"quatsch", set:U4_DYNAMIK2},
+  {w:"Welt 1 · Noten lesen", id:"mu4_takt2", ico:"🥁", nm:"Taktarten vertieft", type:"quatsch", set:U4_TAKT2},
+  {w:"Welt 2 · Instrumente & Weltmusik", id:"mu4_welt", ico:"🌍", nm:"Musik aus aller Welt", type:"quatsch", set:U4_WELTMUSIK},
+  {w:"Welt 2 · Instrumente & Weltmusik", id:"mu4_band", ico:"🎸", nm:"Bandinstrumente", type:"satzbild", set:U4_BANDINSTR},
+  {w:"Welt 2 · Instrumente & Weltmusik", id:"mu4_gesch", ico:"📜", nm:"Musikgeschichte", type:"quatsch", set:U4_MUSIKGESCH},
+  {w:"Welt 3 · Digitale Musik & Kreativität", id:"mu4_digital", ico:"💻", nm:"Digitale Musik", type:"quatsch", set:U4_DIGITAL},
+  {w:"Welt 3 · Digitale Musik & Kreativität", id:"mu4_komposition", ico:"🎶", nm:"Eigene Musik erfinden", type:"quatsch", set:U4_KOMPOSITION},
+  {w:"Welt 3 · Digitale Musik & Kreativität", id:"mu4_konzert", ico:"🎤", nm:"Konzert & Aufführung", type:"quatsch", set:U4_KONZERT}
+];
+
+// ================= KLASSE 4 · Englisch (NRW) =================
+const MONSTER_EN4=[
+  ["⏰","Time-Troll"],["🔢","Number-Knight"],["🛍️","Shopping-Shade"],["🧭","Direction-Djinn"],["⚽","Hobby-Hydra"],
+  ["🎨","Hobby-Harpy"],["👤","Describe-Demon"],["⏮️","Past-Phantom"],["❓","Question-Quokka"],["🌦️","Weather-Warlock"],
+  ["📅","Month-Mimic"],["💼","Job-Jinni"],["📚","Subject-Sprite"],["✏️","Sentence-Shark"],["👑","Review-Rex"]
+];
+const EN4_TIME=[
+  ["'What time is it?' asks for the time.",true],["'It's three o'clock.' means it is 3:00.",true],
+  ["'Half past four' means it is 4:30.",true],["'Quarter past five' means it is 5:15.",true],
+  ["'It's midnight' means it is 12 o'clock at night.",true],["'Morning' comes after 'evening'.",false],
+  ["'Afternoon' is the time after midday.",true],["A clock has an hour hand and a minute hand.",true]
+];
+const EN4_NUMBERS2=[
+  ["10","TEN"],["20","TWENTY"],["30","THIRTY"],["40","FORTY"],["50","FIFTY"],["60","SIXTY"],["70","SEVENTY"],["80","EIGHTY"]
+];
+const EN4_SHOPPING=[
+  ["'How much is this?' asks about the price.",true],["'It costs five pounds.' talks about money.",true],
+  ["A shop is a place where you can buy things.",true],["'I would like...' is a polite way to ask for something.",true],
+  ["Money is not needed to buy things in a shop.",false],["A shopping list helps you remember what to buy.",true],
+  ["'Can I help you?' is something a shop assistant might say.",true],["'Expensive' means it costs a lot of money.",true]
+];
+const EN4_DIRECTIONS=[
+  ["'Turn left' means you should go to the left.",true],["'Turn right' means you should go to the right.",true],
+  ["'Go straight on' means you should go straight ahead.",true],["'Stop' means you should keep walking fast.",false],
+  ["'Behind the school' means it is located after the school.",true],["'Next to the park' means close to the park.",true],
+  ["'In front of the house' means before the house.",true],["A map can help you find directions.",true]
+];
+const EN4_HOBBIES=[
+  ["⚽","FOOTBALL"],["🎨","PAINTING"],["📖","READING"],["🎵","MUSIC"],["🏊","SWIMMING"],["🚴","CYCLING"],["🎮","GAMING"],["💃","DANCING"]
+];
+const EN4_HOBBYSENT=[
+  ["I like playing football.","⚽",["📖","🎨"]],["I like reading books.","📖",["⚽","🎵"]],
+  ["I like painting pictures.","🎨",["🏊","🚴"]],["I like listening to music.","🎵",["📖","⚽"]],
+  ["I like swimming in the pool.","🏊",["🎨","🚴"]],["I like riding my bike.","🚴",["🏊","🎵"]]
+];
+const EN4_DESCRIBE=[
+  ["She has long hair.","👩‍🦱",["👨‍🦲","👧"]],["He is tall.","🧍‍♂️",["🧒","👶"]],
+  ["She is wearing glasses.","👓",["🧢","👟"]],["He has short hair.","👨‍🦱",["👩‍🦱","👶"]],
+  ["She is smiling.","😊",["😢","😠"]],["He is wearing a hat.","🧢",["👓","👟"]]
+];
+const EN4_PAST=[
+  ["'I played football yesterday.' is in the past tense.",true],["'Played' is the past tense of 'play'.",true],
+  ["'I play football tomorrow.' is in the past tense.",false],["'Yesterday' tells us it happened in the past.",true],
+  ["'Walked' is the past tense of 'walk'.",true],["The past tense describes something that will happen.",false],
+  ["'Watched' is the past tense of 'watch'.",true],["'Last week' can introduce a sentence in the past tense.",true]
+];
+const EN4_QUESTIONS=[
+  ["'What's your name?' asks for someone's name.",true],["'How old are you?' asks about someone's age.",true],
+  ["'Where do you live?' asks about a place.",true],["'What is your favourite colour?' asks about a colour.",true],
+  ["'Who is this?' asks about a colour.",false],["'How are you?' asks about how someone feels.",true],
+  ["'Do you have a pet?' is a yes/no question.",true],["Questions in English always end with a full stop.",false]
+];
+const EN4_WEATHER2=[
+  ["'The weather forecast' tells us what the weather will be like.",true],["'It's foggy' means it is hard to see far.",true],
+  ["'It's stormy' means the weather is calm and quiet.",false],["'Warm' and 'hot' can both describe high temperatures.",true],
+  ["'Freezing' means it is extremely cold.",true],["A thermometer measures temperature.",true],
+  ["Spring, summer, autumn and winter are the four seasons.",true],["'It's boiling' means it is extremely cold.",false]
+];
+const EN4_MONTHS=[
+  ["'January' is the first month of the year.",true],["'December' is the last month of the year.",true],
+  ["A year has twelve months.",true],["'July' comes before 'June'.",false],
+  ["'April' comes after 'March'.",true],["Summer months in Germany include 'June', 'July' and 'August'.",true],
+  ["'February' is usually the shortest month.",true],["'September' comes before 'August'.",false]
+];
+const EN4_JOBS=[
+  ["👩‍⚕️","DOCTOR"],["👨‍🍳","COOK"],["👮","POLICE OFFICER"],["👩‍🏫","TEACHER"],["👨‍🚒","FIREFIGHTER"],["👩‍✈️","PILOT"],["👨‍🌾","FARMER"],["👩‍🔬","SCIENTIST"]
+];
+const EN4_SUBJECTS=[
+  ["📐","MATHS"],["📖","ENGLISH"],["🎨","ART"],["🎵","MUSIC"],["⚽","SPORT"],["🔬","SCIENCE"],["🌍","GEOGRAPHY"],["📜","HISTORY"]
+];
+const EN4_SENTENCES2=[
+  ["'I can swim.' is a correct English sentence.",true],["'Swim I can.' is a correct English sentence.",false],
+  ["'She likes ice cream.' is a correct English sentence.",true],["'We goes to school.' is a correct English sentence.",false],
+  ["'They are my friends.' is a correct English sentence.",true],["'He have a bike.' is a correct English sentence.",false],
+  ["'I am eight years old.' is a correct English sentence.",true],["'This is my dog.' is a correct English sentence.",true]
+];
+const EN4_MIX2=[
+  ["'Doctor' is a job.",true],["'Swimming' is a hobby.",true],["'January' is a month.",true],
+  ["'Left' and 'right' are directions.",true],["'Rainy' describes the weather.",true],["'Twenty' is a colour.",false],
+  ["'Teacher' is a weather word.",false],["'Football' is a hobby.",true]
+];
+const LEVELS_EN4=[
+  {w:"Welt 1 · Time & Shopping", id:"en4_time", ico:"⏰", nm:"Telling the Time", type:"quatsch", set:EN4_TIME},
+  {w:"Welt 1 · Time & Shopping", id:"en4_numbers2", ico:"🔢", nm:"Numbers to 80", type:"wortbild", set:EN4_NUMBERS2},
+  {w:"Welt 1 · Time & Shopping", id:"en4_shopping", ico:"🛍️", nm:"Shopping", type:"quatsch", set:EN4_SHOPPING},
+  {w:"Welt 2 · Directions & Hobbies", id:"en4_directions", ico:"🧭", nm:"Directions", type:"quatsch", set:EN4_DIRECTIONS},
+  {w:"Welt 2 · Directions & Hobbies", id:"en4_hobbies", ico:"⚽", nm:"Hobbies", type:"wortbild", set:EN4_HOBBIES},
+  {w:"Welt 2 · Directions & Hobbies", id:"en4_hobbysent", ico:"🎨", nm:"I like...", type:"satzbild", set:EN4_HOBBYSENT},
+  {w:"Welt 3 · People & Past", id:"en4_describe", ico:"👤", nm:"Describing People", type:"satzbild", set:EN4_DESCRIBE},
+  {w:"Welt 3 · People & Past", id:"en4_past", ico:"⏮️", nm:"Simple Past", type:"quatsch", set:EN4_PAST},
+  {w:"Welt 3 · People & Past", id:"en4_questions", ico:"❓", nm:"Asking Questions", type:"quatsch", set:EN4_QUESTIONS},
+  {w:"Welt 4 · Weather, Months & Jobs", id:"en4_weather2", ico:"🌦️", nm:"Weather Forecast", type:"quatsch", set:EN4_WEATHER2},
+  {w:"Welt 4 · Weather, Months & Jobs", id:"en4_months", ico:"📅", nm:"Months", type:"quatsch", set:EN4_MONTHS},
+  {w:"Welt 4 · Weather, Months & Jobs", id:"en4_jobs", ico:"💼", nm:"Jobs", type:"wortbild", set:EN4_JOBS},
+  {w:"Welt 5 · School & Mixed Review", id:"en4_subjects", ico:"📚", nm:"School Subjects", type:"wortbild", set:EN4_SUBJECTS},
+  {w:"Welt 5 · School & Mixed Review", id:"en4_sentences2", ico:"✏️", nm:"Correct Sentences", type:"quatsch", set:EN4_SENTENCES2},
+  {w:"Welt 5 · School & Mixed Review", id:"en4_mix2", ico:"👑", nm:"Mixed Review", type:"quatsch", set:EN4_MIX2}
+];
+
 // ---------- Klassen & Fächer: aktive Level/Monster umschaltbar ----------
 const GRADE_CONTENT = {
+  vor:{
+    deutsch:{title:"📖 Deutsch · Vorschule", LEVELS:LEVELS_DE_V, MONSTER:MONSTER_DE_V},
+    mathe:  {title:"🔢 Mathe · Vorschule",   LEVELS:LEVELS_MA_V, MONSTER:MONSTER_MA_V},
+    sach:   {title:"🌍 Sachunterricht · Vorschule", LEVELS:LEVELS_SU_V, MONSTER:MONSTER_SU_V},
+    musik:  {title:"🎵 Musik · Vorschule",   LEVELS:LEVELS_MU_V, MONSTER:MONSTER_MU_V}
+  },
   k1:{
     deutsch:{title:"📖 Deutsch · Klasse 1", LEVELS:LEVELS_DE, MONSTER:MONSTER_DE},
     mathe:  {title:"🔢 Mathe · Klasse 1",   LEVELS:LEVELS_MA, MONSTER:MONSTER_MA},
@@ -1478,6 +2109,13 @@ const GRADE_CONTENT = {
     sach:   {title:"🌍 Sachunterricht · Klasse 3", LEVELS:LEVELS_SU3, MONSTER:MONSTER_SU3},
     musik:  {title:"🎵 Musik · Klasse 3",   LEVELS:LEVELS_MU3, MONSTER:MONSTER_MU3},
     englisch:{title:"🇬🇧 Englisch · Klasse 3", LEVELS:LEVELS_EN3, MONSTER:MONSTER_EN3}
+  },
+  k4:{
+    deutsch:{title:"📖 Deutsch · Klasse 4", LEVELS:LEVELS_DE4, MONSTER:MONSTER_DE4},
+    mathe:  {title:"🔢 Mathe · Klasse 4",   LEVELS:LEVELS_MA4, MONSTER:MONSTER_MA4},
+    sach:   {title:"🌍 Sachunterricht · Klasse 4", LEVELS:LEVELS_SU4, MONSTER:MONSTER_SU4},
+    musik:  {title:"🎵 Musik · Klasse 4",   LEVELS:LEVELS_MU4, MONSTER:MONSTER_MU4},
+    englisch:{title:"🇬🇧 Englisch · Klasse 4", LEVELS:LEVELS_EN4, MONSTER:MONSTER_EN4}
   }
 };
 const SUBJECT_META = {
